@@ -94,8 +94,9 @@
     async function loadListings() {
       alert('Data2Coin script is running!');
       const status = document.getElementById('status');
-      status.textContent = 'Connecting to database...';
-      const listings = document.getElementById('listings');
+status.textContent = 'Connecting to database...';
+alert('Step 2: Connecting to Supabase');
+const listings = document.getElementById('listings');
 
       const { data, error } = await supabaseClient
         .from('data_listings')

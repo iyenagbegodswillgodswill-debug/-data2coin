@@ -102,9 +102,11 @@
         .order('id', { ascending: false });
 
       if (error) {
-        status.textContent = 'Listings could not be loaded. Please try again later.';
-        return;
-      }
+  status.textContent = 'Database error: ' + error.message;
+  console.error('Data2Coin error:', error);
+  return;
+}
+
 
       listings.replaceChildren();
 

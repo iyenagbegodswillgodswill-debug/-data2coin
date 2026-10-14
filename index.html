@@ -97,7 +97,8 @@
 status.textContent = 'Connecting to database...';
 alert('Step 2: Connecting to Supabase');
 const listings = document.getElementById('listings');
-
+status.textContent = 'Requesting data from Supabase...';
+console.log('Data2Coin: sending database request');
       const { data, error } = await supabaseClient
         .from('data_listings')
         .select('id, bundle_size, price_ghs, network, status, data_size_gb')

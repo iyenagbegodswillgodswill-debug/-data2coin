@@ -93,6 +93,7 @@
 
     async function loadListings() {
       const status = document.getElementById('status');
+      status.textContent = 'Connecting to database...';
       const listings = document.getElementById('listings');
 
       const { data, error } = await supabaseClient

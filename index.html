@@ -131,11 +131,17 @@ alert('Step 2: Connecting to Supabase');
 const listings = document.getElementById('listings');
 status.textContent = 'Requesting data from Supabase...';
 console.log('Data2Coin: sending database request');
-      const { data, error } = await supabaseClient
+const timeout = new Promise((_, reject) =>
+  setTimeout(() => reject(new Error('Database request timed out. Please refresh and try again.')), 10000)
+);   
+const { data, error } = await Promise.race([
+  supabaseClient
         .from('data_listings')
         .select('id, bundle_size, price_ghs, network, status, data_size_gb')
         .eq('status', 'available')
-        .order('id', { ascending: false });
+        .order('id', { ascending: false }),
+  timeout
+]);
 
       if (error) {
   status.textContent = 'Database error: ' + error.message;

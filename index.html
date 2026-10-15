@@ -90,8 +90,7 @@
       SUPABASE_URL,
       SUPABASE_PUBLISHABLE_KEY
     );
-
-    async function loadListings() {
+async function loadListings() {
       alert('Data2Coin script is running!');
       const status = document.getElementById('status');
 status.textContent = 'Connecting to database...';
@@ -121,7 +120,8 @@ console.log('Data2Coin: sending database request');
 
       status.textContent = '';
 
-      data.forEach(function(item) {
+    
+      
         const card = document.createElement('div');
         card.className = 'listing';
 

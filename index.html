@@ -70,9 +70,42 @@
     <section class="card">
       <h2>Want to sell data?</h2>
       <p>Seller registration will be added after the listing and payment process is ready.</p>
-      <button onclick="alert('Seller registration is coming soon!')">
-        Seller registration
-      </button>
+      <button onclick="document.getElementById('sellerForm').style.display='block'">
+  Seller registration
+</button>
+<div id="sellerForm" style="display:none; margin-top:20px;">
+  <h3>Register as a Seller</h3>
+
+  <label for="sellerName">Seller name</label>
+  <input id="sellerName" type="text" placeholder="Enter your name"
+    style="display:block; width:100%; padding:12px; margin:8px 0 16px;">
+
+  <label for="sellerContact">Contact number</label>
+  <input id="sellerContact" type="tel" placeholder="Enter your phone number"
+    style="display:block; width:100%; padding:12px; margin:8px 0 16px;">
+
+  <label for="bundleSize">Data bundle</label>
+  <select id="bundleSize"
+    style="display:block; width:100%; padding:12px; margin:8px 0 16px;">
+    <option value="">Choose bundle size</option>
+    <option value="1 GB">1 GB</option>
+    <option value="2 GB">2 GB</option>
+    <option value="3 GB">3 GB</option>
+    <option value="5 GB">5 GB</option>
+    <option value="10 GB">10 GB</option>
+    <option value="20 GB">20 GB</option>
+  </select>
+
+  <label for="sellerPrice">Selling price (GH₵)</label>
+  <input id="sellerPrice" type="number" min="0.01" step="0.01"
+    placeholder="Enter your price"
+    style="display:block; width:100%; padding:12px; margin:8px 0 16px;">
+
+  <button type="button"
+    onclick="alert('Registration form created! Database submission will be connected next.')">
+    Submit registration
+  </button>
+</div>
     </section>
   </main>
 

@@ -152,16 +152,12 @@ const { data, error } = await Promise.race([
 
 
       listings.replaceChildren();
-
       if (!data || data.length === 0) {
         status.textContent = 'No data listings are available yet.';
         return;
       }
 
-      status.textContent = '';
-
-    
-      
+      for (const item of data) {
         const card = document.createElement('div');
         card.className = 'listing';
 
@@ -176,7 +172,9 @@ const { data, error } = await Promise.race([
 
         card.append(title, price, network);
         listings.appendChild(card);
-      });
+      }
+
+      status.textContent = '';
     }
 
     loadListings();

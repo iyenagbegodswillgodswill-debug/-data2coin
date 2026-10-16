@@ -130,7 +130,8 @@ status.textContent = 'Connecting to database...';
 alert('Step 2: Connecting to Supabase');
 const listings = document.getElementById('listings');
 status.textContent = 'Requesting data from Supabase...';
-console.log('Data2Coin: sending database request');
+status.textContent = 'Test: JavaScript is running';
+  console.log('Data2Coin: sending database request');
 const timeout = new Promise((_, reject) =>
   setTimeout(() => reject(new Error('Database request timed out. Please refresh and try again.')), 10000)
 );   

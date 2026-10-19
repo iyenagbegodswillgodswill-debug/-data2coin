@@ -101,10 +101,9 @@
     placeholder="Enter your price"
     style="display:block; width:100%; padding:12px; margin:8px 0 16px;">
 
-  <button type="button"
-    onclick="alert('Registration form created! Database submission will be connected next.')">
+  <button type="button" onclick="submitSellerRegistration()">
     Submit registration
-  </button>
+</button>
 </div>
     </section>
   </main>
@@ -178,6 +177,19 @@ const { data, error } = await Promise.race([
     }
 
     loadListings();
+        async function submitSellerRegistration() {
+      const name = document.getElementById('sellerName').value.trim();
+      const contact = document.getElementById('sellerContact').value.trim();
+      const bundle = document.getElementById('bundleSize').value;
+      const price = Number(document.getElementById('sellerPrice').value);
+
+      if (!name || !contact || !bundle || !Number.isFinite(price) || price <= 0) {
+        alert('Please fill in all fields correctly.');
+        return;
+      }
+
+      alert('Your form details are valid. Database submission is not connected yet.');
+    }
   </script>
 </body>
 </html>

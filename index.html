@@ -177,19 +177,46 @@ const { data, error } = await Promise.race([
     }
 
     loadListings();
-        async function submitSellerRegistration() {
-      const name = document.getElementById('sellerName').value.trim();
-      const contact = document.getElementById('sellerContact').value.trim();
-      const bundle = document.getElementById('bundleSize').value;
-      const price = Number(document.getElementById('sellerPrice').value);
+      async function submitSellerRegistration() {
+const name = document.getElementById(‘sellerName’).value.trim();
+const contact = document.getElementById(‘sellerContact’).value.trim();
+const bundle = document.getElementById(‘bundleSize’).value;
+const price = Number(document.getElementById(‘sellerPrice’).value);
 
-      if (!name || !contact || !bundle || !Number.isFinite(price) || price <= 0) {
-        alert('Please fill in all fields correctly.');
-        return;
-      }
+if (!name || !contact || !bundle || !Number.isFinite(price) || price <= 0) {
+alert(‘Please fill in all fields correctly.’);
+return;
+}
 
-      alert('Your form details are valid. Database submission is not connected yet.');
-    }
+const button = document.querySelector(’#sellerForm button[onclick=“submitSellerRegistration()”]’);
+button.disabled = true;
+button.textContent = ‘Submitting…’;
+
+try {
+const { error } = await supabaseClient
+.from(‘seller_registrations’)
+.insert([{
+seller_name: name,
+contact_number: contact,
+bundle_size: bundle,
+price_ghs: price
+}]);
+
+if (error) throw error;
+alert('Registration submitted successfully!');
+document.getElementById('sellerName').value = '';
+document.getElementById('sellerContact').value = '';
+document.getElementById('bundleSize').value = '';
+document.getElementById('sellerPrice').value = '';
+
+} catch (error) {
+console.error(‘Seller registration error:’, error);
+alert(’Registration failed: ’ + error.message);
+} finally {
+button.disabled = false;
+button.textContent = ‘Submit registration’;
+}
+}
   </script>
 </body>
 </html>

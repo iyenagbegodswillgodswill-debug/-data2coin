@@ -1,156 +1,241 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Data2Coin Admin Dashboard</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 * { box-sizing: border-box; }
 
 body {
+
   margin: 0;
+
   padding: 20px;
+
   background: #f5f5f5;
+
   font-family: Arial, sans-serif;
+
   color: #222;
+
 }
 
 header {
+
   background: #ffcc00;
+
   padding: 20px;
+
   text-align: center;
+
   border-radius: 12px;
+
   margin-bottom: 20px;
+
 }
 
 .container {
+
   max-width: 650px;
+
   margin: auto;
+
 }
 
 .card {
+
   background: white;
+
   padding: 20px;
+
   border-radius: 12px;
+
   margin-bottom: 15px;
+
   box-shadow: 0 2px 8px #00000012;
+
 }
 
 input {
+
   display: block;
+
   width: 100%;
+
   padding: 13px;
+
   margin: 12px 0;
+
   border: 1px solid #ccc;
+
   border-radius: 7px;
+
   font-size: 16px;
+
 }
 
 button {
+
   padding: 12px 16px;
+
   border: none;
+
   border-radius: 7px;
+
   cursor: pointer;
+
   font-size: 15px;
+
   margin: 5px 4px 5px 0;
+
 }
 
 .primary { background: #ffcc00; }
+
 .approve { background: #168344; color: white; }
+
 .reject { background: #c62828; color: white; }
+
 .logout { background: #333; color: white; }
 
 .hidden { display: none; }
 
 #message, #loginMessage {
+
   overflow-wrap: anywhere;
+
 }
+
 </style>
+
 </head>
 
 <body>
 
 <header>
+
   <h2>Data2Coin Ghana 🇬🇭</h2>
+
   <p>Private Admin Dashboard</p>
+
 </header>
 
 <div class="container">
 
 <section id="loginSection" class="card">
+
   <h2>Admin Login</h2>
 
   <form id="loginForm">
+
     <input id="email" type="email"
+
       placeholder="Admin email" required>
 
     <input id="password" type="password"
+
       placeholder="Password" required>
 
     <button class="primary" type="submit">Login</button>
+
   </form>
 
   <p id="loginMessage"></p>
+
 </section>
 
 <section id="dashboard" class="hidden">
 
   <div class="card">
+
     <h2>Admin Dashboard</h2>
+
     <p id="adminEmail"></p>
 
     <button class="logout" id="logoutButton">Logout</button>
+
     <button class="primary" id="refreshButton">Refresh</button>
 
     <p id="message"></p>
+
   </div>
 
   <div class="card">
+
     <h3>Pending Applications</h3>
+
     <div id="pendingList"></div>
+
   </div>
 
   <div class="card">
+
     <h3>Approved Sellers</h3>
+
     <div id="approvedList"></div>
+
   </div>
 
   <div class="card">
+
     <h3>Rejected Applications</h3>
+
     <div id="rejectedList"></div>
+
   </div>
 
 </section>
+
 </div>
 
 <script>
+
 const SUPABASE_URL =
+
   'https://lulbwtfxavlddcemyfyx.supabase.co';
 
 const SUPABASE_PUBLISHABLE_KEY =
+
   'sb_publishable_-jijVrjmTRU_HJDX33euyw_y89CrW7j';
 
 const ADMIN_ID =
+
   '53862359-f3de-43d9-a61a-a54ad875088c';
 
 const db = window.supabase.createClient(
+
   SUPABASE_URL,
+
   SUPABASE_PUBLISHABLE_KEY
+
 );
 
 const loginSection = document.getElementById('loginSection');
+
 const dashboard = document.getElementById('dashboard');
+
 const loginMessage = document.getElementById('loginMessage');
+
 const message = document.getElementById('message');
 
 function say(element, text) {
+
   element.textContent = text;
+
 }
 
 async function verifyAdmin() {
+
   const { data, error } = await db.auth.getUser();
 
   if (error || !data.user) return false;
@@ -158,202 +243,301 @@ async function verifyAdmin() {
   if (data.user.id !== ADMIN_ID) return false;
 
   const { data: admin, error: adminError } = await db
+
     .from('admin_users')
+
     .select('user_id')
+
     .eq('user_id', data.user.id)
+
     .maybeSingle();
 
   if (adminError || !admin) return false;
 
   document.getElementById('adminEmail').textContent =
+
     'Logged in as: ' + data.user.email;
 
   return true;
+
 }
 
 async function openDashboard() {
+
   const allowed = await verifyAdmin();
 
   if (!allowed) {
+
     await db.auth.signOut();
 
     dashboard.classList.add('hidden');
+
     loginSection.classList.remove('hidden');
 
     say(loginMessage, 'Access denied. Admin account not authorised.');
+
     return;
+
   }
 
   loginSection.classList.add('hidden');
+
   dashboard.classList.remove('hidden');
 
   await loadApplications();
+
 }
 
 document.getElementById('loginForm')
+
 .addEventListener('submit', async function(event) {
+
   event.preventDefault();
 
   say(loginMessage, 'Signing in...');
 
   const email = document.getElementById('email').value.trim();
+
   const password = document.getElementById('password').value;
 
   const { error } = await db.auth.signInWithPassword({
+
     email,
+
     password
+
   });
 
   if (error) {
+
     say(loginMessage, error.message);
+
     return;
+
   }
 
   await openDashboard();
+
 });
 
 async function loadApplications() {
+
   say(message, 'Loading applications...');
 
   const allowed = await verifyAdmin();
 
   if (!allowed) {
+
     await db.auth.signOut();
+
     dashboard.classList.add('hidden');
+
     loginSection.classList.remove('hidden');
+
     say(loginMessage, 'Admin verification failed. Please log in again.');
+
     return;
+
   }
 
   const { data, error } = await db
+
     .from('seller_registrations')
+
     .select(
+
       'id, seller_name, contact_number, bundle_size, selling_price, status'
+
     )
+
     .order('id', { ascending: false });
 
   if (error) {
+
     say(message, 'Database error: ' + error.message);
+
     return;
+
   }
 
   renderList('pendingList',
+
     data.filter(s => s.status === 'pending'), true);
 
   renderList('approvedList',
+
     data.filter(s => s.status === 'approved'), false);
 
   renderList('rejectedList',
+
     data.filter(s => s.status === 'rejected'), false);
 
   say(message, 'Applications loaded successfully.');
+
 }
 
 function renderList(containerId, sellers, allowActions) {
+
   const container = document.getElementById(containerId);
+
   container.replaceChildren();
 
   if (!sellers.length) {
+
     const empty = document.createElement('p');
+
     empty.textContent = 'No applications here.';
+
     container.appendChild(empty);
+
     return;
+
   }
 
   sellers.forEach(seller => {
+
     const card = document.createElement('div');
+
     card.className = 'card';
 
     function addLine(text) {
+
       const p = document.createElement('p');
+
       p.textContent = text;
+
       card.appendChild(p);
+
     }
 
     const title = document.createElement('h3');
+
     title.textContent = seller.seller_name;
+
     card.appendChild(title);
 
     addLine('Application ID: ' + seller.id);
+
     addLine('Contact: ' + seller.contact_number);
+
     addLine('Bundle: ' + seller.bundle_size);
+
     addLine('Price: GH₵ ' + seller.selling_price);
+
     addLine('Status: ' + seller.status);
 
     if (allowActions) {
+
       const approve = document.createElement('button');
+
       approve.className = 'approve';
+
       approve.textContent = 'Approve';
 
       approve.onclick = () =>
+
         changeStatus(seller.id, 'approved');
 
       const reject = document.createElement('button');
+
       reject.className = 'reject';
+
       reject.textContent = 'Reject';
 
       reject.onclick = () =>
+
         changeStatus(seller.id, 'rejected');
 
       card.appendChild(approve);
+
       card.appendChild(reject);
+
     }
 
     container.appendChild(card);
+
   });
+
 }
 
 async function changeStatus(id, status) {
+
   if (!confirm('Are you sure you want to ' + status + ' this seller?')) {
+
     return;
+
   }
 
   say(message, 'Updating seller...');
 
   const { data, error } = await db
+
     .from('seller_registrations')
+
     .update({ status })
+
     .eq('id', id)
+
     .eq('status', 'pending')
+
     .select('id');
 
   if (error) {
+
     say(message, 'Update failed: ' + error.message);
+
     return;
+
   }
 
   if (!data || data.length === 0) {
+
     say(message, 'No pending application was updated.');
+
     return;
+
   }
 
   say(message, 'Seller ' + status + ' successfully.');
+
   await loadApplications();
+
 }
 
 document.getElementById('refreshButton')
+
 .addEventListener('click', loadApplications);
 
 document.getElementById('logoutButton')
+
 .addEventListener('click', async function() {
+
   await db.auth.signOut();
 
   dashboard.classList.add('hidden');
+
   loginSection.classList.remove('hidden');
 
   say(loginMessage, 'You have logged out.');
+
 });
 
 async function checkSession() {
+
   const { data } = await db.auth.getSession();
 
   if (data.session) {
+
     await openDashboard();
+
   }
+
 }
 
 checkSession();
+
 </script>
 
 </body>
+
 </html>

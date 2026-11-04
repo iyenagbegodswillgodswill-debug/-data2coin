@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data2Coin Admin Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 20px;
+  background: #f5f5f5;
+  font-family: Arial, sans-serif;
+  color: #222;
+}
+
+header {
+  background: #ffcc00;
+  padding: 20px;
+  text-align: center;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.container {
+  max-width: 650px;
+  margin: auto;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 8px #00000012;
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  font-size: 16px;
+}
+
+button {
+  padding: 12px 16px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 15px;
+  margin: 5px 4px 5px 0;
+}
+
+.primary {
+  background: #ffcc00;
+  color: #222;
+}
+
+.approve {
+  background: #168344;
+  color: white;
+}
+
+.reject {
+  background: #c62828;
+  color: white;
+}
+
+.logout {
+  background: #333;
+  color: white;
+}
+
+button:disabled {
+  opacity: 0.5;
+}
+
+.hidden {
+  display: none;
+}
+
+.muted {
+  color: #666;
+}
+
+#message {
+  margin: 12px 0;
+  overflow-wrap: anywhere;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h2>Data2Coin Ghana 🇬🇭</h2>
+  <p>Private Admin Dashboard</p>
+</header>
+
+<div class="container">
+
+  <section id="loginSection" class="card">
+    <h2>Admin Login</h2>
+
+    <form id="loginForm">
+      <input
+        id="email"
+        type="email"
+        placeholder="Admin email"
+        autocomplete="username"
+        required
+      >
+
+      <input
+        id="password"
+        type="password"
+        placeholder="Password"
+        autocomplete="current-password"
+        required
+      >
+
+      <button class="primary" type="submit">
+        Login
+      </button>
+    </form>
+
+    <p id="loginMessage"></p>
+  </section>
+
+  <section id="dashboard" class="hidden">
+
+    <div class="card">
+      <h2>Admin Dashboard</h2>
+      <p id="adminEmail"></p>
+      <button class="logout" id="logoutButton">
+        Logout
+      </button>
+      <button class="primary" id="refreshButton">
+        Refresh Applications
+      </button>
+      <p id="message"></p>
+    </div>
+
+    <div class="card">
+      <h3>Pending Applications</h3>
+      <div id="pendingList">Loading...</div>
+    </div>
+
+    <div class="card">
+      <h3>Approved Sellers</h3>
+      <div id="approvedList">Loading...</div>
+    </div>
+
+    <div class="card">
+      <h3>Rejected Applications</h3>
+      <div id="rejectedList">Loading...</div>
+    </div>
+
+  </section>
+
+</div>
+
+<script>
+const SUPABASE_URL =
+  'https://lulbwtfxavlddcemyfyx.supabase.co';
+
+const SUPABASE_PUBLISHABLE_KEY =
+  'sb_publishable_-jijVrjmTRU_HJDX33euyw_y89CrW7J';
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+const MY_ADMIN_ID =
+  '53862359-f3de-43d9-a61a-a54ad875088c';
+
+const loginSection =
+  document.getElementById('loginSection');
+
+const dashboard =
+  document.getElementById('dashboard');
+
+const loginMessage =
+  document.getElementById('loginMessage');
+
+const message =
+  document.getElementById('message');
+
+function showMessage(element, text) {
+  element.textContent = text;
+}
+
+function addText(parent, tag, text) {
+  const element = document.createElement(tag);
+  element.textContent = text;
+  parent.appendChild(element);
+  return element;
+}
+
+async function verifyAdmin() {
+  const { data: authData, error: authError } =
+    await supabaseClient.auth.getUser();
+
+  if (authError || !authData.user) {
+    return false;
+  }
+
+  if (authData.user.id !== MY_ADMIN_ID) {
+    return false;
+  }
+
+  const { data, error } = await supabaseClient
+    .from('admin_users')
+    .select('user_id')
+    .eq('user_id', authData.user.id)
+    .maybeSingle();
+
+  if (error || !data) {
+    return false;
+  }
+
+  document.getElementById('adminEmail').textContent =
+    'Logged in as: ' + authData.user.email;
+
+  return true;
+}
+
+async function openDashboard() {
+  const verified = await verifyAdmin();
+
+  if (!verified) {
+    await supabaseClient.auth.signOut();
+    loginSection.classList.remove('hidden');
+    dashboard.classList.add('hidden');
+
+    showMessage(
+      loginMessage,
+      'Access denied. This account is not an authorised administrator.'
+    );
+
+    return;
+  }
+
+  loginSection.classList.add('hidden');
+  dashboard.classList.remove('hidden');
+
+  await loadApplications();
+}
+
+document.getElementById('loginForm')
+.addEventListener('submit', async function(event) {
+  event.preventDefault();
+
+  showMessage(loginMessage, 'Signing in...');
+
+  const email =
+    document.getElementById('email').value.trim();
+
+  const password =
+    document.getElementById('password').value;
+
+  const { error } = await supabaseClient.auth
+    .signInWithPassword({ email, password });
+
+  if (error) {
+    showMessage(loginMessage, error.message);
+    return;
+  }
+
+  await openDashboard();
+});
+
+async function loadApplications() {
+  showMessage(message, 'Loading applications...');
+
+  const { data, error } = await supabaseClient
+    .from('seller_registrations')
+    .select(
+      'id, created_at, seller_name, contact_number, seller_contact, bundle_size, selling_price, price_ghs, status'
+    )
+    .order('id', { ascending: false });
+
+  if (error) {
+    showMessage(message, 'Error: ' + error.message);
+    return;
+  }
+
+  renderApplications(data || []);
+
+  showMessage(message, 'Applications loaded successfully.');
+}
+
+function renderApplications(applications) {
+  const pending = applications.filter(
+    item => item.status === 'pending'
+  );
+
+  const approved = applications.filter(
+    item => item.status === 'approved'
+  );
+
+  const rejected = applications.filter(
+    item => item.status === 'rejected'
+  );
+
+  renderList('pendingList', pending, true);
+  renderList('approvedList', approved, false);
+  renderList('rejectedList', rejected, false);
+}
+
+function renderList(containerId, applications, allowActions) {
+  const container = document.getElementById(containerId);
+
+  container.replaceChildren();
+
+  if (applications.length === 0) {
+    addText(container, 'p', 'No applications here.');
+    return;
+  }
+
+  applications.forEach(seller => {
+    const card = document.createElement('div');
+
+    card.className = 'card';
+
+    addText(card, 'h3', seller.seller_name);
+    addText(card, 'p', 'Application ID: ' + seller.id);
+    addText(card, 'p', 'Contact: ' + seller.contact_number);
+    addText(card, 'p', 'Bundle: ' + seller.bundle_size);
+    addText(card, 'p', 'Price: GH₵ ' + seller.selling_price);
+    addText(card, 'p', 'Status: ' + seller.status);
+
+    if (allowActions) {
+      const approveButton = document.createElement('button');
+      approveButton.className = 'approve';
+      approveButton.textContent = 'Approve';
+
+      approveButton.addEventListener('click', () => {
+        changeStatus(seller.id, 'approved');
+      });
+
+      const rejectButton = document.createElement('button');
+      rejectButton.className = 'reject';
+      rejectButton.textContent = 'Reject';
+
+      rejectButton.addEventListener('click', () => {
+        changeStatus(seller.id, 'rejected');
+      });
+
+      card.appendChild(approveButton);
+      card.appendChild(rejectButton);
+    }
+
+    container.appendChild(card);
+  });
+}
+
+async function changeStatus(id, newStatus) {
+  const confirmed = confirm(
+    'Are you sure you want to ' + newStatus +
+    ' this seller application?'
+  );
+
+  if (!confirmed) return;
+
+  showMessage(message, 'Updating application...');
+
+  const { error } = await supabaseClient
+    .from('seller_registrations')
+    .update({ status: newStatus })
+    .eq('id', id)
+    .eq('status', 'pending');
+
+  if (error) {
+    showMessage(message, 'Update failed: ' + error.message);
+    return;
+  }
+
+  showMessage(message, 'Application updated.');
+  await loadApplications();
+}
+
+document.getElementById('refreshButton')
+.addEventListener('click', loadApplications);
+
+document.getElementById('logoutButton')
+.addEventListener('click', async function() {
+  await supabaseClient.auth.signOut();
+
+  dashboard.classList.add('hidden');
+  loginSection.classList.remove('hidden');
+
+  showMessage(loginMessage, 'You have logged out.');
+});
+
+async function checkExistingSession() {
+  const { data } = await supabaseClient.auth.getSession();
+
+  if (data.session) {
+    await openDashboard();
+  }
+}
+
+checkExistingSession();
+</script>
+
+</body>
+</html>

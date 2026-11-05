@@ -106,6 +106,10 @@ button {
 
 .reject { background: #c62828; color: white; }
 
+.suspend { background: #e07800; color: white; }
+
+.reactivate { background: #168344; color: white; }
+
 .logout { background: #333; color: white; }
 
 .hidden { display: none; }
@@ -188,6 +192,14 @@ button {
 
   <div class="card">
 
+    <h3>Suspended Sellers</h3>
+
+    <div id="suspendedList"></div>
+
+  </div>
+
+  <div class="card">
+
     <h3>Rejected Applications</h3>
 
     <div id="rejectedList"></div>
@@ -234,6 +246,8 @@ function say(element, text) {
 
 }
 
+// VERIFY ADMIN
+
 async function verifyAdmin() {
 
   const { data, error } = await db.auth.getUser();
@@ -262,6 +276,8 @@ async function verifyAdmin() {
 
 }
 
+// OPEN DASHBOARD
+
 async function openDashboard() {
 
   const allowed = await verifyAdmin();
@@ -287,6 +303,8 @@ async function openDashboard() {
   await loadApplications();
 
 }
+
+// LOGIN
 
 document.getElementById('loginForm')
 
@@ -319,6 +337,8 @@ document.getElementById('loginForm')
   await openDashboard();
 
 });
+
+// LOAD APPLICATIONS
 
 async function loadApplications() {
 
@@ -360,23 +380,45 @@ async function loadApplications() {
 
   }
 
-  renderList('pendingList',
+  renderList(
 
-    data.filter(s => s.status === 'pending'), true);
+    'pendingList',
 
-  renderList('approvedList',
+    data.filter(s => s.status === 'pending')
 
-    data.filter(s => s.status === 'approved'), false);
+  );
 
-  renderList('rejectedList',
+  renderList(
 
-    data.filter(s => s.status === 'rejected'), false);
+    'approvedList',
+
+    data.filter(s => s.status === 'approved')
+
+  );
+
+  renderList(
+
+    'suspendedList',
+
+    data.filter(s => s.status === 'suspended')
+
+  );
+
+  renderList(
+
+    'rejectedList',
+
+    data.filter(s => s.status === 'rejected')
+
+  );
 
   say(message, 'Applications loaded successfully.');
 
 }
 
-function renderList(containerId, sellers, allowActions) {
+// DISPLAY SELLERS
+
+function renderList(containerId, sellers) {
 
   const container = document.getElementById(containerId);
 
@@ -426,7 +468,7 @@ function renderList(containerId, sellers, allowActions) {
 
     addLine('Status: ' + seller.status);
 
-    if (allowActions) {
+    if (seller.status === 'pending') {
 
       const approve = document.createElement('button');
 
@@ -448,9 +490,39 @@ function renderList(containerId, sellers, allowActions) {
 
         changeStatus(seller.id, 'rejected');
 
-      card.appendChild(approve);
+      card.append(approve, reject);
 
-      card.appendChild(reject);
+    }
+
+    if (seller.status === 'approved') {
+
+      const suspend = document.createElement('button');
+
+      suspend.className = 'suspend';
+
+      suspend.textContent = 'Suspend Seller';
+
+      suspend.onclick = () =>
+
+        suspendSeller(seller.id);
+
+      card.appendChild(suspend);
+
+    }
+
+    if (seller.status === 'suspended') {
+
+      const reactivate = document.createElement('button');
+
+      reactivate.className = 'reactivate';
+
+      reactivate.textContent = 'Reactivate Seller';
+
+      reactivate.onclick = () =>
+
+        reactivateSeller(seller.id);
+
+      card.appendChild(reactivate);
 
     }
 
@@ -459,6 +531,8 @@ function renderList(containerId, sellers, allowActions) {
   });
 
 }
+
+// APPROVE OR REJECT APPLICATION
 
 async function changeStatus(id, status) {
 
@@ -504,9 +578,147 @@ async function changeStatus(id, status) {
 
 }
 
+// SUSPEND SELLER
+
+async function suspendSeller(id) {
+
+  if (!confirm('Suspend this seller? Their data listing will become unavailable.')) {
+
+    return;
+
+  }
+
+  say(message, 'Suspending seller...');
+
+  const { data, error } = await db
+
+    .from('seller_registrations')
+
+    .update({ status: 'suspended' })
+
+    .eq('id', id)
+
+    .eq('status', 'approved')
+
+    .select('id');
+
+  if (error) {
+
+    say(message, 'Suspension failed: ' + error.message);
+
+    return;
+
+  }
+
+  if (!data || data.length === 0) {
+
+    say(message, 'Seller was not updated. Refresh and try again.');
+
+    return;
+
+  }
+
+  const { error: listingError } = await db
+
+    .from('data_listings')
+
+    .update({ status: 'unavailable' })
+
+    .eq('seller_registration_id', id);
+
+  if (listingError) {
+
+    say(message, 'Seller suspended, but listing update failed: ' + listingError.message);
+
+    return;
+
+  }
+
+  say(message, 'Seller suspended successfully.');
+
+  await loadApplications();
+
+}
+
+// REACTIVATE SELLER
+
+async function reactivateSeller(id) {
+
+  if (!confirm('Reactivate this seller and make their linked listing available again?')) {
+
+    return;
+
+  }
+
+  say(message, 'Reactivating seller...');
+
+  const { data, error } = await db
+
+    .from('seller_registrations')
+
+    .update({ status: 'approved' })
+
+    .eq('id', id)
+
+    .eq('status', 'suspended')
+
+    .select('id');
+
+  if (error) {
+
+    say(message, 'Reactivation failed: ' + error.message);
+
+    return;
+
+  }
+
+  if (!data || data.length === 0) {
+
+    say(message, 'Seller was not updated. Refresh and try again.');
+
+    return;
+
+  }
+
+  const { data: listing, error: listingError } = await db
+
+    .from('data_listings')
+
+    .update({ status: 'available' })
+
+    .eq('seller_registration_id', id)
+
+    .select('id');
+
+  if (listingError) {
+
+    say(message, 'Seller approved, but listing update failed: ' + listingError.message);
+
+    return;
+
+  }
+
+  if (!listing || listing.length === 0) {
+
+    say(message, 'Seller approved, but no linked listing was found. Please check the database.');
+
+    return;
+
+  }
+
+  say(message, 'Seller reactivated successfully.');
+
+  await loadApplications();
+
+}
+
+// REFRESH
+
 document.getElementById('refreshButton')
 
 .addEventListener('click', loadApplications);
+
+// LOGOUT
 
 document.getElementById('logoutButton')
 
@@ -521,6 +733,8 @@ document.getElementById('logoutButton')
   say(loginMessage, 'You have logged out.');
 
 });
+
+// CHECK EXISTING SESSION
 
 async function checkSession() {
 

@@ -260,7 +260,9 @@
 
       <p>Register your interest in selling MTN data bundles through Data2Coin.</p>
 
-      <button type="button"
+      <button
+
+        type="button"
 
         onclick="document.getElementById('sellerForm').style.display='block'">
 
@@ -302,11 +304,23 @@
 
         <label for="sellerPrice">Selling price (GH₵)</label>
 
-        <input id="sellerPrice" type="number" min="0.01" step="0.01"
+        <input
+
+          id="sellerPrice"
+
+          type="number"
+
+          min="0.01"
+
+          step="0.01"
 
           placeholder="Enter your price">
 
-        <button type="button" id="submitButton"
+        <button
+
+          type="button"
+
+          id="submitButton"
 
           onclick="submitSellerRegistration()">
 
@@ -350,7 +364,7 @@
 
     );
 
-    // LOAD AVAILABLE DATA LISTINGS
+    // LOAD AVAILABLE DATA FROM THE SAFE PUBLIC VIEW
 
     async function loadListings() {
 
@@ -364,11 +378,9 @@
 
         const { data, error } = await supabaseClient
 
-          .from('data_listings')
+          .from('public_data_listings')
 
-          .select('id, bundle_size, price_ghs, network, status, data_size_gb')
-
-          .eq('status', 'available')
+          .select('id, bundle_size, price_ghs, network, data_size_gb')
 
           .order('id', { ascending: false });
 

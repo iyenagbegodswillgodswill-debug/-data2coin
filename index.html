@@ -6,11 +6,13 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="theme-color" content="#080808">
+<meta name="description" content="Data2Coin Ghana - Buy and sell MTN data bundles in Ghana.">
 
-<title>Data2Coin Ghana 🇬🇭</title>
+<meta name="theme-color" content="#11140f">
+
+<title>Data2Coin Ghana</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -18,531 +20,421 @@
 
 * {
 
-  box-sizing: border-box;
+    box-sizing: border-box;
 
-  margin: 0;
+    margin: 0;
 
-  padding: 0;
+    padding: 0;
 
 }
 
-html {
+:root {
 
-  width: 100%;
+    --gold: #ffcc00;
 
-  min-height: 100%;
+    --dark: #11140f;
 
-  background: #080808;
+    --card: #1d211a;
+
+    --text: #ffffff;
+
+    --muted: #b8bcae;
+
+    --green: #3bd477;
 
 }
 
 body {
 
-  width: 100%;
+    background: var(--dark);
 
-  min-height: 100vh;
+    color: var(--text);
 
-  min-height: 100dvh;
+    font-family: Arial, sans-serif;
 
-  background: #080808;
-
-  color: #fff;
-
-  font-family: Arial, sans-serif;
-
-  font-size: 18px;
-
-  line-height: 1.7;
-
-  overflow-x: hidden;
+    min-height: 100vh;
 
 }
 
 .app {
 
-  width: 100%;
+    width: 100%;
 
-  max-width: none;
+    min-height: 100vh;
 
-  min-height: 100vh;
-
-  min-height: 100dvh;
-
-  margin: 0;
-
-  padding: 20px 16px 130px;
-
-  padding-top: max(20px, env(safe-area-inset-top));
-
-  background:
-
-    radial-gradient(circle at top right, #3b2a00, transparent 35%),
-
-    #101010;
-
-  border: none;
+    padding-bottom: 100px;
 
 }
 
 header {
 
-  text-align: center;
+    background: #191d16;
 
-  padding: 22px 10px;
+    padding: 24px 18px;
 
-  border-bottom: 2px solid #d6a928;
-
-  margin-bottom: 28px;
+    border-bottom: 1px solid #34392e;
 
 }
 
-header h1 {
+.logo {
 
-  color: #ffcc33;
+    font-size: 27px;
 
-  font-size: 36px;
+    font-weight: 900;
 
-  line-height: 1.3;
-
-}
-
-header p {
-
-  font-size: 16px;
-
-  color: #ddd;
+    color: var(--gold);
 
 }
 
-.africa-line {
+.tagline {
 
-  height: 5px;
+    font-size: 15px;
 
-  margin-top: 15px;
+    color: var(--muted);
 
-  background: repeating-linear-gradient(
+    margin-top: 8px;
 
-    90deg,
+}
 
-    #d6a928 0 15px,
+.container {
 
-    #111 15px 20px,
+    padding: 18px;
 
-    #a52a2a 20px 35px,
+    max-width: 700px;
 
-    #111 35px 40px,
-
-    #238636 40px 55px,
-
-    #111 55px 60px
-
-  );
+    margin: auto;
 
 }
 
 .page {
 
-  display: none;
-
-  animation: appear .35s ease;
+    display: none;
 
 }
 
 .page.active {
 
-  display: block;
-
-}
-
-@keyframes appear {
-
-  from {
-
-    opacity: 0;
-
-    transform: translateX(18px);
-
-  }
-
-  to {
-
-    opacity: 1;
-
-    transform: translateX(0);
-
-  }
-
-}
-
-h2 {
-
-  font-size: 30px;
-
-  color: #ffcc33;
-
-  margin-bottom: 14px;
-
-  line-height: 1.35;
-
-}
-
-h3 {
-
-  font-size: 23px;
-
-  color: #ffcc33;
-
-  margin-bottom: 10px;
-
-}
-
-p {
-
-  font-size: 17px;
-
-  line-height: 1.8;
-
-  color: #ddd;
-
-  margin-bottom: 14px;
+    display: block;
 
 }
 
 .card {
 
-  background: #1b1b1b;
+    background: var(--card);
 
-  border: 1px solid #a88425;
+    border: 1px solid #34392e;
 
-  border-radius: 19px;
+    border-radius: 18px;
 
-  padding: 22px;
+    padding: 20px;
 
-  margin-bottom: 19px;
-
-  box-shadow: 0 5px 18px #0008;
+    margin-bottom: 18px;
 
 }
 
-.welcome {
+.hero {
 
-  background: linear-gradient(135deg, #332600, #171717);
+    background: linear-gradient(135deg, #30301b, #191d16);
 
-  border: 1px solid #e0b431;
+    border: 1px solid #665719;
 
-}
-
-.eyebrow {
-
-  color: #e4b52f;
-
-  font-size: 15px;
-
-  text-transform: uppercase;
-
-  letter-spacing: 2px;
-
-  margin-bottom: 10px;
+    padding: 25px 20px;
 
 }
 
-.grid {
+h1 {
 
-  display: grid;
+    font-size: 30px;
 
-  grid-template-columns: repeat(2, 1fr);
+    line-height: 1.25;
 
-  gap: 15px;
-
-  margin-top: 22px;
+    margin-bottom: 12px;
 
 }
 
-.tile {
+h2 {
 
-  background: linear-gradient(145deg, #242424, #111);
+    font-size: 24px;
 
-  border: 1px solid #a88425;
-
-  border-radius: 18px;
-
-  padding: 24px 10px;
-
-  text-align: center;
-
-  cursor: pointer;
-
-  min-height: 140px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  align-items: center;
+    margin-bottom: 15px;
 
 }
 
-.tile:active {
+h3 {
 
-  transform: scale(.97);
+    font-size: 19px;
 
-}
-
-.tile .icon {
-
-  display: block;
-
-  font-size: 42px;
-
-  margin-bottom: 10px;
+    margin-bottom: 12px;
 
 }
 
-.tile strong {
+p {
 
-  font-size: 16px;
+    font-size: 16px;
 
-  color: #ffcc33;
+    line-height: 1.6;
+
+    color: var(--muted);
+
+}
+
+.gold {
+
+    color: var(--gold);
+
+}
+
+.green {
+
+    color: var(--green);
 
 }
 
 button {
 
-  background: linear-gradient(135deg, #ffda55, #d49a00);
+    border: none;
 
-  color: #111;
+    border-radius: 12px;
 
-  border: none;
+    padding: 15px 18px;
 
-  border-radius: 12px;
+    font-size: 16px;
 
-  padding: 17px;
+    font-weight: bold;
 
-  width: 100%;
+    cursor: pointer;
 
-  font-weight: bold;
+    width: 100%;
 
-  font-size: 18px;
+    margin-top: 12px;
 
-  margin-top: 12px;
+}
 
-  cursor: pointer;
+.primary {
+
+    background: var(--gold);
+
+    color: #17170f;
+
+}
+
+.secondary {
+
+    background: #34392e;
+
+    color: white;
 
 }
 
 button:disabled {
 
-  opacity: .55;
+    opacity: 0.55;
 
-  cursor: not-allowed;
+    cursor: not-allowed;
 
 }
 
-input, select {
+input, select, textarea {
 
-  width: 100%;
+    width: 100%;
 
-  padding: 17px;
+    padding: 15px;
 
-  border-radius: 11px;
+    border-radius: 10px;
 
-  border: 1px solid #a88425;
+    border: 1px solid #515747;
 
-  background: #101010;
+    background: #11140f;
 
-  color: white;
+    color: white;
 
-  font-size: 18px;
+    font-size: 16px;
 
-  margin: 8px 0 17px;
+    margin-top: 8px;
+
+    margin-bottom: 16px;
 
 }
 
 label {
 
-  display: block;
+    display: block;
 
-  color: #ffcc33;
+    font-size: 15px;
 
-  font-size: 17px;
+    font-weight: bold;
+
+    margin-top: 12px;
 
 }
 
-.bundle-card {
+.data-card {
 
-  background: #202020;
+    border: 1px solid #444b39;
 
-  border: 1px solid #a88425;
+    border-radius: 15px;
 
-  border-radius: 16px;
+    padding: 18px;
 
-  padding: 20px;
+    margin-bottom: 15px;
 
-  margin: 14px 0;
+    background: #24291f;
+
+}
+
+.data-size {
+
+    font-size: 25px;
+
+    font-weight: bold;
+
+    color: var(--gold);
 
 }
 
 .price {
 
-  color: #ffcc33;
+    font-size: 21px;
 
-  font-size: 23px;
+    font-weight: bold;
 
-  font-weight: bold;
+    margin-top: 8px;
+
+}
+
+.badge {
+
+    display: inline-block;
+
+    background: #173d27;
+
+    color: #65ed98;
+
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+    margin-top: 10px;
 
 }
 
 .notice {
 
-  background: #332600;
+    background: #3b3214;
 
-  border-left: 4px solid #ffcc33;
+    border: 1px solid #756321;
 
-  padding: 16px;
+    padding: 15px;
 
-  border-radius: 9px;
+    border-radius: 12px;
 
-  font-size: 15px;
-
-  margin-top: 17px;
-
-  color: #eee;
-
-  line-height: 1.8;
+    margin-top: 15px;
 
 }
 
-.navigation {
+.notice p {
 
-  display: flex;
-
-  justify-content: space-between;
-
-  gap: 12px;
-
-  margin-top: 28px;
+    color: #ffe58a;
 
 }
 
-.navigation button {
+.status-message {
 
-  width: 48%;
+    font-size: 15px;
 
-}
+    margin-top: 12px;
 
-.page-number {
-
-  text-align: center;
-
-  color: #ffcc33;
-
-  font-size: 17px;
-
-  margin-top: 15px;
+    overflow-wrap: anywhere;
 
 }
 
 .bottom-nav {
 
-  position: fixed;
+    position: fixed;
 
-  bottom: 0;
+    bottom: 0;
 
-  left: 0;
+    left: 0;
 
-  transform: none;
+    width: 100%;
 
-  width: 100%;
+    background: #191d16;
 
-  max-width: none;
+    border-top: 1px solid #444b39;
 
-  background: #080808;
+    display: flex;
 
-  border-top: 1px solid #b58b28;
+    justify-content: space-around;
 
-  display: flex;
+    padding: 10px 3px calc(10px + env(safe-area-inset-bottom));
 
-  justify-content: space-around;
-
-  padding: 12px 5px;
-
-  padding-bottom: max(12px, env(safe-area-inset-bottom));
-
-  z-index: 10;
+    z-index: 100;
 
 }
 
-.nav-item {
+.nav-button {
 
-  background: none;
+    background: transparent;
 
-  color: #ddd;
+    color: #b8bcae;
 
-  width: auto;
+    font-size: 11px;
 
-  padding: 5px;
+    padding: 7px 2px;
 
-  margin: 0;
+    margin: 0;
 
-  font-size: 13px;
-
-  flex: 1;
+    width: 16.66%;
 
 }
 
-.nav-item span {
+.nav-button span {
 
-  display: block;
+    display: block;
 
-  font-size: 27px;
+    font-size: 21px;
+
+    margin-bottom: 5px;
 
 }
 
-.nav-item.selected {
+.nav-button.active {
 
-  color: #ffcc33;
+    color: var(--gold);
 
 }
 
 footer {
 
-  text-align: center;
+    text-align: center;
 
-  color: #999;
+    padding: 25px 15px;
 
-  font-size: 14px;
+    color: #888f80;
 
-  margin-top: 35px;
+    font-size: 13px;
 
 }
 
-@media(max-width: 380px) {
+hr {
 
-  header h1 {
+    border: none;
 
-    font-size: 31px;
+    border-top: 1px solid #42483a;
 
-  }
+    margin: 18px 0;
 
-  h2 {
+}
 
-    font-size: 26px;
+@media (min-width: 700px) {
 
-  }
+    .container {
 
-  .tile {
+        padding-top: 25px;
 
-    min-height: 125px;
-
-  }
-
-  .tile strong {
-
-    font-size: 14px;
-
-  }
+    }
 
 }
 
@@ -556,339 +448,409 @@ footer {
 
 <header>
 
-  <h1>Data2Coin 🇬🇭</h1>
+    <div class="logo">Data2Coin 🇬🇭</div>
 
-  <p>Ghana's Data Marketplace</p>
+    <div class="tagline">
 
-  <div class="africa-line"></div>
+        Buy and sell MTN data bundles in Ghana
+
+    </div>
 
 </header>
 
-<!-- PAGE 1: HOME -->
+<main class="container">
 
-<section class="page active" id="page1">
+<!-- HOME PAGE -->
 
-  <div class="card welcome">
+<section class="page active" id="home">
 
-    <div class="eyebrow">Welcome to Data2Coin</div>
+    <div class="card hero">
 
-    <h2>Data made simple.</h2>
+        <h1>
 
-    <p>Buy and sell MTN data bundles in Ghana through one simple marketplace.</p>
+            Your Data.<br>
 
-    <p><strong>🇬🇭 Network:</strong> MTN Ghana</p>
+            Your Money.
 
-    <p><strong>💰 Planned platform fee:</strong> 2%</p>
+        </h1>
 
-  </div>
+        <p>
 
-  <h2>What would you like to do?</h2>
+            Welcome to Data2Coin Ghana — a marketplace
 
-  <div class="grid">
+            connecting MTN data buyers and sellers.
 
-    <div class="tile" onclick="showPage(2)">
+        </p>
 
-      <span class="icon">📶</span>
+        <button class="primary" onclick="showPage('data')">
 
-      <strong>Buy Data</strong>
+            Explore Available Data
 
-    </div>
-
-    <div class="tile" onclick="showPage(3)">
-
-      <span class="icon">📱</span>
-
-      <strong>Airtime</strong>
+        </button>
 
     </div>
 
-    <div class="tile" onclick="showPage(4)">
+    <div class="card">
 
-      <span class="icon">💳</span>
+        <h2>About Data2Coin</h2>
 
-      <strong>Payments</strong>
+        <p>
 
-    </div>
+            Data2Coin is designed to make buying and selling
 
-    <div class="tile" onclick="showPage(5)">
+            MTN data bundles easier in Ghana.
 
-      <span class="icon">💰</span>
+        </p>
 
-      <strong>Sell Data</strong>
+        <hr>
 
-    </div>
+        <p><strong class="gold">Network:</strong> MTN Ghana</p>
 
-    <div class="tile" onclick="showPage(6)">
+        <p><strong class="gold">Currency:</strong> Ghana Cedis (GH₵)</p>
 
-      <span class="icon">👤</span>
-
-      <strong>My Account</strong>
+        <p><strong class="gold">Planned platform fee:</strong> 2%</p>
 
     </div>
 
-    <div class="tile" onclick="showPage(2)">
+    <div class="card">
 
-      <span class="icon">🌍</span>
+        <h2>How It Works</h2>
 
-      <strong>Explore Data</strong>
+        <p>1. Browse available data bundles.</p>
+
+        <p>2. Choose a bundle and submit your phone number.</p>
+
+        <p>3. Your order is recorded.</p>
+
+        <p>4. Payment and data delivery will be introduced after testing.</p>
 
     </div>
 
-  </div>
+    <div class="card">
+
+        <h2>Want to become a seller?</h2>
+
+        <p>
+
+            Register your data bundle and wait for approval
+
+            before it appears in the marketplace.
+
+        </p>
+
+        <button class="primary" onclick="showPage('sell')">
+
+            Become a Seller
+
+        </button>
+
+    </div>
 
 </section>
 
-<!-- PAGE 2: DATA -->
+<!-- BUY DATA PAGE -->
 
-<section class="page" id="page2">
+<section class="page" id="data">
 
-  <div class="eyebrow">Marketplace</div>
+    <div class="card">
 
-  <h2>MTN Data Bundles 📶</h2>
+        <h2>Available Data</h2>
 
-  <p>Explore data bundles listed by sellers.</p>
+        <p>
 
-  <div class="card">
+            Browse available MTN data bundles from approved sellers.
 
-    <h3>Available Data</h3>
+        </p>
 
-    <p id="status">Loading listings...</p>
+        <div id="status" class="status-message">
 
-    <div id="listings"></div>
+            Connecting to marketplace...
 
-  </div>
+        </div>
 
-  <div class="notice">
+    </div>
 
-    Demo preview: Buying and payment processing are not yet available.
+    <div id="listings">
 
-    Do not send money to anyone claiming to collect payment for Data2Coin.
+        <div class="card">
 
-  </div>
+            <p>Loading available data...</p>
 
-</section>
+        </div>
 
-<!-- PAGE 3: AIRTIME -->
-
-<section class="page" id="page3">
-
-  <div class="eyebrow">Mobile services</div>
-
-  <h2>Airtime 📱</h2>
-
-  <div class="card">
-
-    <h3>MTN Airtime</h3>
-
-    <p>We are preparing an airtime service for Data2Coin users.</p>
-
-    <p>Network: MTN Ghana</p>
-
-    <button disabled>Coming Soon</button>
-
-  </div>
-
-  <div class="notice">
-
-    Airtime purchases are not active yet. No payments are accepted here.
-
-  </div>
+    </div>
 
 </section>
 
-<!-- PAGE 4: PAYMENTS -->
+<!-- SELL DATA PAGE -->
 
-<section class="page" id="page4">
+<section class="page" id="sell">
 
-  <div class="eyebrow">Transactions</div>
+    <div class="card">
 
-  <h2>Payments 💳</h2>
+        <h2>Become a Seller</h2>
 
-  <div class="card">
+        <p>
 
-    <h3>Mobile Money</h3>
+            Submit your details below. Your registration
 
-    <p>We plan to support convenient mobile money payments in Ghana.</p>
+            must be approved before your bundle is listed.
 
-    <p>Payment method: MTN Mobile Money</p>
+        </p>
 
-    <button disabled>Coming Soon</button>
+        <form id="sellerForm">
 
-  </div>
+            <label>Your name</label>
 
-  <div class="notice">
+            <input
 
-    Payment services are not connected. Never share your MoMo PIN or OTP.
+                type="text"
 
-  </div>
+                id="sellerName"
+
+                placeholder="Enter your name"
+
+                required
+
+            >
+
+            <label>MTN phone number</label>
+
+            <input
+
+                type="tel"
+
+                id="sellerContact"
+
+                placeholder="Example: 0241234567"
+
+                required
+
+            >
+
+            <label>Data bundle</label>
+
+            <input
+
+                type="text"
+
+                id="bundleSize"
+
+                placeholder="Example: 5 GB"
+
+                required
+
+            >
+
+            <label>Selling price (GH₵)</label>
+
+            <input
+
+                type="number"
+
+                id="sellerPrice"
+
+                placeholder="Enter your price"
+
+                min="0.01"
+
+                step="0.01"
+
+                required
+
+            >
+
+            <button class="primary" type="submit" id="sellerSubmit">
+
+                Submit Seller Registration
+
+            </button>
+
+            <div id="sellerMessage" class="status-message"></div>
+
+        </form>
+
+    </div>
+
+    <div class="card">
+
+        <h3>Seller approval</h3>
+
+        <p>
+
+            Every seller registration is reviewed by an administrator.
+
+            Only approved sellers can have their data displayed.
+
+        </p>
+
+    </div>
 
 </section>
 
-<!-- PAGE 5: SELL DATA -->
+<!-- PAYMENTS PAGE -->
 
-<section class="page" id="page5">
+<section class="page" id="payments">
 
-  <div class="eyebrow">Become a seller</div>
+    <div class="card">
 
-  <h2>Sell Your Data 💰</h2>
+        <h2>Payments</h2>
 
-  <div class="card">
+        <p>
 
-    <p>Register your data bundle for review by the Data2Coin team.</p>
+            Mobile Money payment integration is planned for
 
-    <form id="sellerForm">
+            Data2Coin Ghana.
 
-      <label for="sellerName">Your name</label>
+        </p>
 
-      <input id="sellerName" type="text" required
+        <div class="notice">
 
-        placeholder="Enter your name">
+            <p>
 
-      <label for="sellerContact">Contact number</label>
+                Payment integration is not active yet.
 
-      <input id="sellerContact" type="tel" required
+                Do not send money to anyone claiming to collect
 
-        placeholder="Enter your phone number">
+                payments on behalf of this demo website.
 
-      <label for="bundleSize">Data bundle</label>
+            </p>
 
-      <select id="bundleSize" required>
+        </div>
 
-        <option value="">Select bundle size</option>
+        <hr>
 
-        <option value="1 GB">1 GB</option>
+        <p><strong class="gold">Planned payment method:</strong></p>
 
-        <option value="2 GB">2 GB</option>
+        <p>MTN Mobile Money</p>
 
-        <option value="3 GB">3 GB</option>
+        <p><strong class="gold">Planned platform fee:</strong></p>
 
-        <option value="5 GB">5 GB</option>
+        <p>2% of each successful order.</p>
 
-        <option value="10 GB">10 GB</option>
-
-        <option value="20 GB">20 GB</option>
-
-      </select>
-
-      <label for="sellerPrice">Selling price (GH₵)</label>
-
-      <input id="sellerPrice" type="number" min="0.01"
-
-        step="0.01" required placeholder="Enter your price">
-
-      <button type="submit" id="submitButton">
-
-        Submit Registration
-
-      </button>
-
-    </form>
-
-    <p id="sellerMessage"></p>
-
-  </div>
-
-  <div class="notice">
-
-    Registration does not guarantee approval. Listings must be reviewed
-
-    before appearing in the marketplace.
-
-  </div>
+    </div>
 
 </section>
 
-<!-- PAGE 6: ACCOUNT -->
+<!-- AIRTIME PAGE -->
 
-<section class="page" id="page6">
+<section class="page" id="airtime">
 
-  <div class="eyebrow">Your space</div>
+    <div class="card">
 
-  <h2>My Account 👤</h2>
+        <h2>Airtime</h2>
 
-  <div class="card">
+        <p>
 
-    <h3>Welcome to Data2Coin</h3>
+            Airtime buying and selling will be introduced
 
-    <p>Your account features are being prepared.</p>
+            in a future update.
 
-    <p>Seller registration is currently available through the Sell Data page.</p>
+        </p>
 
-    <button onclick="showPage(5)">Register as a Seller</button>
+        <div class="notice">
 
-  </div>
+            <p>This feature is coming soon.</p>
 
-  <div class="card">
+        </div>
 
-    <h3>About Data2Coin</h3>
-
-    <p>Data2Coin is a marketplace concept connecting MTN data buyers and sellers in Ghana.</p>
-
-    <p>Our planned platform fee is 2%.</p>
-
-  </div>
-
-  <div class="notice">
-
-    This is an early preview. Account balances, transaction history
-
-    and withdrawals are not available yet.
-
-  </div>
+    </div>
 
 </section>
 
-<div class="navigation">
+<!-- MY ACCOUNT PAGE -->
 
-  <button onclick="previousPage()">← Previous</button>
+<section class="page" id="account">
 
-  <button onclick="nextPage()">Next →</button>
+    <div class="card">
 
-</div>
+        <h2>My Account</h2>
 
-<div class="page-number" id="pageNumber">1 / 6</div>
+        <p>
+
+            Your personal account dashboard will be introduced
+
+            in a future update.
+
+        </p>
+
+        <div class="notice">
+
+            <p>Account registration and login are coming soon.</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+<!-- BOTTOM NAVIGATION -->
+
+<nav class="bottom-nav">
+
+    <button class="nav-button active" data-page="home" onclick="showPage('home')">
+
+        <span>🏠</span>
+
+        Home
+
+    </button>
+
+    <button class="nav-button" data-page="data" onclick="showPage('data')">
+
+        <span>📶</span>
+
+        Buy Data
+
+    </button>
+
+    <button class="nav-button" data-page="sell" onclick="showPage('sell')">
+
+        <span>💼</span>
+
+        Sell
+
+    </button>
+
+    <button class="nav-button" data-page="payments" onclick="showPage('payments')">
+
+        <span>💳</span>
+
+        Payments
+
+    </button>
+
+    <button class="nav-button" data-page="airtime" onclick="showPage('airtime')">
+
+        <span>📱</span>
+
+        Airtime
+
+    </button>
+
+    <button class="nav-button" data-page="account" onclick="showPage('account')">
+
+        <span>👤</span>
+
+        Account
+
+    </button>
+
+</nav>
 
 <footer>
 
-  Data2Coin Ghana 🇬🇭 · Early Preview
+    Data2Coin Ghana 🇬🇭<br>
 
-  <br>
+    Connecting data buyers and sellers.<br>
 
-  Demo only — no payments are accepted yet.
+    Demo preview — real payments are not active yet.
 
 </footer>
 
 </div>
-
-<!-- FULL-WIDTH BOTTOM NAVIGATION -->
-
-<nav class="bottom-nav">
-
-  <button class="nav-item selected" onclick="showPage(1)">
-
-    <span>🏠</span>Home
-
-  </button>
-
-  <button class="nav-item" onclick="showPage(2)">
-
-    <span>📶</span>Data
-
-  </button>
-
-  <button class="nav-item" onclick="showPage(4)">
-
-    <span>💳</span>Payments
-
-  </button>
-
-  <button class="nav-item" onclick="showPage(6)">
-
-    <span>👤</span>Account
-
-  </button>
-
-</nav>
 
 <script>
 
@@ -904,211 +866,335 @@ const SUPABASE_PUBLISHABLE_KEY =
 
 const supabaseClient = window.supabase.createClient(
 
-  SUPABASE_URL,
+    SUPABASE_URL,
 
-  SUPABASE_PUBLISHABLE_KEY
+    SUPABASE_PUBLISHABLE_KEY
 
 );
 
 /* PAGE NAVIGATION */
 
-let currentPage = 1;
+function showPage(pageName) {
 
-const totalPages = 6;
+    document.querySelectorAll(".page").forEach(page => {
 
-function showPage(number) {
+        page.classList.remove("active");
 
-  currentPage = Math.max(1, Math.min(totalPages, number));
+    });
 
-  document.querySelectorAll(".page").forEach(page => {
+    document.querySelectorAll(".nav-button").forEach(button => {
 
-    page.classList.remove("active");
+        button.classList.remove("active");
 
-  });
+    });
 
-  document.getElementById("page" + currentPage)
+    document.getElementById(pageName).classList.add("active");
 
-    .classList.add("active");
+    const activeButton = document.querySelector(
 
-  document.getElementById("pageNumber").textContent =
+        '.nav-button[data-page="' + pageName + '"]'
 
-    currentPage + " / " + totalPages;
+    );
 
-  document.querySelectorAll(".nav-item").forEach(item => {
+    if (activeButton) {
 
-    item.classList.remove("selected");
-
-  });
-
-  if (currentPage === 1) {
-
-    document.querySelectorAll(".nav-item")[0].classList.add("selected");
-
-  }
-
-  if (currentPage === 2) {
-
-    document.querySelectorAll(".nav-item")[1].classList.add("selected");
-
-  }
-
-  if (currentPage === 4) {
-
-    document.querySelectorAll(".nav-item")[2].classList.add("selected");
-
-  }
-
-  if (currentPage === 6) {
-
-    document.querySelectorAll(".nav-item")[3].classList.add("selected");
-
-  }
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
-
-}
-
-function nextPage() {
-
-  if (currentPage < totalPages) {
-
-    showPage(currentPage + 1);
-
-  }
-
-}
-
-function previousPage() {
-
-  if (currentPage > 1) {
-
-    showPage(currentPage - 1);
-
-  }
-
-}
-
-/* SWIPE NAVIGATION */
-
-let touchStartX = 0;
-
-let touchEndX = 0;
-
-document.addEventListener("touchstart", event => {
-
-  touchStartX = event.changedTouches[0].screenX;
-
-}, { passive: true });
-
-document.addEventListener("touchend", event => {
-
-  touchEndX = event.changedTouches[0].screenX;
-
-  const difference = touchStartX - touchEndX;
-
-  if (Math.abs(difference) > 70) {
-
-    if (difference > 0) {
-
-      nextPage();
-
-    } else {
-
-      previousPage();
+        activeButton.classList.add("active");
 
     }
 
-  }
+    window.scrollTo(0, 0);
 
-}, { passive: true });
+    if (pageName === "data") {
+
+        loadListings();
+
+    }
+
+}
 
 /* LOAD AVAILABLE DATA */
 
 async function loadListings() {
 
-  const status = document.getElementById("status");
+    const status = document.getElementById("status");
 
-  const listings = document.getElementById("listings");
+    const listings = document.getElementById("listings");
 
-  status.textContent = "Loading listings...";
+    status.textContent = "Loading available data...";
 
-  listings.innerHTML = "";
+    listings.innerHTML = "";
 
-  try {
+    try {
 
-    const { data, error } = await supabaseClient
+        const { data, error } = await supabaseClient
 
-      .from("public_data_listings")
+            .from("public_data_listings")
 
-      .select("id, bundle_size, price_ghs, network, data_size_gb")
+            .select("id, bundle_size, price_ghs, network, data_size_gb")
 
-      .order("id", { ascending: false });
+            .order("id", { ascending: false });
 
-    if (error) {
+        if (error) {
 
-      throw error;
+            throw error;
+
+        }
+
+        if (!data || data.length === 0) {
+
+            status.textContent = "No available data bundles at the moment.";
+
+            listings.innerHTML = `
+
+                <div class="card">
+
+                    <p>
+
+                        New bundles will appear here when sellers
+
+                        are approved.
+
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+        status.textContent =
+
+            data.length + " available bundle(s) found.";
+
+        data.forEach(item => {
+
+            const card = document.createElement("div");
+
+            card.className = "data-card";
+
+            const size = document.createElement("div");
+
+            size.className = "data-size";
+
+            size.textContent = item.bundle_size || "Data bundle";
+
+            const network = document.createElement("p");
+
+            network.textContent =
+
+                "Network: " + (item.network || "MTN");
+
+            const price = document.createElement("div");
+
+            price.className = "price";
+
+            price.textContent =
+
+                "GH₵ " + Number(item.price_ghs).toFixed(2);
+
+            const badge = document.createElement("div");
+
+            badge.className = "badge";
+
+            badge.textContent = "Available";
+
+            const button = document.createElement("button");
+
+            button.className = "primary";
+
+            button.textContent = "Order Data";
+
+            button.addEventListener("click", function() {
+
+                openOrderForm(item, card);
+
+            });
+
+            card.append(
+
+                size,
+
+                network,
+
+                price,
+
+                badge,
+
+                button
+
+            );
+
+            listings.appendChild(card);
+
+        });
+
+    } catch (error) {
+
+        console.error("Marketplace error:", error);
+
+        status.textContent =
+
+            "Unable to load data. Please refresh and try again.";
+
+        listings.innerHTML = `
+
+            <div class="card">
+
+                <p>
+
+                    There was a problem connecting to the marketplace.
+
+                    Please try again later.
+
+                </p>
+
+            </div>
+
+        `;
 
     }
 
-    if (!data || data.length === 0) {
+}
 
-      status.textContent = "No available data bundles yet.";
+/* BUYER ORDER FORM */
 
-      return;
+function openOrderForm(item, card) {
+
+    const oldForm = document.getElementById("buyerOrderForm");
+
+    if (oldForm) {
+
+        oldForm.remove();
 
     }
 
-    status.textContent = data.length + " available listing(s)";
+    const form = document.createElement("form");
 
-    data.forEach(item => {
+    form.id = "buyerOrderForm";
 
-      const card = document.createElement("div");
+    form.className = "card";
 
-      card.className = "bundle-card";
+    const heading = document.createElement("h3");
 
-      const title = document.createElement("h3");
+    heading.textContent = "Complete Your Order";
 
-      title.textContent = item.bundle_size || "Data Bundle";
+    const description = document.createElement("p");
 
-      const network = document.createElement("p");
+    description.textContent =
 
-      network.textContent = "Network: " + (item.network || "MTN");
+        item.bundle_size + " — GH₵ " +
 
-      const price = document.createElement("p");
+        Number(item.price_ghs).toFixed(2);
 
-      price.className = "price";
+    const label = document.createElement("label");
 
-      price.textContent =
+    label.textContent = "Your MTN phone number";
 
-        "Price: GH₵ " + Number(item.price_ghs).toFixed(2);
+    const input = document.createElement("input");
 
-      const button = document.createElement("button");
+    input.type = "tel";
 
-      button.textContent = "Buy — Coming Soon";
+    input.placeholder = "Example: 0241234567";
 
-      button.disabled = true;
+    input.required = true;
 
-      card.appendChild(title);
+    const submit = document.createElement("button");
 
-      card.appendChild(network);
+    submit.type = "submit";
 
-      card.appendChild(price);
+    submit.className = "primary";
 
-      card.appendChild(button);
+    submit.textContent = "Submit Order";
 
-      listings.appendChild(card);
+    const message = document.createElement("p");
+
+    message.className = "status-message";
+
+    form.append(
+
+        heading,
+
+        description,
+
+        label,
+
+        input,
+
+        submit,
+
+        message
+
+    );
+
+    card.appendChild(form);
+
+    form.addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const phone = input.value.trim();
+
+        const digits = phone.replace(/\D/g, "");
+
+        if (digits.length < 9 || digits.length > 15) {
+
+            message.textContent =
+
+                "Please enter a valid phone number.";
+
+            return;
+
+        }
+
+        submit.disabled = true;
+
+        submit.textContent = "Submitting...";
+
+        message.textContent = "";
+
+        try {
+
+            const { error } = await supabaseClient
+
+                .from("data_orders")
+
+                .insert([{
+
+                    listing_id: Number(item.id),
+
+                    buyer_contact: phone
+
+                }]);
+
+            if (error) {
+
+                throw error;
+
+            }
+
+            message.textContent =
+
+                "Your order has been submitted successfully. Payment is not active yet.";
+
+            submit.textContent = "Order Submitted";
+
+        } catch (error) {
+
+            console.error("Order error:", error);
+
+            message.textContent =
+
+                "Order failed. Please check your details and try again.";
+
+            submit.disabled = false;
+
+            submit.textContent = "Submit Order";
+
+        }
 
     });
-
-  } catch (error) {
-
-    console.error("Listing error:", error);
-
-    status.textContent =
-
-      "Unable to load listings. Please try again later.";
-
-  }
 
 }
 
@@ -1116,105 +1202,127 @@ async function loadListings() {
 
 document.getElementById("sellerForm")
 
-  .addEventListener("submit", async function(event) {
+.addEventListener("submit", async function(event) {
 
-  event.preventDefault();
+    event.preventDefault();
 
-  const button = document.getElementById("submitButton");
+    const sellerName =
 
-  const message = document.getElementById("sellerMessage");
+        document.getElementById("sellerName").value.trim();
 
-  const sellerName =
+    const sellerContact =
 
-    document.getElementById("sellerName").value.trim();
+        document.getElementById("sellerContact").value.trim();
 
-  const sellerContact =
+    const bundleSize =
 
-    document.getElementById("sellerContact").value.trim();
+        document.getElementById("bundleSize").value.trim();
 
-  const bundleSize =
+    const sellerPrice =
 
-    document.getElementById("bundleSize").value;
+        Number(document.getElementById("sellerPrice").value);
 
-  const sellerPrice =
+    const message =
 
-    Number(document.getElementById("sellerPrice").value);
+        document.getElementById("sellerMessage");
 
-  if (!sellerName || !sellerContact ||
+    const submit =
 
-      !bundleSize || !Number.isFinite(sellerPrice) ||
+        document.getElementById("sellerSubmit");
 
-      sellerPrice <= 0) {
+    const digits = sellerContact.replace(/\D/g, "");
 
-    message.textContent =
+    if (
 
-      "Please complete all fields correctly.";
+        !sellerName ||
 
-    return;
+        digits.length < 9 ||
 
-  }
+        digits.length > 15 ||
 
-  button.disabled = true;
+        !bundleSize ||
 
-  button.textContent = "Submitting...";
+        !Number.isFinite(sellerPrice) ||
 
-  message.textContent = "";
+        sellerPrice <= 0
 
-  try {
+    ) {
 
-    const { error } = await supabaseClient
+        message.textContent =
 
-      .from("seller_registrations")
+            "Please enter valid information in all fields.";
 
-      .insert([{
-
-        seller_name: sellerName,
-
-        contact_number: sellerContact,
-
-        seller_contact: sellerContact,
-
-        bundle_size: bundleSize,
-
-        selling_price: sellerPrice,
-
-        price_ghs: sellerPrice,
-
-        status: "pending"
-
-      }]);
-
-    if (error) {
-
-      throw error;
+        return;
 
     }
 
-    message.textContent =
+    submit.disabled = true;
 
-      "Registration submitted successfully! Awaiting review.";
+    submit.textContent = "Submitting...";
 
-    document.getElementById("sellerForm").reset();
+    message.textContent = "";
 
-  } catch (error) {
+    try {
 
-    console.error("Registration error:", error);
+        const { error } = await supabaseClient
 
-    message.textContent =
+            .from("seller_registrations")
 
-      "Registration failed. Please check your details and try again.";
+            .insert([{
 
-  }
+                seller_name: sellerName,
 
-  button.disabled = false;
+                contact_number: sellerContact,
 
-  button.textContent = "Submit Registration";
+                seller_contact: sellerContact,
+
+                bundle_size: bundleSize,
+
+                selling_price: sellerPrice,
+
+                price_ghs: sellerPrice,
+
+                status: "pending"
+
+            }]);
+
+        if (error) {
+
+            throw error;
+
+        }
+
+        message.textContent =
+
+            "Registration submitted successfully! Your application is waiting for admin approval.";
+
+        document.getElementById("sellerForm").reset();
+
+        submit.textContent = "Registration Submitted";
+
+    } catch (error) {
+
+        console.error("Seller registration error:", error);
+
+        message.textContent =
+
+            "Registration failed. Please check your details and try again.";
+
+        submit.disabled = false;
+
+        submit.textContent = "Submit Seller Registration";
+
+    }
 
 });
 
-/* START WEBSITE */
+/* INITIALISE WEBSITE */
 
-loadListings();
+document.addEventListener("DOMContentLoaded", function() {
+
+    loadListings();
+
+});
 
 </script>
 

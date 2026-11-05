@@ -8,721 +8,815 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<meta name="theme-color" content="#100e0a">
+
 <meta name="description" content="Data2Coin Ghana - Buy and sell MTN data bundles.">
 
-<meta name="theme-color" content="#11140f">
-
-<title>Data2Coin Ghana | Data Marketplace</title>
+<title>Data2Coin Ghana</title>
 
 <style>
 
-* {
+:root {
 
-  box-sizing: border-box;
+  --black:#100e0a;
 
-  scroll-behavior: smooth;
+  --dark:#1b1710;
+
+  --gold:#ffcc00;
+
+  --gold2:#d99b20;
+
+  --green:#159447;
+
+  --white:#fff;
+
+  --muted:#b9b2a3;
 
 }
 
-:root {
+* {
 
-  --black: #11140f;
-
-  --dark: #191d17;
-
-  --yellow: #ffcc00;
-
-  --green: #159447;
-
-  --white: #ffffff;
-
-  --muted: #a7aca3;
-
-  --light: #f5f6f2;
+  box-sizing:border-box;
 
 }
 
 body {
 
-  margin: 0;
+  margin:0;
 
-  font-family: Arial, sans-serif;
+  font-family:Arial,sans-serif;
 
-  background: var(--light);
+  background:#080705;
 
-  color: var(--black);
-
-}
-
-a {
-
-  text-decoration: none;
-
-  color: inherit;
+  color:white;
 
 }
 
-header {
+button,input,select {
 
-  background: var(--black);
+  font:inherit;
 
-  color: white;
+}
 
-  padding: 18px 6%;
+button {
 
-  display: flex;
+  cursor:pointer;
 
-  align-items: center;
+}
 
-  justify-content: space-between;
+.app {
 
-  position: sticky;
+  max-width:520px;
 
-  top: 0;
+  min-height:100vh;
 
-  z-index: 100;
+  margin:auto;
 
-  border-bottom: 1px solid #30352c;
+  background:
+
+    radial-gradient(circle at top right,#3b2910 0,transparent 35%),
+
+    var(--black);
+
+  overflow:hidden;
+
+  position:relative;
+
+}
+
+.topbar {
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  padding:19px 20px;
+
+  border-bottom:1px solid #5b451b;
+
+  background:#100e0a;
 
 }
 
 .logo {
 
-  font-size: 23px;
+  font-size:21px;
 
-  font-weight: 900;
+  font-weight:900;
 
-  color: var(--yellow);
+  color:var(--gold);
 
 }
 
 .logo span {
 
-  color: white;
+  color:white;
 
 }
 
-nav {
+.top-icon {
 
-  display: flex;
+  color:var(--gold);
 
-  gap: 25px;
+  font-size:23px;
 
-  align-items: center;
+  background:none;
 
-}
-
-nav a {
-
-  color: #eeeeee;
-
-  font-size: 14px;
-
-  font-weight: bold;
+  border:0;
 
 }
 
-nav a:hover {
+.page-area {
 
-  color: var(--yellow);
+  padding:20px 18px 15px;
 
-}
+  min-height:620px;
 
-.nav-button {
-
-  background: var(--yellow);
-
-  color: var(--black);
-
-  padding: 11px 17px;
-
-  border-radius: 7px;
+  touch-action:pan-y;
 
 }
 
-.menu-button {
+.page {
 
-  display: none;
+  display:none;
 
-  background: transparent;
-
-  color: white;
-
-  font-size: 25px;
-
-  padding: 5px;
+  animation:pageIn .35s ease;
 
 }
 
-.hero {
+.page.active {
 
-  background:
-
-    radial-gradient(circle at 85% 30%, #29452a 0, transparent 35%),
-
-    linear-gradient(135deg, #11140f, #20291e);
-
-  color: white;
-
-  padding: 85px 7%;
-
-  min-height: 450px;
-
-  display: flex;
-
-  align-items: center;
+  display:block;
 
 }
 
-.hero-content {
+.page.turn-next {
 
-  max-width: 650px;
-
-}
-
-.tag {
-
-  color: var(--yellow);
-
-  font-size: 13px;
-
-  font-weight: bold;
-
-  letter-spacing: 2px;
-
-  text-transform: uppercase;
+  animation:turnNext .35s ease;
 
 }
 
-.hero h1 {
+.page.turn-back {
 
-  font-size: clamp(38px, 7vw, 65px);
-
-  line-height: 1.08;
-
-  margin: 18px 0;
+  animation:turnBack .35s ease;
 
 }
 
-.hero h1 span {
+@keyframes pageIn {
 
-  color: var(--yellow);
+  from {opacity:0;transform:translateX(15px);}
 
-}
-
-.hero p {
-
-  color: #d2d7ce;
-
-  line-height: 1.8;
-
-  max-width: 520px;
-
-  font-size: 16px;
+  to {opacity:1;transform:translateX(0);}
 
 }
 
-.hero-buttons {
+@keyframes turnNext {
 
-  display: flex;
+  from {opacity:0;transform:translateX(35px) rotateY(-5deg);}
 
-  gap: 12px;
-
-  margin-top: 28px;
-
-  flex-wrap: wrap;
+  to {opacity:1;transform:translateX(0) rotateY(0);}
 
 }
 
-.button {
+@keyframes turnBack {
 
-  display: inline-block;
+  from {opacity:0;transform:translateX(-35px) rotateY(5deg);}
 
-  padding: 14px 22px;
-
-  border-radius: 8px;
-
-  font-weight: bold;
-
-  border: 0;
-
-  cursor: pointer;
-
-  font-size: 15px;
+  to {opacity:1;transform:translateX(0) rotateY(0);}
 
 }
 
-.primary {
+.kente {
 
-  background: var(--yellow);
+  height:9px;
 
-  color: var(--black);
+  background:repeating-linear-gradient(
 
-}
+    45deg,
 
-.secondary {
+    #ffcc00 0 7px,
 
-  border: 1px solid #777;
+    #159447 7px 14px,
 
-  color: white;
+    #a52c1d 14px 21px,
 
-  background: transparent;
+    #17120a 21px 28px
 
-}
+  );
 
-.section {
+  border-radius:5px;
 
-  padding: 65px 6%;
-
-}
-
-.section-heading {
-
-  text-align: center;
-
-  max-width: 650px;
-
-  margin: 0 auto 35px;
+  margin-bottom:20px;
 
 }
 
-.section-heading .tag {
+.welcome {
 
-  color: var(--green);
+  background:linear-gradient(135deg,#30220d,#100e0a 70%);
 
-}
+  border:1px solid #a87920;
 
-.section-heading h2 {
+  border-radius:19px;
 
-  font-size: 32px;
+  padding:24px 20px;
 
-  margin: 12px 0;
+  position:relative;
 
-}
-
-.section-heading p {
-
-  color: #666;
-
-  line-height: 1.7;
+  overflow:hidden;
 
 }
 
-.stats {
+.eyebrow {
 
-  background: var(--yellow);
+  color:var(--gold);
 
-  padding: 25px 6%;
+  font-size:11px;
 
-  display: grid;
+  letter-spacing:2px;
 
-  grid-template-columns: repeat(3, 1fr);
+  font-weight:bold;
 
-  text-align: center;
-
-  gap: 15px;
+  text-transform:uppercase;
 
 }
 
-.stat strong {
+h1 {
 
-  display: block;
+  font-size:31px;
 
-  font-size: 22px;
+  line-height:1.15;
 
-}
-
-.stat span {
-
-  font-size: 13px;
+  margin:13px 0;
 
 }
 
-.dark-section {
+h1 span {
 
-  background: var(--black);
-
-  color: white;
+  color:var(--gold);
 
 }
 
-.dark-section .section-heading p {
+h2 {
 
-  color: var(--muted);
+  font-size:25px;
+
+  margin:12px 0;
 
 }
 
-.bundle-grid,
+h3 {
 
-.steps-grid,
+  margin:10px 0;
 
-.about-grid {
+}
 
-  display: grid;
+p {
 
-  grid-template-columns: repeat(3, 1fr);
+  color:var(--muted);
 
-  gap: 20px;
+  line-height:1.6;
 
-  max-width: 1100px;
+  font-size:14px;
 
-  margin: auto;
+}
+
+.hero-symbol {
+
+  font-size:58px;
+
+  text-align:right;
+
+  margin-top:-5px;
+
+}
+
+.tile-grid {
+
+  display:grid;
+
+  grid-template-columns:repeat(3,1fr);
+
+  gap:11px;
+
+  margin-top:20px;
+
+}
+
+.tile {
+
+  background:linear-gradient(145deg,#2b2418,#15120c);
+
+  border:1px solid #6b501d;
+
+  border-radius:15px;
+
+  padding:17px 7px;
+
+  color:white;
+
+  text-align:center;
+
+  min-height:110px;
+
+}
+
+.tile .icon {
+
+  display:block;
+
+  font-size:29px;
+
+  margin-bottom:9px;
+
+}
+
+.tile strong {
+
+  font-size:12px;
+
+}
+
+.tile:active {
+
+  transform:scale(.96);
+
+}
+
+.info-card {
+
+  background:#1c1810;
+
+  border:1px solid #59431b;
+
+  border-radius:15px;
+
+  padding:17px;
+
+  margin-top:17px;
+
+}
+
+.info-card strong {
+
+  color:var(--gold);
+
+}
+
+.gold-button {
+
+  display:block;
+
+  width:100%;
+
+  background:linear-gradient(135deg,#ffdc48,#e8a900);
+
+  border:0;
+
+  border-radius:12px;
+
+  padding:15px;
+
+  color:#171107;
+
+  font-weight:900;
+
+  margin-top:17px;
+
+}
+
+.outline-button {
+
+  display:block;
+
+  width:100%;
+
+  background:transparent;
+
+  border:1px solid var(--gold);
+
+  border-radius:12px;
+
+  padding:13px;
+
+  color:var(--gold);
+
+  font-weight:bold;
+
+  margin-top:12px;
+
+}
+
+.section-title {
+
+  margin:12px 0 20px;
+
+}
+
+.section-title h2 {
+
+  color:var(--gold);
+
+}
+
+.bundle-list {
+
+  display:grid;
+
+  gap:12px;
 
 }
 
 .bundle-card {
 
-  background: white;
+  display:flex;
 
-  border: 1px solid #e5e5e5;
+  align-items:center;
 
-  padding: 25px;
+  justify-content:space-between;
 
-  border-radius: 14px;
+  gap:10px;
 
-  transition: transform .2s, box-shadow .2s;
+  background:linear-gradient(120deg,#302514,#17130d);
 
-}
+  border:1px solid #78591e;
 
-.bundle-card:hover {
+  border-radius:14px;
 
-  transform: translateY(-5px);
-
-  box-shadow: 0 10px 25px #00000012;
+  padding:15px;
 
 }
 
-.bundle-icon {
+.bundle-left {
 
-  font-size: 30px;
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+}
+
+.signal {
+
+  font-size:25px;
+
+  color:var(--gold);
 
 }
 
 .bundle-card h3 {
 
-  font-size: 25px;
+  font-size:17px;
 
-  margin: 15px 0 8px;
-
-}
-
-.bundle-price {
-
-  color: var(--green);
-
-  font-size: 23px;
-
-  font-weight: 900;
+  margin:0 0 5px;
 
 }
 
 .bundle-card p {
 
-  color: #666;
+  margin:0;
 
-  font-size: 14px;
-
-}
-
-.bundle-network {
-
-  display: inline-block;
-
-  background: #fff5c5;
-
-  padding: 7px 12px;
-
-  border-radius: 20px;
-
-  font-size: 12px;
-
-  font-weight: bold;
+  font-size:12px;
 
 }
 
-#status {
+.price {
 
-  text-align: center;
+  color:var(--gold);
 
-  color: #777;
+  font-weight:900;
 
-}
+  font-size:16px;
 
-.steps-grid {
-
-  grid-template-columns: repeat(3, 1fr);
+  white-space:nowrap;
 
 }
 
-.step-card {
+.small-button {
 
-  background: var(--dark);
+  background:var(--gold);
 
-  border: 1px solid #30382d;
+  border:0;
 
-  border-radius: 13px;
+  border-radius:8px;
 
-  padding: 25px;
+  padding:10px 13px;
 
-}
+  font-weight:bold;
 
-.step-number {
+  color:#171107;
 
-  width: 43px;
-
-  height: 43px;
-
-  border-radius: 50%;
-
-  background: var(--yellow);
-
-  color: var(--black);
-
-  display: grid;
-
-  place-items: center;
-
-  font-weight: 900;
-
-  font-size: 19px;
+  margin-top:7px;
 
 }
 
-.step-card p {
+.amount-grid {
 
-  color: var(--muted);
+  display:grid;
 
-  line-height: 1.7;
+  grid-template-columns:repeat(3,1fr);
+
+  gap:10px;
+
+  margin:20px 0;
+
+}
+
+.amount {
+
+  border:1px solid #76571e;
+
+  background:#211a0e;
+
+  color:white;
+
+  border-radius:10px;
+
+  padding:15px 5px;
+
+}
+
+.amount.selected {
+
+  background:var(--gold);
+
+  color:#171107;
+
+  font-weight:bold;
+
+}
+
+.service-grid {
+
+  display:grid;
+
+  grid-template-columns:repeat(2,1fr);
+
+  gap:12px;
+
+  margin-top:20px;
+
+}
+
+.service {
+
+  background:#211a0e;
+
+  border:1px solid #624a1d;
+
+  border-radius:13px;
+
+  padding:18px 10px;
+
+  text-align:center;
+
+  color:white;
+
+}
+
+.service span {
+
+  display:block;
+
+  font-size:27px;
+
+  margin-bottom:9px;
 
 }
 
 .seller-box {
 
-  max-width: 750px;
+  background:#211a0e;
 
-  margin: auto;
+  border:1px solid #70521d;
 
-  background: white;
+  border-radius:16px;
 
-  border-radius: 16px;
-
-  padding: 30px;
-
-  box-shadow: 0 5px 25px #0000000c;
-
-}
-
-.seller-box p {
-
-  color: #666;
-
-  line-height: 1.7;
+  padding:19px;
 
 }
 
 label {
 
-  display: block;
+  display:block;
 
-  font-weight: bold;
+  margin-top:15px;
 
-  margin-top: 16px;
+  font-size:13px;
 
-  font-size: 14px;
+  font-weight:bold;
 
-}
-
-input, select {
-
-  display: block;
-
-  width: 100%;
-
-  padding: 14px;
-
-  margin-top: 8px;
-
-  border: 1px solid #d5d5d5;
-
-  border-radius: 8px;
-
-  font-size: 16px;
-
-  background: white;
+  color:var(--gold);
 
 }
 
-.full-button {
+input,select {
 
-  width: 100%;
+  width:100%;
 
-  margin-top: 20px;
+  padding:14px;
+
+  margin-top:7px;
+
+  border:1px solid #76602f;
+
+  border-radius:9px;
+
+  background:#100e0a;
+
+  color:white;
+
+  font-size:16px;
+
+}
+
+input::placeholder {
+
+  color:#8c8577;
 
 }
 
 .notice {
 
-  background: #fff6d6;
+  background:#35290f;
 
-  border-left: 4px solid var(--yellow);
+  border-left:4px solid var(--gold);
 
-  padding: 15px;
+  padding:13px;
 
-  border-radius: 7px;
+  border-radius:7px;
 
-  color: #544719;
+  color:#e8d8a9;
 
-  line-height: 1.7;
+  font-size:12px;
 
-  font-size: 13px;
+  line-height:1.6;
 
-  margin-top: 20px;
-
-}
-
-.about-card {
-
-  background: var(--dark);
-
-  color: white;
-
-  padding: 25px;
-
-  border-radius: 12px;
+  margin-top:17px;
 
 }
 
-.about-card p {
+.account-row {
 
-  color: #b9c0b5;
+  display:flex;
 
-  line-height: 1.8;
+  align-items:center;
 
-}
+  gap:12px;
 
-footer {
+  padding:17px 5px;
 
-  background: var(--black);
-
-  color: white;
-
-  padding: 35px 6%;
-
-  text-align: center;
+  border-bottom:1px solid #49391d;
 
 }
 
-footer .logo {
+.account-row span {
 
-  margin-bottom: 12px;
-
-}
-
-footer p {
-
-  color: #aeb4a9;
-
-  font-size: 13px;
-
-  line-height: 1.8;
+  font-size:23px;
 
 }
 
-footer a {
+.account-row strong {
 
-  color: var(--yellow);
+  font-size:14px;
 
 }
 
-@media(max-width: 750px) {
+.account-row small {
 
-  header {
+  color:var(--gold);
 
-    padding: 16px 5%;
+}
+
+.page-controls {
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:24px;
+
+  padding:15px;
+
+}
+
+.arrow {
+
+  width:43px;
+
+  height:43px;
+
+  border-radius:50%;
+
+  background:#241b0d;
+
+  border:1px solid #89651e;
+
+  color:var(--gold);
+
+  font-size:22px;
+
+}
+
+.page-number {
+
+  color:var(--gold);
+
+  font-weight:bold;
+
+  font-size:13px;
+
+}
+
+.bottom-nav {
+
+  display:grid;
+
+  grid-template-columns:repeat(4,1fr);
+
+  background:#100e0a;
+
+  border-top:1px solid #604719;
+
+  padding:10px 5px;
+
+}
+
+.nav-item {
+
+  background:none;
+
+  border:0;
+
+  color:#aaa18f;
+
+  padding:7px 2px;
+
+  font-size:11px;
+
+}
+
+.nav-item span {
+
+  display:block;
+
+  font-size:21px;
+
+  margin-bottom:5px;
+
+}
+
+.nav-item.active {
+
+  color:var(--gold);
+
+  font-weight:bold;
+
+}
+
+.footer {
+
+  text-align:center;
+
+  color:#918878;
+
+  font-size:11px;
+
+  padding:14px 10px 20px;
+
+}
+
+.empty {
+
+  text-align:center;
+
+  color:#c4b99f;
+
+  padding:25px 10px;
+
+}
+
+@media(max-width:360px) {
+
+  .tile-grid {
+
+    gap:7px;
 
   }
 
-  .menu-button {
+  .tile {
 
-    display: block;
-
-  }
-
-  nav {
-
-    display: none;
-
-    position: absolute;
-
-    top: 65px;
-
-    left: 0;
-
-    width: 100%;
-
-    background: var(--black);
-
-    padding: 20px;
-
-    flex-direction: column;
-
-    align-items: stretch;
-
-    gap: 20px;
+    padding:13px 4px;
 
   }
 
-  nav.open {
+  h1 {
 
-    display: flex;
-
-  }
-
-  nav a {
-
-    padding: 7px;
-
-  }
-
-  .hero {
-
-    padding: 65px 7%;
-
-  }
-
-  .section {
-
-    padding: 50px 5%;
-
-  }
-
-  .bundle-grid,
-
-  .steps-grid,
-
-  .about-grid {
-
-    grid-template-columns: 1fr;
-
-  }
-
-  .stats {
-
-    grid-template-columns: 1fr;
-
-    gap: 22px;
-
-  }
-
-  .section-heading h2 {
-
-    font-size: 27px;
-
-  }
-
-  .seller-box {
-
-    padding: 22px;
+    font-size:27px;
 
   }
 
@@ -734,433 +828,441 @@ footer a {
 
 <body>
 
-<header>
+<div class="app">
 
-  <a href="#home" class="logo">Data2Coin <span>🇬🇭</span></a>
+  <header class="topbar">
 
-  <button class="menu-button" onclick="toggleMenu()" aria-label="Open menu">
+    <div class="logo">Data2Coin <span>🇬🇭</span></div>
 
-    ☰
+    <button class="top-icon" type="button" aria-label="Notifications">♧</button>
 
-  </button>
+  </header>
 
-  <nav id="navigation">
+  <main class="page-area" id="pageArea">
 
-    <a href="#home" onclick="closeMenu()">Home</a>
+    <!-- PAGE 1: HOME -->
 
-    <a href="#buy" onclick="closeMenu()">Buy Data</a>
+    <section class="page active" data-page="0">
 
-    <a href="#how" onclick="closeMenu()">How It Works</a>
+      <div class="kente"></div>
 
-    <a href="#sell" onclick="closeMenu()">Sell Data</a>
+      <div class="welcome">
 
-    <a href="#about" onclick="closeMenu()">About</a>
+        <div class="eyebrow">Welcome to Data2Coin Ghana</div>
 
-    <a href="#buy" class="nav-button" onclick="closeMenu()">Explore Bundles</a>
+        <h1>Your Data.<br>Your Marketplace.<br><span>Your Opportunity.</span></h1>
 
-  </nav>
+        <p>Buy and sell MTN data bundles in Ghana.</p>
 
-</header>
+        <div class="hero-symbol">📱</div>
 
-<!-- HOME SECTION -->
+        <button class="gold-button" type="button" onclick="goToPage(1)">
 
-<section class="hero" id="home">
+          Explore Data →
 
-  <div class="hero-content">
+        </button>
 
-    <div class="tag">Welcome to Data2Coin Ghana</div>
+      </div>
 
-    <h1>
+      <div class="tile-grid">
 
-      Your Data.<br>
+        <button class="tile" onclick="goToPage(1)">
 
-      Your Marketplace.<br>
+          <span class="icon">📶</span>
 
-      <span>Your Opportunity.</span>
+          <strong>Data Bundles</strong>
 
-    </h1>
+        </button>
 
-    <p>
+        <button class="tile" onclick="goToPage(2)">
 
-      Discover a smarter way to connect MTN data buyers and sellers
+          <span class="icon">📱</span>
 
-      in Ghana. Explore available bundles and register as a seller.
+          <strong>Airtime</strong>
 
-    </p>
+        </button>
 
-    <div class="hero-buttons">
+        <button class="tile" onclick="goToPage(3)">
 
-      <a href="#buy" class="button primary">Explore Data →</a>
+          <span class="icon">💳</span>
 
-      <a href="#sell" class="button secondary">Become a Seller</a>
+          <strong>Payments</strong>
 
-    </div>
+        </button>
+
+        <button class="tile" onclick="goToPage(1)">
+
+          <span class="icon">🛒</span>
+
+          <strong>Buy Data</strong>
+
+        </button>
+
+        <button class="tile" onclick="goToPage(4)">
+
+          <span class="icon">💰</span>
+
+          <strong>Sell Data</strong>
+
+        </button>
+
+        <button class="tile" onclick="goToPage(5)">
+
+          <span class="icon">👤</span>
+
+          <strong>My Account</strong>
+
+        </button>
+
+      </div>
+
+      <div class="info-card">
+
+        <strong>🌍 Built for Ghana</strong>
+
+        <p>Connecting MTN data buyers and sellers. Our planned platform fee is 2%.</p>
+
+      </div>
+
+    </section>
+
+    <!-- PAGE 2: DATA -->
+
+    <section class="page" data-page="1">
+
+      <div class="kente"></div>
+
+      <div class="section-title">
+
+        <div class="eyebrow">Marketplace</div>
+
+        <h2>📶 MTN Data Bundles</h2>
+
+        <p>Choose from available bundles listed by approved sellers.</p>
+
+      </div>
+
+      <p id="status">Loading available bundles...</p>
+
+      <div class="bundle-list" id="listings"></div>
+
+      <div class="notice">
+
+        Preview only. Buying and checkout are not yet available.
+
+        Do not send money to anyone claiming to collect payment for Data2Coin.
+
+      </div>
+
+    </section>
+
+    <!-- PAGE 3: AIRTIME -->
+
+    <section class="page" data-page="2">
+
+      <div class="kente"></div>
+
+      <div class="section-title">
+
+        <div class="eyebrow">Mobile services</div>
+
+        <h2>📱 Airtime</h2>
+
+        <p>MTN airtime services are planned for a future release.</p>
+
+      </div>
+
+      <div class="welcome">
+
+        <div class="hero-symbol">📲</div>
+
+        <h2>Stay Connected</h2>
+
+        <p>We're preparing an easy way to access airtime through Data2Coin.</p>
+
+      </div>
+
+      <div class="amount-grid">
+
+        <button class="amount" type="button">GH₵ 5</button>
+
+        <button class="amount" type="button">GH₵ 10</button>
+
+        <button class="amount" type="button">GH₵ 20</button>
+
+        <button class="amount" type="button">GH₵ 50</button>
+
+        <button class="amount" type="button">GH₵ 100</button>
+
+        <button class="amount" type="button">Other</button>
+
+      </div>
+
+      <div class="notice">
+
+        Airtime purchases are not active yet. These are design previews only.
+
+      </div>
+
+    </section>
+
+    <!-- PAGE 4: PAYMENTS -->
+
+    <section class="page" data-page="3">
+
+      <div class="kente"></div>
+
+      <div class="section-title">
+
+        <div class="eyebrow">Coming soon</div>
+
+        <h2>💳 Payments</h2>
+
+        <p>Mobile Money and other payment options are planned.</p>
+
+      </div>
+
+      <div class="service-grid">
+
+        <div class="service">
+
+          <span>📲</span>
+
+          MTN Mobile Money
+
+        </div>
+
+        <div class="service">
+
+          <span>🏦</span>
+
+          Bank Payment
+
+        </div>
+
+        <div class="service">
+
+          <span>🧾</span>
+
+          Transaction History
+
+        </div>
+
+        <div class="service">
+
+          <span>🔒</span>
+
+          Secure Checkout
+
+        </div>
+
+      </div>
+
+      <div class="notice">
+
+        Payment processing has not been connected. No payments can currently be made through this page.
+
+      </div>
+
+    </section>
+
+    <!-- PAGE 5: SELL DATA -->
+
+    <section class="page" data-page="4">
+
+      <div class="kente"></div>
+
+      <div class="section-title">
+
+        <div class="eyebrow">Join the marketplace</div>
+
+        <h2>💰 Become a Seller</h2>
+
+        <p>Register your MTN data bundle for review.</p>
+
+      </div>
+
+      <div class="seller-box">
+
+        <h3>Seller Registration</h3>
+
+        <p>Approved seller listings can appear in the Data2Coin marketplace.</p>
+
+        <label for="sellerName">Seller Name</label>
+
+        <input id="sellerName" type="text" placeholder="Enter your name" autocomplete="name">
+
+        <label for="sellerContact">Contact Number</label>
+
+        <input id="sellerContact" type="tel" placeholder="Enter your phone number" autocomplete="tel">
+
+        <label for="bundleSize">Data Bundle</label>
+
+        <select id="bundleSize">
+
+          <option value="">Choose bundle size</option>
+
+          <option value="1 GB">1 GB</option>
+
+          <option value="2 GB">2 GB</option>
+
+          <option value="3 GB">3 GB</option>
+
+          <option value="5 GB">5 GB</option>
+
+          <option value="10 GB">10 GB</option>
+
+          <option value="20 GB">20 GB</option>
+
+        </select>
+
+        <label for="sellerPrice">Selling Price (GH₵)</label>
+
+        <input id="sellerPrice" type="number" min="0.01" step="0.01" placeholder="Enter selling price">
+
+        <button type="button" id="submitButton" class="gold-button" onclick="submitSellerRegistration()">
+
+          Submit Registration
+
+        </button>
+
+        <div class="notice">
+
+          Your registration will be reviewed before your bundle becomes publicly available.
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- PAGE 6: ACCOUNT -->
+
+    <section class="page" data-page="5">
+
+      <div class="kente"></div>
+
+      <div class="section-title">
+
+        <div class="eyebrow">Personal space</div>
+
+        <h2>👤 My Account</h2>
+
+        <p>Welcome to your Data2Coin account area.</p>
+
+      </div>
+
+      <div class="welcome">
+
+        <div class="hero-symbol">👤</div>
+
+        <h2>Guest User</h2>
+
+        <p>Account registration and login will be introduced in a future update.</p>
+
+      </div>
+
+      <div class="info-card">
+
+        <div class="account-row">
+
+          <span>📋</span>
+
+          <strong>Transaction History</strong>
+
+        </div>
+
+        <div class="account-row">
+
+          <span>📦</span>
+
+          <strong>My Listings</strong>
+
+        </div>
+
+        <div class="account-row">
+
+          <span>⚙️</span>
+
+          <strong>Settings</strong>
+
+        </div>
+
+        <div class="account-row">
+
+          <span>❓</span>
+
+          <strong>Help & Support</strong>
+
+        </div>
+
+        <div class="account-row">
+
+          <span>🌍</span>
+
+          <strong>About Data2Coin Ghana</strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- PAGE ARROWS -->
+
+  <div class="page-controls">
+
+    <button class="arrow" type="button" onclick="previousPage()" aria-label="Previous page">‹</button>
+
+    <span class="page-number" id="pageNumber">1 / 6</span>
+
+    <button class="arrow" type="button" onclick="nextPage()" aria-label="Next page">›</button>
 
   </div>
 
-</section>
+  <!-- BOTTOM NAVIGATION -->
 
-<!-- STATS -->
+  <nav class="bottom-nav">
 
-<section class="stats">
+    <button class="nav-item active" data-nav="0" onclick="goToPage(0)">
 
-  <div class="stat">
-
-    <strong>🇬🇭 Ghana</strong>
-
-    <span>Built for Ghana</span>
-
-  </div>
-
-  <div class="stat">
-
-    <strong>MTN</strong>
-
-    <span>Network focus</span>
-
-  </div>
-
-  <div class="stat">
-
-    <strong>2%</strong>
-
-    <span>Planned platform fee</span>
-
-  </div>
-
-</section>
-
-<!-- BUY DATA -->
-
-<section class="section" id="buy">
-
-  <div class="section-heading">
-
-    <div class="tag">Explore bundles</div>
-
-    <h2>Available Data Bundles</h2>
-
-    <p>
-
-      Browse the MTN data bundles currently listed on Data2Coin.
-
-      New approved listings can appear automatically.
-
-    </p>
-
-  </div>
-
-  <p id="status">Loading available bundles...</p>
-
-  <div class="bundle-grid" id="listings"></div>
-
-</section>
-
-<!-- HOW IT WORKS -->
-
-<section class="section dark-section" id="how">
-
-  <div class="section-heading">
-
-    <div class="tag">Simple process</div>
-
-    <h2>How Data2Coin Works</h2>
-
-    <p>
-
-      Our goal is to make connecting data buyers and sellers simple.
-
-    </p>
-
-  </div>
-
-  <div class="steps-grid">
-
-    <div class="step-card">
-
-      <div class="step-number">1</div>
-
-      <h3>Explore Bundles</h3>
-
-      <p>
-
-        Browse available MTN data bundles and compare their prices.
-
-      </p>
-
-    </div>
-
-    <div class="step-card">
-
-      <div class="step-number">2</div>
-
-      <h3>Choose Your Data</h3>
-
-      <p>
-
-        Find the bundle that matches your data needs and budget.
-
-      </p>
-
-    </div>
-
-    <div class="step-card">
-
-      <div class="step-number">3</div>
-
-      <h3>Secure Checkout</h3>
-
-      <p>
-
-        Online ordering and secure Mobile Money payments are
-
-        planned for a future release.
-
-      </p>
-
-    </div>
-
-  </div>
-
-  <div class="notice" style="max-width:900px;margin:30px auto 0;">
-
-    <strong>Preview notice:</strong>
-
-    Data2Coin is still under development. Purchases and payments
-
-    are not available yet. Never send money to anyone claiming
-
-    to collect payment on behalf of Data2Coin.
-
-  </div>
-
-</section>
-
-<!-- SELL DATA -->
-
-<section class="section" id="sell">
-
-  <div class="section-heading">
-
-    <div class="tag">Join the marketplace</div>
-
-    <h2>Become a Data Seller</h2>
-
-    <p>
-
-      Interested in listing your MTN data bundles?
-
-      Register your interest below.
-
-    </p>
-
-  </div>
-
-  <div class="seller-box">
-
-    <h2>Seller Registration</h2>
-
-    <p>
-
-      Submit your details for review. Approved sellers can have
-
-      their bundles displayed on the marketplace.
-
-    </p>
-
-    <button
-
-      type="button"
-
-      class="button primary"
-
-      onclick="showSellerForm()">
-
-      Register as a Seller
+      <span>⌂</span>Home
 
     </button>
 
-    <div id="sellerForm" style="display:none;margin-top:25px;">
+    <button class="nav-item" data-nav="1" onclick="goToPage(1)">
 
-      <label for="sellerName">Seller Name</label>
+      <span>▣</span>Data
 
-      <input
+    </button>
 
-        id="sellerName"
+    <button class="nav-item" data-nav="3" onclick="goToPage(3)">
 
-        type="text"
+      <span>▤</span>Payments
 
-        placeholder="Enter your name"
+    </button>
 
-        autocomplete="name">
+    <button class="nav-item" data-nav="5" onclick="goToPage(5)">
 
-      <label for="sellerContact">Contact Number</label>
+      <span>☻</span>Account
 
-      <input
+    </button>
 
-        id="sellerContact"
+  </nav>
 
-        type="tel"
+  <div class="footer">
 
-        placeholder="Enter your phone number"
+    <div class="kente"></div>
 
-        autocomplete="tel">
+    Data2Coin Ghana 🇬🇭 · Buy · Sell · Connect<br>
 
-      <label for="bundleSize">Data Bundle</label>
-
-      <select id="bundleSize">
-
-        <option value="">Choose bundle size</option>
-
-        <option value="1 GB">1 GB</option>
-
-        <option value="2 GB">2 GB</option>
-
-        <option value="3 GB">3 GB</option>
-
-        <option value="5 GB">5 GB</option>
-
-        <option value="10 GB">10 GB</option>
-
-        <option value="20 GB">20 GB</option>
-
-      </select>
-
-      <label for="sellerPrice">Selling Price (GH₵)</label>
-
-      <input
-
-        id="sellerPrice"
-
-        type="number"
-
-        min="0.01"
-
-        step="0.01"
-
-        placeholder="Enter your selling price">
-
-      <button
-
-        type="button"
-
-        id="submitButton"
-
-        class="button primary full-button"
-
-        onclick="submitSellerRegistration()">
-
-        Submit Registration
-
-      </button>
-
-    </div>
-
-    <div class="notice">
-
-      Your registration will be reviewed before your bundle
-
-      becomes publicly available.
-
-    </div>
+    Early Preview — No payments accepted yet.
 
   </div>
 
-</section>
-
-<!-- ABOUT -->
-
-<section class="section dark-section" id="about">
-
-  <div class="section-heading">
-
-    <div class="tag">Our vision</div>
-
-    <h2>About Data2Coin</h2>
-
-    <p>
-
-      A marketplace concept designed to connect MTN data buyers
-
-      and sellers in Ghana.
-
-    </p>
-
-  </div>
-
-  <div class="about-grid">
-
-    <div class="about-card">
-
-      <h3>Our Mission 🌍</h3>
-
-      <p>
-
-        To create a simple digital marketplace where people
-
-        can discover and list available mobile data bundles.
-
-      </p>
-
-    </div>
-
-    <div class="about-card">
-
-      <h3>Our Focus 📱</h3>
-
-      <p>
-
-        We are starting with MTN Ghana, with a focus on
-
-        accessibility and a simple mobile-friendly experience.
-
-      </p>
-
-    </div>
-
-    <div class="about-card">
-
-      <h3>Our Future 🚀</h3>
-
-      <p>
-
-        We plan to introduce secure ordering, Mobile Money
-
-        checkout and additional marketplace features.
-
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- FOOTER -->
-
-<footer>
-
-  <div class="logo">Data2Coin 🇬🇭</div>
-
-  <p>Connecting MTN data buyers and sellers in Ghana.</p>
-
-  <p>
-
-    Home · Buy Data · Sell Data · About
-
-  </p>
-
-  <p>
-
-    Early Preview — No payments are currently accepted.
-
-  </p>
-
-  <p>© 2026 Data2Coin Ghana. All rights reserved.</p>
-
-</footer>
-
-<!-- SUPABASE -->
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -1184,33 +1286,127 @@ const supabaseClient = window.supabase.createClient(
 
 );
 
-// MOBILE NAVIGATION
+// PAGE NAVIGATION
 
-function toggleMenu() {
+let currentPage = 0;
 
-  document.getElementById('navigation').classList.toggle('open');
+const pages = document.querySelectorAll('.page');
+
+const pageNumber = document.getElementById('pageNumber');
+
+const navItems = document.querySelectorAll('.nav-item');
+
+function goToPage(number, direction) {
+
+  if (number < 0 || number >= pages.length) return;
+
+  const oldPage = pages[currentPage];
+
+  const newPage = pages[number];
+
+  if (number === currentPage) return;
+
+  oldPage.classList.remove('active','turn-next','turn-back');
+
+  currentPage = number;
+
+  newPage.classList.add('active');
+
+  if (direction === 'back') {
+
+    newPage.classList.add('turn-back');
+
+  } else {
+
+    newPage.classList.add('turn-next');
+
+  }
+
+  pageNumber.textContent = (currentPage + 1) + ' / ' + pages.length;
+
+  navItems.forEach(item => {
+
+    item.classList.toggle(
+
+      'active',
+
+      Number(item.dataset.nav) === currentPage
+
+    );
+
+  });
+
+  document.getElementById('pageArea').scrollTop = 0;
+
+  window.scrollTo({top:0,behavior:'smooth'});
 
 }
 
-function closeMenu() {
+function nextPage() {
 
-  document.getElementById('navigation').classList.remove('open');
+  if (currentPage < pages.length - 1) {
 
-}
+    goToPage(currentPage + 1, 'next');
 
-// SELLER FORM
-
-function showSellerForm() {
-
-  const form = document.getElementById('sellerForm');
-
-  form.style.display = 'block';
-
-  form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
 
 }
 
-// LOAD PUBLIC LISTINGS
+function previousPage() {
+
+  if (currentPage > 0) {
+
+    goToPage(currentPage - 1, 'back');
+
+  }
+
+}
+
+// SWIPE NAVIGATION
+
+let touchStartX = 0;
+
+let touchStartY = 0;
+
+const pageArea = document.getElementById('pageArea');
+
+pageArea.addEventListener('touchstart', event => {
+
+  touchStartX = event.changedTouches[0].screenX;
+
+  touchStartY = event.changedTouches[0].screenY;
+
+}, {passive:true});
+
+pageArea.addEventListener('touchend', event => {
+
+  const endX = event.changedTouches[0].screenX;
+
+  const endY = event.changedTouches[0].screenY;
+
+  const differenceX = endX - touchStartX;
+
+  const differenceY = endY - touchStartY;
+
+  if (Math.abs(differenceX) > 65 &&
+
+      Math.abs(differenceX) > Math.abs(differenceY) * 1.3) {
+
+    if (differenceX < 0) {
+
+      nextPage();
+
+    } else {
+
+      previousPage();
+
+    }
+
+  }
+
+}, {passive:true});
+
+// LOAD PUBLIC DATA LISTINGS
 
 async function loadListings() {
 
@@ -1218,23 +1414,17 @@ async function loadListings() {
 
   const listings = document.getElementById('listings');
 
-  status.textContent = 'Loading available bundles...';
-
   try {
 
-    const { data, error } = await supabaseClient
+    const {data,error} = await supabaseClient
 
       .from('public_data_listings')
 
-      .select('id, bundle_size, price_ghs, network, data_size_gb')
+      .select('id,bundle_size,price_ghs,network,data_size_gb')
 
-      .order('id', { ascending: false });
+      .order('id',{ascending:false});
 
-    if (error) {
-
-      throw error;
-
-    }
+    if (error) throw error;
 
     listings.replaceChildren();
 
@@ -1246,17 +1436,23 @@ async function loadListings() {
 
     }
 
-    for (const item of data) {
+    data.forEach(item => {
 
       const card = document.createElement('div');
 
       card.className = 'bundle-card';
 
+      const left = document.createElement('div');
+
+      left.className = 'bundle-left';
+
       const icon = document.createElement('div');
 
-      icon.className = 'bundle-icon';
+      icon.className = 'signal';
 
-      icon.textContent = '📶';
+      icon.textContent = '▥';
+
+      const details = document.createElement('div');
 
       const title = document.createElement('h3');
 
@@ -1264,35 +1460,47 @@ async function loadListings() {
 
         item.bundle_size || (item.data_size_gb + ' GB');
 
+      const network = document.createElement('p');
+
+      network.textContent = item.network || 'MTN Ghana';
+
+      details.append(title,network);
+
+      left.append(icon,details);
+
+      const right = document.createElement('div');
+
+      right.style.textAlign = 'right';
+
       const price = document.createElement('div');
 
-      price.className = 'bundle-price';
+      price.className = 'price';
 
-      price.textContent =
+      price.textContent = 'GH₵ ' + Number(item.price_ghs).toFixed(2);
 
-        'GH₵ ' + Number(item.price_ghs).toFixed(2);
+      const buy = document.createElement('button');
 
-      const description = document.createElement('p');
+      buy.className = 'small-button';
 
-      description.textContent = 'Available MTN data bundle';
+      buy.textContent = 'Coming Soon';
 
-      const network = document.createElement('span');
+      buy.disabled = true;
 
-      network.className = 'bundle-network';
+      buy.style.opacity = '0.75';
 
-      network.textContent = item.network || 'MTN';
+      right.append(price,buy);
 
-      card.append(icon, title, price, description, network);
+      card.append(left,right);
 
       listings.appendChild(card);
 
-    }
+    });
 
     status.textContent = '';
 
-  } catch (error) {
+  } catch(error) {
 
-    console.error('Data2Coin loading error:', error);
+    console.error('Listing error:',error);
 
     status.textContent =
 
@@ -1306,35 +1514,17 @@ async function loadListings() {
 
 async function submitSellerRegistration() {
 
-  const name =
+  const name = document.getElementById('sellerName').value.trim();
 
-    document.getElementById('sellerName').value.trim();
+  const contact = document.getElementById('sellerContact').value.trim();
 
-  const contact =
+  const bundle = document.getElementById('bundleSize').value;
 
-    document.getElementById('sellerContact').value.trim();
+  const price = Number(document.getElementById('sellerPrice').value);
 
-  const bundle =
+  if (!name || !contact || !bundle ||
 
-    document.getElementById('bundleSize').value;
-
-  const price =
-
-    Number(document.getElementById('sellerPrice').value);
-
-  if (
-
-    !name ||
-
-    !contact ||
-
-    !bundle ||
-
-    !Number.isFinite(price) ||
-
-    price <= 0
-
-  ) {
+      !Number.isFinite(price) || price <= 0) {
 
     alert('Please fill in all fields correctly.');
 
@@ -1350,33 +1540,29 @@ async function submitSellerRegistration() {
 
   try {
 
-    const { error } = await supabaseClient
+    const {error} = await supabaseClient
 
       .from('seller_registrations')
 
       .insert([{
 
-        seller_name: name,
+        seller_name:name,
 
-        contact_number: contact,
+        contact_number:contact,
 
-        seller_contact: contact,
+        seller_contact:contact,
 
-        bundle_size: bundle,
+        bundle_size:bundle,
 
-        selling_price: price,
+        selling_price:price,
 
-        price_ghs: price,
+        price_ghs:price,
 
-        status: 'pending'
+        status:'pending'
 
       }]);
 
-    if (error) {
-
-      throw error;
-
-    }
+    if (error) throw error;
 
     alert('Registration submitted successfully!');
 
@@ -1388,9 +1574,9 @@ async function submitSellerRegistration() {
 
     document.getElementById('sellerPrice').value = '';
 
-  } catch (error) {
+  } catch(error) {
 
-    console.error('Seller registration error:', error);
+    console.error('Registration error:',error);
 
     alert('Registration failed: ' + error.message);
 
@@ -1404,7 +1590,7 @@ async function submitSellerRegistration() {
 
 }
 
-// START WEBSITE
+// START
 
 loadListings();
 

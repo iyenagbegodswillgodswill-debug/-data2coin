@@ -16,355 +16,81 @@
 
 <style>
 
-* {
+*{box-sizing:border-box}
 
-  box-sizing: border-box;
+body{margin:0;font-family:Arial,sans-serif;background:#f3f4ef;color:#171914}
 
-}
+header{background:#11140f;color:white;padding:24px 16px;text-align:center;border-bottom:4px solid #ffcc00}
 
-body {
+header h1{margin:0;font-size:25px}
 
-  margin: 0;
+header p{margin:8px 0 0;color:#ffcc00;font-size:14px}
 
-  font-family: Arial, sans-serif;
+.container{width:100%;max-width:850px;padding:16px;margin:auto}
 
-  background: #f3f4ef;
+.card{background:white;border-radius:14px;padding:18px;margin-bottom:16px;box-shadow:0 3px 12px rgba(0,0,0,.06)}
 
-  color: #171914;
+h2{font-size:20px;margin-top:0}
 
-}
+h3{font-size:17px;margin:0 0 12px}
 
-header {
+input{width:100%;padding:15px;margin:8px 0;border:1px solid #ccc;border-radius:9px;font-size:16px}
 
-  background: #11140f;
+button{border:none;border-radius:9px;padding:12px 15px;margin:5px 4px 5px 0;font-size:14px;font-weight:bold;cursor:pointer}
 
-  color: white;
+button:disabled{opacity:.5;cursor:not-allowed}
 
-  padding: 24px 16px;
+.primary{background:#ffcc00;color:#171914}
 
-  text-align: center;
+.dark{background:#171914;color:white}
 
-  border-bottom: 4px solid #ffcc00;
+.green{background:#168447;color:white}
 
-}
+.red{background:#c83232;color:white}
 
-header h1 {
+.gray{background:#e8e9e4;color:#222}
 
-  margin: 0;
+.hidden{display:none!important}
 
-  font-size: 25px;
+.message{padding:12px;border-radius:8px;margin-top:10px;background:#fff4cc;font-size:14px;overflow-wrap:anywhere}
 
-}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 
-header p {
+.stat{background:#f6f5ed;border-radius:10px;padding:14px}
 
-  margin: 8px 0 0;
+.stat strong{display:block;font-size:23px;margin-top:7px;overflow-wrap:anywhere}
 
-  color: #ffcc00;
+.stat span{font-size:13px;color:#555}
 
-  font-size: 14px;
+.item{border:1px solid #e5e5e5;border-radius:11px;padding:14px;margin:12px 0;background:#fff;overflow-wrap:anywhere}
 
-}
+.item p{margin:7px 0;font-size:14px;line-height:1.5}
 
-.container {
+.badge{display:inline-block;padding:5px 9px;border-radius:20px;background:#eee;font-size:12px;font-weight:bold;text-transform:uppercase}
 
-  width: 100%;
+.pending_payment{background:#fff0c2}
 
-  max-width: 850px;
+.paid{background:#d9f4e3}
 
-  padding: 16px;
+.completed{background:#d9e8ff}
 
-  margin: auto;
+.cancelled,.rejected,.suspended{background:#ffe0e0}
 
-}
+.approved{background:#d9f4e3}
 
-.card {
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
 
-  background: white;
+.small{color:#666;font-size:13px}
 
-  border-radius: 14px;
+.invite-box{background:#fff9df;border:1px solid #f0d66a;border-radius:10px;padding:12px;margin-top:12px}
 
-  padding: 18px;
+.invite-box label{font-size:13px;font-weight:bold}
 
-  margin-bottom: 16px;
+.invite-status{font-size:13px;color:#168447;margin-top:8px}
 
-  box-shadow: 0 3px 12px rgba(0,0,0,.06);
+footer{text-align:center;padding:25px;color:#777;font-size:12px}
 
-}
-
-h2 {
-
-  font-size: 20px;
-
-  margin-top: 0;
-
-}
-
-h3 {
-
-  font-size: 17px;
-
-  margin: 0 0 12px;
-
-}
-
-input {
-
-  width: 100%;
-
-  padding: 15px;
-
-  margin: 8px 0;
-
-  border: 1px solid #ccc;
-
-  border-radius: 9px;
-
-  font-size: 16px;
-
-}
-
-button {
-
-  border: none;
-
-  border-radius: 9px;
-
-  padding: 12px 15px;
-
-  margin: 5px 4px 5px 0;
-
-  font-size: 14px;
-
-  font-weight: bold;
-
-  cursor: pointer;
-
-}
-
-.primary {
-
-  background: #ffcc00;
-
-  color: #171914;
-
-}
-
-.dark {
-
-  background: #171914;
-
-  color: white;
-
-}
-
-.green {
-
-  background: #168447;
-
-  color: white;
-
-}
-
-.red {
-
-  background: #c83232;
-
-  color: white;
-
-}
-
-.gray {
-
-  background: #e8e9e4;
-
-  color: #222;
-
-}
-
-.hidden {
-
-  display: none !important;
-
-}
-
-.message {
-
-  padding: 12px;
-
-  border-radius: 8px;
-
-  margin-top: 10px;
-
-  background: #fff4cc;
-
-  font-size: 14px;
-
-  overflow-wrap: anywhere;
-
-}
-
-.stats {
-
-  display: grid;
-
-  grid-template-columns: repeat(2, 1fr);
-
-  gap: 10px;
-
-}
-
-.stat {
-
-  background: #f6f5ed;
-
-  border-radius: 10px;
-
-  padding: 14px;
-
-}
-
-.stat strong {
-
-  display: block;
-
-  font-size: 23px;
-
-  margin-top: 7px;
-
-  overflow-wrap: anywhere;
-
-}
-
-.stat span {
-
-  font-size: 13px;
-
-  color: #555;
-
-}
-
-.item {
-
-  border: 1px solid #e5e5e5;
-
-  border-radius: 11px;
-
-  padding: 14px;
-
-  margin: 12px 0;
-
-  background: #fff;
-
-  overflow-wrap: anywhere;
-
-}
-
-.item p {
-
-  margin: 7px 0;
-
-  font-size: 14px;
-
-  line-height: 1.5;
-
-}
-
-.badge {
-
-  display: inline-block;
-
-  padding: 5px 9px;
-
-  border-radius: 20px;
-
-  background: #eee;
-
-  font-size: 12px;
-
-  font-weight: bold;
-
-  text-transform: uppercase;
-
-}
-
-.pending_payment {
-
-  background: #fff0c2;
-
-}
-
-.paid {
-
-  background: #d9f4e3;
-
-}
-
-.completed {
-
-  background: #d9e8ff;
-
-}
-
-.cancelled,
-
-.rejected,
-
-.suspended {
-
-  background: #ffe0e0;
-
-}
-
-.approved {
-
-  background: #d9f4e3;
-
-}
-
-.section-title {
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  gap: 8px;
-
-  flex-wrap: wrap;
-
-}
-
-.small {
-
-  color: #666;
-
-  font-size: 13px;
-
-}
-
-footer {
-
-  text-align: center;
-
-  padding: 25px;
-
-  color: #777;
-
-  font-size: 12px;
-
-}
-
-@media (min-width: 600px) {
-
-  .stats {
-
-    grid-template-columns: repeat(4, 1fr);
-
-  }
-
-}
+@media(min-width:600px){.stats{grid-template-columns:repeat(4,1fr)}}
 
 </style>
 
@@ -374,1123 +100,959 @@ footer {
 
 <header>
 
-  <h1>Data2Coin 🇬🇭</h1>
+<h1>Data2Coin 🇬🇭</h1>
 
-  <p>Administrator Dashboard</p>
+<p>Administrator Dashboard</p>
 
 </header>
 
 <div class="container">
 
-  <!-- LOGIN -->
+<section id="loginSection" class="card">
 
-  <section id="loginSection" class="card">
+<h2>Admin Login</h2>
 
-    <h2>Admin Login</h2>
+<p class="small">Sign in with your authorised administrator account.</p>
 
-    <p class="small">Sign in with your authorised administrator account.</p>
+<input type="email" id="email" placeholder="Admin email" autocomplete="username">
 
-    <input
+<input type="password" id="password" placeholder="Password" autocomplete="current-password">
 
-      type="email"
+<button class="primary" id="loginButton" onclick="login()">Login to Dashboard</button>
 
-      id="email"
+<div id="loginMessage" class="message hidden"></div>
 
-      placeholder="Admin email"
+</section>
 
-      autocomplete="username"
+<section id="dashboard" class="hidden">
 
-    >
+<div class="card">
 
-    <input
+<div class="section-title">
 
-      type="password"
+<div>
 
-      id="password"
+<h2>Welcome, Admin 👋</h2>
 
-      placeholder="Password"
-
-      autocomplete="current-password"
-
-    >
-
-    <button class="primary" id="loginButton" onclick="login()">
-
-      Login to Dashboard
-
-    </button>
-
-    <div id="loginMessage" class="message hidden"></div>
-
-  </section>
-
-  <!-- DASHBOARD -->
-
-  <section id="dashboard" class="hidden">
-
-    <div class="card">
-
-      <div class="section-title">
-
-        <div>
-
-          <h2>Welcome, Admin 👋</h2>
-
-          <p class="small">Manage Data2Coin Ghana.</p>
-
-        </div>
-
-        <button class="red" onclick="logout()">Logout</button>
-
-      </div>
-
-      <button class="primary" onclick="refreshDashboard()">
-
-        Refresh Dashboard
-
-      </button>
-
-      <div id="dashboardMessage" class="message hidden"></div>
-
-    </div>
-
-    <!-- ORDER OVERVIEW -->
-
-    <div class="card">
-
-      <h2>Order Overview</h2>
-
-      <div class="stats">
-
-        <div class="stat">
-
-          <span>Total Orders</span>
-
-          <strong id="totalOrders">0</strong>
-
-        </div>
-
-        <div class="stat">
-
-          <span>Awaiting Payment</span>
-
-          <strong id="pendingOrders">0</strong>
-
-        </div>
-
-        <div class="stat">
-
-          <span>Paid Orders</span>
-
-          <strong id="paidOrders">0</strong>
-
-        </div>
-
-        <div class="stat">
-
-          <span>Completed Orders</span>
-
-          <strong id="completedOrders">0</strong>
-
-        </div>
-
-      </div>
-
-      <div class="stat" style="margin-top:12px">
-
-        <span>Recorded Platform Earnings — 2%</span>
-
-        <strong id="platformEarnings">GH₵ 0.00</strong>
-
-        <p class="small">
-
-          Calculated from paid and completed orders only.
-
-          This is recorded commission, not proof of money received or withdrawn.
-
-        </p>
-
-      </div>
-
-    </div>
-
-    <!-- ORDERS -->
-
-    <div class="card">
-
-      <div class="section-title">
-
-        <h2>Buyer Orders</h2>
-
-        <button class="gray" onclick="loadOrders()">Refresh Orders</button>
-
-      </div>
-
-      <p class="small">
-
-        Verify actual payment before marking an order as Paid.
-
-        Do not mark an order Paid just because it was submitted.
-
-      </p>
-
-      <div id="ordersList">
-
-        <p class="small">Loading orders...</p>
-
-      </div>
-
-    </div>
-
-    <!-- SELLER APPLICATIONS -->
-
-    <div class="card">
-
-      <div class="section-title">
-
-        <h2>Pending Applications</h2>
-
-        <button class="gray" onclick="loadApplications()">Refresh</button>
-
-      </div>
-
-      <div id="pendingList">Loading...</div>
-
-    </div>
-
-    <div class="card">
-
-      <h2>Approved Sellers</h2>
-
-      <div id="approvedList">Loading...</div>
-
-    </div>
-
-    <div class="card">
-
-      <h2>Suspended Sellers</h2>
-
-      <div id="suspendedList">Loading...</div>
-
-    </div>
-
-    <div class="card">
-
-      <h2>Rejected Applications</h2>
-
-      <div id="rejectedList">Loading...</div>
-
-    </div>
-
-  </section>
+<p class="small">Manage Data2Coin Ghana.</p>
 
 </div>
 
-<footer>
+<button class="red" onclick="logout()">Logout</button>
 
-  Data2Coin Ghana · Administrator Dashboard
+</div>
 
-</footer>
+<button class="primary" onclick="refreshDashboard()">Refresh Dashboard</button>
+
+<div id="dashboardMessage" class="message hidden"></div>
+
+</div>
+
+<div class="card">
+
+<h2>Order Overview</h2>
+
+<div class="stats">
+
+<div class="stat"><span>Total Orders</span><strong id="totalOrders">0</strong></div>
+
+<div class="stat"><span>Awaiting Payment</span><strong id="pendingOrders">0</strong></div>
+
+<div class="stat"><span>Paid Orders</span><strong id="paidOrders">0</strong></div>
+
+<div class="stat"><span>Completed Orders</span><strong id="completedOrders">0</strong></div>
+
+</div>
+
+<div class="stat" style="margin-top:12px">
+
+<span>Recorded Platform Earnings — 2%</span>
+
+<strong id="platformEarnings">GH₵ 0.00</strong>
+
+<p class="small">Calculated from paid and completed orders only. This is recorded commission, not proof of money received or withdrawn.</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="section-title">
+
+<h2>Buyer Orders</h2>
+
+<button class="gray" onclick="loadOrders()">Refresh Orders</button>
+
+</div>
+
+<p class="small">Verify actual payment before marking an order as Paid. Do not mark an order Paid just because it was submitted.</p>
+
+<div id="ordersList"><p class="small">Loading orders...</p></div>
+
+</div>
+
+<div class="card">
+
+<div class="section-title">
+
+<h2>Pending Applications</h2>
+
+<button class="gray" onclick="loadApplications()">Refresh</button>
+
+</div>
+
+<div id="pendingList">Loading...</div>
+
+</div>
+
+<div class="card">
+
+<h2>Approved Sellers</h2>
+
+<div id="approvedList">Loading...</div>
+
+</div>
+
+<div class="card">
+
+<h2>Suspended Sellers</h2>
+
+<div id="suspendedList">Loading...</div>
+
+</div>
+
+<div class="card">
+
+<h2>Rejected Applications</h2>
+
+<div id="rejectedList">Loading...</div>
+
+</div>
+
+</section>
+
+</div>
+
+<footer>Data2Coin Ghana · Administrator Dashboard</footer>
 
 <script>
 
-const SUPABASE_URL =
+const SUPABASE_URL="https://lulbwtfxavlddcemyfyx.supabase.co";
 
-  "https://lulbwtfxavlddcemyfyx.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_-jijVrjmTRU_HJDX33euyw_y89CrW7j";
 
-const SUPABASE_PUBLISHABLE_KEY =
+const ADMIN_ID="53862359-f3de-43d9-a61a-a54ad875088c";
 
-  "sb_publishable_-jijVrjmTRU_HJDX33euyw_y89CrW7j";
+const db=window.supabase.createClient(
 
-const ADMIN_ID =
+SUPABASE_URL,
 
-  "53862359-f3de-43d9-a61a-a54ad875088c";
-
-const db = window.supabase.createClient(
-
-  SUPABASE_URL,
-
-  SUPABASE_PUBLISHABLE_KEY
+SUPABASE_PUBLISHABLE_KEY
 
 );
 
-// -------------------------
-
 // GENERAL HELPERS
 
-// -------------------------
+function showMessage(id,message){
 
-function showMessage(id, message) {
+const box=document.getElementById(id);
 
-  const box = document.getElementById(id);
+box.textContent=message;
 
-  box.textContent = message;
-
-  box.classList.remove("hidden");
+box.classList.remove("hidden");
 
 }
 
-function hideMessage(id) {
+function hideMessage(id){
 
-  document.getElementById(id).classList.add("hidden");
-
-}
-
-function money(value) {
-
-  return "GH₵ " + Number(value || 0).toFixed(2);
+document.getElementById(id).classList.add("hidden");
 
 }
 
-function addText(parent, tag, value, className) {
+function money(value){
 
-  const element = document.createElement(tag);
-
-  element.textContent = value ?? "";
-
-  if (className) element.className = className;
-
-  parent.appendChild(element);
-
-  return element;
+return "GH₵ "+Number(value||0).toFixed(2);
 
 }
 
-function makeButton(label, className, action) {
+function addText(parent,tag,value,className){
 
-  const button = document.createElement("button");
+const element=document.createElement(tag);
 
-  button.textContent = label;
+element.textContent=value??"";
 
-  button.className = className;
+if(className)element.className=className;
 
-  button.addEventListener("click", action);
+parent.appendChild(element);
 
-  return button;
-
-}
-
-function showError(prefix, error) {
-
-  console.error(prefix, error);
-
-  showMessage(
-
-    "dashboardMessage",
-
-    prefix + ": " + (error.message || "Please try again.")
-
-  );
+return element;
 
 }
 
-// -------------------------
+function makeButton(label,className,action){
+
+const button=document.createElement("button");
+
+button.textContent=label;
+
+button.className=className;
+
+button.addEventListener("click",action);
+
+return button;
+
+}
 
 // ADMIN SECURITY
 
-// -------------------------
+async function verifyAdmin(){
 
-async function verifyAdmin() {
+const {data,error}=await db.auth.getUser();
 
-  const { data, error } = await db.auth.getUser();
+if(error||!data.user)return false;
 
-  if (error || !data.user) {
+if(data.user.id!==ADMIN_ID){
 
-    return false;
+await db.auth.signOut();
 
-  }
-
-  if (data.user.id !== ADMIN_ID) {
-
-    await db.auth.signOut();
-
-    return false;
-
-  }
-
-  const { data: admin, error: adminError } = await db
-
-    .from("admin_users")
-
-    .select("user_id")
-
-    .eq("user_id", data.user.id)
-
-    .maybeSingle();
-
-  if (adminError || !admin) {
-
-    await db.auth.signOut();
-
-    return false;
-
-  }
-
-  return true;
+return false;
 
 }
 
-// -------------------------
+const {data:admin,error:adminError}=await db
+
+.from("admin_users")
+
+.select("user_id")
+
+.eq("user_id",data.user.id)
+
+.maybeSingle();
+
+if(adminError||!admin){
+
+await db.auth.signOut();
+
+return false;
+
+}
+
+return true;
+
+}
 
 // LOGIN
 
-// -------------------------
+async function login(){
 
-async function login() {
+const email=document.getElementById("email").value.trim();
 
-  const email = document.getElementById("email").value.trim();
+const password=document.getElementById("password").value;
 
-  const password = document.getElementById("password").value;
+hideMessage("loginMessage");
 
-  hideMessage("loginMessage");
+if(!email||!password){
 
-  if (!email || !password) {
+showMessage("loginMessage","Enter your email and password.");
 
-    showMessage("loginMessage", "Enter your email and password.");
-
-    return;
-
-  }
-
-  const button = document.getElementById("loginButton");
-
-  button.disabled = true;
-
-  button.textContent = "Signing in...";
-
-  try {
-
-    const { error } = await db.auth.signInWithPassword({
-
-      email,
-
-      password
-
-    });
-
-    if (error) throw error;
-
-    const authorised = await verifyAdmin();
-
-    if (!authorised) {
-
-      showMessage(
-
-        "loginMessage",
-
-        "Access denied. This account is not an authorised administrator."
-
-      );
-
-      return;
-
-    }
-
-    openDashboard();
-
-  } catch (error) {
-
-    showMessage("loginMessage", error.message);
-
-  } finally {
-
-    button.disabled = false;
-
-    button.textContent = "Login to Dashboard";
-
-  }
+return;
 
 }
 
-// -------------------------
+const button=document.getElementById("loginButton");
+
+button.disabled=true;
+
+button.textContent="Signing in...";
+
+try{
+
+const {error}=await db.auth.signInWithPassword({email,password});
+
+if(error)throw error;
+
+const authorised=await verifyAdmin();
+
+if(!authorised){
+
+showMessage("loginMessage","Access denied. This account is not an authorised administrator.");
+
+return;
+
+}
+
+openDashboard();
+
+}catch(error){
+
+showMessage("loginMessage",error.message);
+
+}finally{
+
+button.disabled=false;
+
+button.textContent="Login to Dashboard";
+
+}
+
+}
 
 // OPEN DASHBOARD
 
-// -------------------------
+async function openDashboard(){
 
-async function openDashboard() {
+document.getElementById("loginSection").classList.add("hidden");
 
-  document.getElementById("loginSection").classList.add("hidden");
+document.getElementById("dashboard").classList.remove("hidden");
 
-  document.getElementById("dashboard").classList.remove("hidden");
-
-  await refreshDashboard();
+await refreshDashboard();
 
 }
 
-// -------------------------
+// REFRESH DASHBOARD
 
-// REFRESH EVERYTHING
+async function refreshDashboard(){
 
-// -------------------------
+hideMessage("dashboardMessage");
 
-async function refreshDashboard() {
+const authorised=await verifyAdmin();
 
-  hideMessage("dashboardMessage");
+if(!authorised){
 
-  const authorised = await verifyAdmin();
+document.getElementById("dashboard").classList.add("hidden");
 
-  if (!authorised) {
+document.getElementById("loginSection").classList.remove("hidden");
 
-    document.getElementById("dashboard").classList.add("hidden");
+showMessage("loginMessage","Please sign in again.");
 
-    document.getElementById("loginSection").classList.remove("hidden");
-
-    showMessage("loginMessage", "Please sign in again.");
-
-    return;
-
-  }
-
-  await Promise.all([
-
-    loadOrders(),
-
-    loadApplications()
-
-  ]);
+return;
 
 }
 
-// -------------------------
-
-// LOAD BUYER ORDERS
-
-// -------------------------
-
-async function loadOrders() {
-
-  const list = document.getElementById("ordersList");
-
-  list.replaceChildren();
-
-  addText(list, "p", "Loading orders...", "small");
-
-  const { data, error } = await db
-
-    .from("data_orders")
-
-    .select(`
-
-      id,
-
-      listing_id,
-
-      buyer_contact,
-
-      amount_ghs,
-
-      platform_fee,
-
-      seller_amount,
-
-      status,
-
-      created_at
-
-    `)
-
-    .order("id", { ascending: false });
-
-  list.replaceChildren();
-
-  if (error) {
-
-    addText(
-
-      list,
-
-      "p",
-
-      "Could not load orders: " + error.message,
-
-      "small"
-
-    );
-
-    return;
-
-  }
-
-  const orders = data || [];
-
-  const pending = orders.filter(o => o.status === "pending_payment");
-
-  const paid = orders.filter(o => o.status === "paid");
-
-  const completed = orders.filter(o => o.status === "completed");
-
-  const earnings = orders
-
-    .filter(o => ["paid", "completed"].includes(o.status))
-
-    .reduce((sum, o) => sum + Number(o.platform_fee || 0), 0);
-
-  document.getElementById("totalOrders").textContent = orders.length;
-
-  document.getElementById("pendingOrders").textContent = pending.length;
-
-  document.getElementById("paidOrders").textContent = paid.length;
-
-  document.getElementById("completedOrders").textContent = completed.length;
-
-  document.getElementById("platformEarnings").textContent = money(earnings);
-
-  if (!orders.length) {
-
-    addText(list, "p", "No buyer orders yet.", "small");
-
-    return;
-
-  }
-
-  orders.forEach(order => {
-
-    const card = document.createElement("div");
-
-    card.className = "item";
-
-    addText(card, "h3", "Order #" + order.id);
-
-    addText(
-
-      card,
-
-      "span",
-
-      order.status.replaceAll("_", " "),
-
-      "badge " + order.status
-
-    );
-
-    addText(card, "p", "Listing ID: " + order.listing_id);
-
-    addText(card, "p", "Buyer contact: " + order.buyer_contact);
-
-    addText(card, "p", "Order amount: " + money(order.amount_ghs));
-
-    addText(card, "p", "Platform fee (2%): " + money(order.platform_fee));
-
-    addText(card, "p", "Seller amount: " + money(order.seller_amount));
-
-    const date = order.created_at
-
-      ? new Date(order.created_at).toLocaleString()
-
-      : "Not available";
-
-    addText(card, "p", "Date: " + date);
-
-    if (order.status === "pending_payment") {
-
-      card.appendChild(
-
-        makeButton("Mark Paid", "green", () => {
-
-          updateOrderStatus(order.id, "paid");
-
-        })
-
-      );
-
-      card.appendChild(
-
-        makeButton("Cancel Order", "red", () => {
-
-          updateOrderStatus(order.id, "cancelled");
-
-        })
-
-      );
-
-    }
-
-    if (order.status === "paid") {
-
-      card.appendChild(
-
-        makeButton("Mark Completed", "primary", () => {
-
-          updateOrderStatus(order.id, "completed");
-
-        })
-
-      );
-
-      card.appendChild(
-
-        makeButton("Cancel Order", "red", () => {
-
-          updateOrderStatus(order.id, "cancelled");
-
-        })
-
-      );
-
-    }
-
-    list.appendChild(card);
-
-  });
+await Promise.all([loadOrders(),loadApplications()]);
 
 }
 
-// -------------------------
+// LOAD ORDERS
+
+async function loadOrders(){
+
+const list=document.getElementById("ordersList");
+
+list.replaceChildren();
+
+addText(list,"p","Loading orders...","small");
+
+const {data,error}=await db
+
+.from("data_orders")
+
+.select(`
+
+id,
+
+listing_id,
+
+buyer_contact,
+
+amount_ghs,
+
+platform_fee,
+
+seller_amount,
+
+status,
+
+created_at
+
+`)
+
+.order("id",{ascending:false});
+
+list.replaceChildren();
+
+if(error){
+
+addText(list,"p","Could not load orders: "+error.message,"small");
+
+return;
+
+}
+
+const orders=data||[];
+
+const pending=orders.filter(o=>o.status==="pending_payment");
+
+const paid=orders.filter(o=>o.status==="paid");
+
+const completed=orders.filter(o=>o.status==="completed");
+
+const earnings=orders
+
+.filter(o=>["paid","completed"].includes(o.status))
+
+.reduce((sum,o)=>sum+Number(o.platform_fee||0),0);
+
+document.getElementById("totalOrders").textContent=orders.length;
+
+document.getElementById("pendingOrders").textContent=pending.length;
+
+document.getElementById("paidOrders").textContent=paid.length;
+
+document.getElementById("completedOrders").textContent=completed.length;
+
+document.getElementById("platformEarnings").textContent=money(earnings);
+
+if(!orders.length){
+
+addText(list,"p","No buyer orders yet.","small");
+
+return;
+
+}
+
+orders.forEach(order=>{
+
+const card=document.createElement("div");
+
+card.className="item";
+
+addText(card,"h3","Order #"+order.id);
+
+addText(card,"span",order.status.replaceAll("_"," "),"badge "+order.status);
+
+addText(card,"p","Listing ID: "+order.listing_id);
+
+addText(card,"p","Buyer contact: "+order.buyer_contact);
+
+addText(card,"p","Order amount: "+money(order.amount_ghs));
+
+addText(card,"p","Platform fee (2%): "+money(order.platform_fee));
+
+addText(card,"p","Seller amount: "+money(order.seller_amount));
+
+const date=order.created_at
+
+?new Date(order.created_at).toLocaleString()
+
+:"Not available";
+
+addText(card,"p","Date: "+date);
+
+if(order.status==="pending_payment"){
+
+card.appendChild(makeButton("Mark Paid","green",()=>updateOrderStatus(order.id,"paid")));
+
+card.appendChild(makeButton("Cancel Order","red",()=>updateOrderStatus(order.id,"cancelled")));
+
+}
+
+if(order.status==="paid"){
+
+card.appendChild(makeButton("Mark Completed","primary",()=>updateOrderStatus(order.id,"completed")));
+
+card.appendChild(makeButton("Cancel Order","red",()=>updateOrderStatus(order.id,"cancelled")));
+
+}
+
+list.appendChild(card);
+
+});
+
+}
 
 // UPDATE ORDER STATUS
 
-// -------------------------
+async function updateOrderStatus(orderId,newStatus){
 
-async function updateOrderStatus(orderId, newStatus) {
+const messages={
 
-  const messages = {
+paid:"Have you verified that the buyer's payment was actually received?",
 
-    paid: "Have you verified that the buyer's payment was actually received?",
+completed:"Confirm that the data has been delivered to the buyer?",
 
-    completed: "Confirm that the data has been delivered to the buyer?",
+cancelled:"Are you sure you want to cancel this order?"
 
-    cancelled: "Are you sure you want to cancel this order?"
+};
 
-  };
+if(!confirm(messages[newStatus]))return;
 
-  if (!confirm(messages[newStatus])) {
+const {data,error}=await db
 
-    return;
+.from("data_orders")
 
-  }
+.update({status:newStatus})
 
-  const { data, error } = await db
+.eq("id",orderId)
 
-    .from("data_orders")
+.select("id");
 
-    .update({ status: newStatus })
+if(error){
 
-    .eq("id", orderId)
+alert("Could not update order: "+error.message);
 
-    .select("id");
-
-  if (error) {
-
-    alert("Could not update order: " + error.message);
-
-    return;
-
-  }
-
-  if (!data || data.length === 0) {
-
-    alert("No order was updated. Please refresh and try again.");
-
-    return;
-
-  }
-
-  alert("Order #" + orderId + " updated to " + newStatus + ".");
-
-  await loadOrders();
+return;
 
 }
 
-// -------------------------
+if(!data||data.length===0){
+
+alert("No order was updated. Please refresh and try again.");
+
+return;
+
+}
+
+alert("Order #"+orderId+" updated to "+newStatus+".");
+
+await loadOrders();
+
+}
 
 // LOAD SELLER APPLICATIONS
 
-// -------------------------
+async function loadApplications(){
 
-async function loadApplications() {
+const sections=["pendingList","approvedList","suspendedList","rejectedList"];
 
-  const sections = [
+sections.forEach(id=>{
 
-    "pendingList",
+const element=document.getElementById(id);
 
-    "approvedList",
+element.replaceChildren();
 
-    "suspendedList",
+addText(element,"p","Loading...","small");
 
-    "rejectedList"
+});
 
-  ];
+const {data,error}=await db
 
-  sections.forEach(id => {
+.from("seller_registrations")
 
-    document.getElementById(id).replaceChildren();
+.select(`
 
-    addText(document.getElementById(id), "p", "Loading...", "small");
+id,
 
-  });
+seller_name,
 
-  const { data, error } = await db
+contact_number,
 
-    .from("seller_registrations")
+bundle_size,
 
-    .select(`
+selling_price,
 
-      id,
+status,
 
-      seller_name,
+email,
 
-      contact_number,
+auth_user_id
 
-      bundle_size,
+`)
 
-      selling_price,
+.order("id",{ascending:false});
 
-      status
+if(error){
 
-    `)
+sections.forEach(id=>{
 
-    .order("id", { ascending: false });
+const element=document.getElementById(id);
 
-  if (error) {
+element.replaceChildren();
 
-    sections.forEach(id => {
+addText(element,"p",error.message,"small");
 
-      const element = document.getElementById(id);
+});
 
-      element.replaceChildren();
-
-      addText(element, "p", error.message, "small");
-
-    });
-
-    return;
-
-  }
-
-  const sellers = data || [];
-
-  const groups = {
-
-    pending: [],
-
-    approved: [],
-
-    suspended: [],
-
-    rejected: []
-
-  };
-
-  sellers.forEach(seller => {
-
-    if (groups[seller.status]) {
-
-      groups[seller.status].push(seller);
-
-    }
-
-  });
-
-  renderSellers("pendingList", groups.pending, "pending");
-
-  renderSellers("approvedList", groups.approved, "approved");
-
-  renderSellers("suspendedList", groups.suspended, "suspended");
-
-  renderSellers("rejectedList", groups.rejected, "rejected");
+return;
 
 }
 
-// -------------------------
+const sellers=data||[];
+
+const groups={
+
+pending:[],
+
+approved:[],
+
+suspended:[],
+
+rejected:[]
+
+};
+
+sellers.forEach(seller=>{
+
+if(groups[seller.status]){
+
+groups[seller.status].push(seller);
+
+}
+
+});
+
+renderSellers("pendingList",groups.pending,"pending");
+
+renderSellers("approvedList",groups.approved,"approved");
+
+renderSellers("suspendedList",groups.suspended,"suspended");
+
+renderSellers("rejectedList",groups.rejected,"rejected");
+
+}
 
 // RENDER SELLER LISTS
 
-// -------------------------
+function renderSellers(elementId,sellers,type){
 
-function renderSellers(elementId, sellers, type) {
+const container=document.getElementById(elementId);
 
-  const container = document.getElementById(elementId);
+container.replaceChildren();
 
-  container.replaceChildren();
+if(!sellers.length){
 
-  if (!sellers.length) {
+addText(container,"p","No sellers in this section.","small");
 
-    addText(container, "p", "No sellers in this section.", "small");
-
-    return;
-
-  }
-
-  sellers.forEach(seller => {
-
-    const card = document.createElement("div");
-
-    card.className = "item";
-
-    addText(card, "h3", seller.seller_name || "Unnamed seller");
-
-    addText(card, "p", "Seller ID: " + seller.id);
-
-    addText(card, "p", "Contact: " + seller.contact_number);
-
-    addText(card, "p", "Bundle: " + seller.bundle_size);
-
-    addText(card, "p", "Price: " + money(seller.selling_price));
-
-    addText(
-
-      card,
-
-      "span",
-
-      seller.status,
-
-      "badge " + seller.status
-
-    );
-
-    if (type === "pending") {
-
-      card.appendChild(
-
-        makeButton("Approve", "green", () => {
-
-          changeStatus(seller.id, "approved");
-
-        })
-
-      );
-
-      card.appendChild(
-
-        makeButton("Reject", "red", () => {
-
-          changeStatus(seller.id, "rejected");
-
-        })
-
-      );
-
-    }
-
-    if (type === "approved") {
-
-      card.appendChild(
-
-        makeButton("Suspend Seller", "red", () => {
-
-          suspendSeller(seller.id);
-
-        })
-
-      );
-
-    }
-
-    if (type === "suspended") {
-
-      card.appendChild(
-
-        makeButton("Reactivate Seller", "green", () => {
-
-          reactivateSeller(seller.id);
-
-        })
-
-      );
-
-    }
-
-    container.appendChild(card);
-
-  });
+return;
 
 }
 
-// -------------------------
+sellers.forEach(seller=>{
 
-// APPROVE / REJECT SELLER
+const card=document.createElement("div");
 
-// -------------------------
+card.className="item";
 
-async function changeStatus(id, status) {
+addText(card,"h3",seller.seller_name||"Unnamed seller");
 
-  const action = status === "approved" ? "approve" : "reject";
+addText(card,"p","Seller ID: "+seller.id);
 
-  if (!confirm("Are you sure you want to " + action + " this seller?")) {
+addText(card,"p","Contact: "+seller.contact_number);
 
-    return;
+addText(card,"p","Bundle: "+seller.bundle_size);
 
-  }
+addText(card,"p","Price: "+money(seller.selling_price));
 
-  const { error } = await db
+addText(card,"span",seller.status,"badge "+seller.status);
 
-    .from("seller_registrations")
+if(type==="pending"){
 
-    .update({ status })
+card.appendChild(makeButton("Approve","green",()=>changeStatus(seller.id,"approved")));
 
-    .eq("id", id);
-
-  if (error) {
-
-    alert("Could not update seller: " + error.message);
-
-    return;
-
-  }
-
-  alert("Seller application " + status + ".");
-
-  await loadApplications();
+card.appendChild(makeButton("Reject","red",()=>changeStatus(seller.id,"rejected")));
 
 }
 
-// -------------------------
+if(type==="approved"){
+
+if(seller.auth_user_id){
+
+addText(card,"p","Email: "+(seller.email||"Not recorded"));
+
+addText(card,"p","Seller login account already linked.","invite-status");
+
+}else{
+
+const inviteBox=document.createElement("div");
+
+inviteBox.className="invite-box";
+
+const label=document.createElement("label");
+
+label.textContent="Seller email address";
+
+label.htmlFor="seller-email-"+seller.id;
+
+inviteBox.appendChild(label);
+
+const emailInput=document.createElement("input");
+
+emailInput.type="email";
+
+emailInput.id="seller-email-"+seller.id;
+
+emailInput.placeholder="Enter seller email address";
+
+emailInput.value=seller.email||"";
+
+emailInput.autocomplete="email";
+
+inviteBox.appendChild(emailInput);
+
+const inviteButton=makeButton(
+
+"Invite Seller",
+
+"primary",
+
+()=>inviteSeller(seller.id,emailInput,inviteButton)
+
+);
+
+inviteBox.appendChild(inviteButton);
+
+card.appendChild(inviteBox);
+
+}
+
+card.appendChild(makeButton("Suspend Seller","red",()=>suspendSeller(seller.id)));
+
+}
+
+if(type==="suspended"){
+
+card.appendChild(makeButton("Reactivate Seller","green",()=>reactivateSeller(seller.id)));
+
+}
+
+container.appendChild(card);
+
+});
+
+}
+
+// INVITE APPROVED SELLER
+
+async function inviteSeller(sellerId,emailInput,button){
+
+const email=emailInput.value.trim().toLowerCase();
+
+if(!email||!emailInput.checkValidity()){
+
+alert("Please enter a valid seller email address.");
+
+emailInput.focus();
+
+return;
+
+}
+
+if(!confirm("Send a seller account invitation to "+email+"?")){
+
+return;
+
+}
+
+button.disabled=true;
+
+button.textContent="Sending invitation...";
+
+try{
+
+const authorised=await verifyAdmin();
+
+if(!authorised){
+
+throw new Error("Admin session expired. Please log in again.");
+
+}
+
+const {data,error}=await db.functions.invoke("invite-seller",{
+
+body:{
+
+seller_id:sellerId,
+
+email:email
+
+}
+
+});
+
+if(error){
+
+let detail=error.message;
+
+try{
+
+const response=error.context;
+
+if(response&&typeof response.json==="function"){
+
+const body=await response.json();
+
+if(body.error)detail=body.error;
+
+}
+
+}catch(e){}
+
+throw new Error(detail);
+
+}
+
+if(!data||!data.success){
+
+throw new Error(data?.error||"Invitation could not be sent.");
+
+}
+
+alert("Invitation sent successfully to "+email+".");
+
+await loadApplications();
+
+}catch(error){
+
+alert("Invitation failed: "+error.message);
+
+button.disabled=false;
+
+button.textContent="Invite Seller";
+
+}
+
+}
+
+// APPROVE OR REJECT SELLER
+
+async function changeStatus(id,status){
+
+const action=status==="approved"?"approve":"reject";
+
+if(!confirm("Are you sure you want to "+action+" this seller?"))return;
+
+const {error}=await db
+
+.from("seller_registrations")
+
+.update({status})
+
+.eq("id",id);
+
+if(error){
+
+alert("Could not update seller: "+error.message);
+
+return;
+
+}
+
+alert("Seller application "+status+".");
+
+await loadApplications();
+
+}
 
 // SUSPEND SELLER
 
-// -------------------------
+async function suspendSeller(id){
 
-async function suspendSeller(id) {
+if(!confirm("Suspend this seller and hide their listing?"))return;
 
-  if (!confirm("Suspend this seller and hide their listing?")) {
+const {error}=await db
 
-    return;
+.from("seller_registrations")
 
-  }
+.update({status:"suspended"})
 
-  const { error } = await db
+.eq("id",id);
 
-    .from("seller_registrations")
+if(error){
 
-    .update({ status: "suspended" })
+alert("Could not suspend seller: "+error.message);
 
-    .eq("id", id);
-
-  if (error) {
-
-    alert("Could not suspend seller: " + error.message);
-
-    return;
-
-  }
-
-  const { error: listingError } = await db
-
-    .from("data_listings")
-
-    .update({ status: "unavailable" })
-
-    .eq("seller_registration_id", id);
-
-  if (listingError) {
-
-    alert(
-
-      "Seller suspended, but listing update failed: " +
-
-      listingError.message
-
-    );
-
-  } else {
-
-    alert("Seller suspended successfully.");
-
-  }
-
-  await loadApplications();
+return;
 
 }
 
-// -------------------------
+const {error:listingError}=await db
+
+.from("data_listings")
+
+.update({status:"unavailable"})
+
+.eq("seller_registration_id",id);
+
+if(listingError){
+
+alert("Seller suspended, but listing update failed: "+listingError.message);
+
+}else{
+
+alert("Seller suspended successfully.");
+
+}
+
+await loadApplications();
+
+}
 
 // REACTIVATE SELLER
 
-// -------------------------
+async function reactivateSeller(id){
 
-async function reactivateSeller(id) {
+if(!confirm("Reactivate this seller and make their listing available?"))return;
 
-  if (!confirm("Reactivate this seller and make their listing available?")) {
+const {error}=await db
 
-    return;
+.from("seller_registrations")
 
-  }
+.update({status:"approved"})
 
-  const { error } = await db
+.eq("id",id);
 
-    .from("seller_registrations")
+if(error){
 
-    .update({ status: "approved" })
+alert("Could not reactivate seller: "+error.message);
 
-    .eq("id", id);
-
-  if (error) {
-
-    alert("Could not reactivate seller: " + error.message);
-
-    return;
-
-  }
-
-  const { error: listingError } = await db
-
-    .from("data_listings")
-
-    .update({ status: "available" })
-
-    .eq("seller_registration_id", id);
-
-  if (listingError) {
-
-    alert(
-
-      "Seller reactivated, but listing update failed: " +
-
-      listingError.message
-
-    );
-
-  } else {
-
-    alert("Seller reactivated successfully.");
-
-  }
-
-  await loadApplications();
+return;
 
 }
 
-// -------------------------
+const {error:listingError}=await db
+
+.from("data_listings")
+
+.update({status:"available"})
+
+.eq("seller_registration_id",id);
+
+if(listingError){
+
+alert("Seller reactivated, but listing update failed: "+listingError.message);
+
+}else{
+
+alert("Seller reactivated successfully.");
+
+}
+
+await loadApplications();
+
+}
 
 // LOGOUT
 
-// -------------------------
+async function logout(){
 
-async function logout() {
+await db.auth.signOut();
 
-  await db.auth.signOut();
+document.getElementById("dashboard").classList.add("hidden");
 
-  document.getElementById("dashboard").classList.add("hidden");
+document.getElementById("loginSection").classList.remove("hidden");
 
-  document.getElementById("loginSection").classList.remove("hidden");
-
-  document.getElementById("password").value = "";
+document.getElementById("password").value="";
 
 }
 
-// -------------------------
-
 // CHECK EXISTING SESSION
 
-// -------------------------
+async function checkSession(){
 
-async function checkSession() {
+const {data}=await db.auth.getSession();
 
-  const { data } = await db.auth.getSession();
+if(data.session){
 
-  if (data.session) {
+const authorised=await verifyAdmin();
 
-    const authorised = await verifyAdmin();
+if(authorised){
 
-    if (authorised) {
+await openDashboard();
 
-      await openDashboard();
+}
 
-    }
-
-  }
+}
 
 }
 

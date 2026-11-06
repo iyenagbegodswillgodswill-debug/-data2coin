@@ -4,233 +4,441 @@
 
 <head>
 
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Data2Coin Ghana - Seller Dashboard</title>
+<title>Data2Coin Ghana - Seller Dashboard</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <style>
+<style>
 
-    * { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
-    body { margin: 0; background: #101010; color: white; font-family: Arial, sans-serif; }
+body {
 
-    header { background: #ffcc00; color: #111; padding: 20px; text-align: center; }
+  margin: 0;
 
-    header h2 { margin: 0; }
+  background: #101010;
 
-    .container { max-width: 850px; margin: 25px auto; padding: 15px; }
+  color: white;
 
-    .card { background: #1d1d1d; border: 1px solid #333; border-radius: 12px; padding: 20px; margin-bottom: 18px; }
+  font-family: Arial, sans-serif;
 
-    h3 { color: #ffcc00; margin-top: 0; }
+}
 
-    input { width: 100%; padding: 14px; margin: 8px 0; background: #111; color: white; border: 1px solid #555; border-radius: 7px; }
+header {
 
-    button { padding: 12px 18px; background: #ffcc00; color: #111; border: 0; border-radius: 7px; font-weight: bold; cursor: pointer; margin: 5px 0; }
+  background: #ffcc00;
 
-    button:disabled { opacity: .5; cursor: not-allowed; }
+  color: #111;
 
-    .secondary { background: #333; color: white; }
+  padding: 20px;
 
-    .stat { display: inline-block; background: #292929; padding: 15px; border-radius: 8px; margin: 5px; min-width: 135px; }
+  text-align: center;
 
-    .stat strong { display: block; font-size: 22px; color: #ffcc00; margin-top: 8px; }
+}
 
-    .item { border-top: 1px solid #444; padding: 14px 0; }
+.container {
 
-    .small { color: #bbb; font-size: 13px; }
+  max-width: 850px;
 
-    #dashboard { display: none; }
+  margin: 25px auto;
 
-    #message { margin: 12px 0; color: #ffcc00; }
+  padding: 15px;
 
-    .status { color: #ffcc00; font-weight: bold; }
+}
 
-    footer { text-align: center; color: #888; padding: 25px; }
+.card {
 
-  </style>
+  background: #1d1d1d;
+
+  border: 1px solid #333;
+
+  border-radius: 12px;
+
+  padding: 20px;
+
+  margin-bottom: 18px;
+
+}
+
+h3 { color: #ffcc00; }
+
+input {
+
+  width: 100%;
+
+  padding: 14px;
+
+  margin: 8px 0;
+
+  background: #111;
+
+  color: white;
+
+  border: 1px solid #555;
+
+  border-radius: 7px;
+
+}
+
+button {
+
+  padding: 12px 18px;
+
+  background: #ffcc00;
+
+  color: #111;
+
+  border: 0;
+
+  border-radius: 7px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  margin: 5px 0;
+
+}
+
+button:disabled {
+
+  opacity: .5;
+
+}
+
+.secondary {
+
+  background: #333;
+
+  color: white;
+
+}
+
+.small {
+
+  color: #bbb;
+
+  font-size: 13px;
+
+}
+
+.item {
+
+  border-top: 1px solid #444;
+
+  padding: 14px 0;
+
+}
+
+.stat {
+
+  display: inline-block;
+
+  background: #292929;
+
+  padding: 15px;
+
+  border-radius: 8px;
+
+}
+
+.stat strong {
+
+  display: block;
+
+  font-size: 22px;
+
+  color: #ffcc00;
+
+  margin-top: 8px;
+
+}
+
+#dashboard { display: none; }
+
+#message {
+
+  margin: 12px 0;
+
+  color: #ffcc00;
+
+}
+
+.status {
+
+  color: #ffcc00;
+
+  font-weight: bold;
+
+}
+
+footer {
+
+  text-align: center;
+
+  color: #888;
+
+  padding: 25px;
+
+}
+
+</style>
 
 </head>
 
 <body>
 
-  <header>
+<header>
 
-    <h2>Data2Coin 🇬🇭</h2>
+  <h2>Data2Coin 🇬🇭</h2>
 
-    <p>Seller Dashboard</p>
+  <p>Seller Dashboard</p>
 
-  </header>
+</header>
 
-  <div class="container">
+<div class="container">
 
-    <!-- Login Section -->
+  <div class="card" id="loginBox">
 
-    <div class="card" id="loginBox">
+    <h3>Seller Login</h3>
 
-      <h3>Seller Login</h3>
+    <p class="small">
 
-      <p class="small">Log in with the email and password connected to your approved seller account.</p>
+      Log in with the email and password connected to your approved seller account.
 
-      <input id="email" type="email" placeholder="Email address">
+    </p>
 
-      <input id="password" type="password" placeholder="Password">
+    <input id="email" type="email" placeholder="Email address">
 
-      <button onclick="login()">Login</button>
+    <input id="password" type="password" placeholder="Password">
 
-      <p id="message"></p>
+    <button id="loginButton" type="button" onclick="login()">
+
+      Login
+
+    </button>
+
+    <p id="message"></p>
+
+  </div>
+
+  <div id="dashboard">
+
+    <div class="card">
+
+      <h3>Welcome, <span id="sellerName">Seller</span> 👋</h3>
+
+      <p id="sellerStatus" class="status"></p>
+
+      <button class="secondary" onclick="loadDashboard()">
+
+        Refresh Dashboard
+
+      </button>
+
+      <button class="secondary" onclick="logout()">
+
+        Logout
+
+      </button>
 
     </div>
 
-    <!-- Dashboard Section -->
+    <div class="card">
 
-    <div id="dashboard">
+      <h3>My Earnings</h3>
 
-      <div class="card">
+      <div class="stat">
 
-        <h3>Welcome, <span id="sellerName">Seller</span> 👋</h3>
+        Paid + Completed
 
-        <p id="sellerStatus" class="status"></p>
-
-        <button class="secondary" onclick="loadDashboard()">Refresh Dashboard</button>
-
-        <button class="secondary" onclick="logout()">Logout</button>
+        <strong id="earnings">GH₵ 0.00</strong>
 
       </div>
 
-      <!-- Earnings -->
+      <p class="small">
 
-      <div class="card">
+        Recorded seller earnings. This does not confirm money has been received or withdrawn.
 
-        <h3>My Earnings</h3>
+      </p>
 
-        <div class="stat">Paid + Completed
+    </div>
 
-          <strong id="earnings">GH₵ 0.00</strong>
+    <div class="card">
 
-        </div>
+      <h3>My Data Listings</h3>
 
-        <p class="small">Recorded seller earnings. This does not confirm money has been received or withdrawn.</p>
+      <div id="listings">Loading listings...</div>
 
-      </div>
+    </div>
 
-      <!-- Listings -->
+    <div class="card">
 
-      <div class="card">
+      <h3>Customer Orders</h3>
 
-        <h3>My Data Listings</h3>
-
-        <div id="listings">Loading listings...</div>
-
-      </div>
-
-      <!-- Orders -->
-
-      <div class="card">
-
-        <h3>Customer Orders</h3>
-
-        <div id="orders">Loading orders...</div>
-
-      </div>
+      <div id="orders">Loading orders...</div>
 
     </div>
 
   </div>
 
-  <footer>Data2Coin Ghana · Seller Portal</footer>
+</div>
 
-  <script>
+<footer>Data2Coin Ghana · Seller Portal</footer>
 
-    const SUPABASE_URL = "https://lulbwtfxavlddcemyfyx.supabase.co";
+<script>
 
-    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_-jijVrjmTRU_HJDX33euyw_y89CrW7j"; // Replace with your actual key if needed
+const SUPABASE_URL =
 
-    const supabase = window.supabase.createClient(
+"https://lulbwtfxavlddcemyfyx.supabase.co";
 
-      SUPABASE_URL,
+const SUPABASE_PUBLISHABLE_KEY =
 
-      SUPABASE_PUBLISHABLE_KEY
+"sb_publishable_-jijVrjmTRU_HJDX33euyw_y89CrW7j";
 
-    );
+const supabase = window.supabase.createClient(
 
-    let currentSeller = null;
+  SUPABASE_URL,
 
-    let currentListings = [];
+  SUPABASE_PUBLISHABLE_KEY
 
-    function money(value) {
+);
 
-      return "GH₵ " + Number(value || 0).toFixed(2);
+let currentSeller = null;
 
-    }
+function money(value) {
 
-    function showMessage(message) {
+  return "GH₵ " + Number(value || 0).toFixed(2);
 
-      document.getElementById("message").textContent = message;
+}
 
-    }
+function escapeHTML(value) {
 
-    async function login() {
+  return String(value ?? "").replace(/[&<>"']/g, function(char) {
 
-      const email = document.getElementById("email").value.trim();
+    return {
 
-      const password = document.getElementById("password").value;
+      "&": "&amp;",
 
-      if (!email || !password) {
+      "<": "&lt;",
 
-        showMessage("Enter your email and password.");
+      ">": "&gt;",
 
-        return;
+      '"': "&quot;",
 
-      }
+      "'": "&#039;"
 
-      showMessage("Logging in...");
+    }[char];
 
-      const { data, error } = await supabase.auth.signInWithPassword({
+  });
 
-        email,
+}
 
-        password
+function showMessage(message) {
+
+  document.getElementById("message").textContent = message;
+
+}
+
+async function login() {
+
+  const button = document.getElementById("loginButton");
+
+  const email = document.getElementById("email").value.trim();
+
+  const password = document.getElementById("password").value;
+
+  if (!email || !password) {
+
+    showMessage("Enter your email and password.");
+
+    return;
+
+  }
+
+  button.disabled = true;
+
+  showMessage("Logging in...");
+
+  try {
+
+    const { data, error } =
+
+      await supabase.auth.signInWithPassword({
+
+        email: email,
+
+        password: password
 
       });
 
-      if (error) {
+    if (error) {
 
-        showMessage(error.message);
+      showMessage("Login failed: " + error.message);
 
-        return;
-
-      }
-
-      document.getElementById("loginBox").style.display = "none";
-
-      document.getElementById("dashboard").style.display = "block";
-
-      await loadDashboard();
+      return;
 
     }
 
-    async function loadDashboard() {
+    if (!data.user) {
 
-      document.getElementById("listings").textContent = "Loading listings...";
+      showMessage("Login unsuccessful. Please try again.");
 
-      document.getElementById("orders").textContent = "Loading orders...";
+      return;
 
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
+    }
 
-      if (userError || !user) {
+    showMessage("Login successful!");
 
-        logout();
+    document.getElementById("loginBox").style.display = "none";
 
-        return;
+    document.getElementById("dashboard").style.display = "block";
 
-      }
+    await loadDashboard();
 
-      const { data: seller, error: sellerError } = await supabase
+  } catch (error) {
+
+    showMessage("Connection error: " + error.message);
+
+  } finally {
+
+    button.disabled = false;
+
+  }
+
+}
+
+async function loadDashboard() {
+
+  document.getElementById("listings").textContent =
+
+    "Loading listings...";
+
+  document.getElementById("orders").textContent =
+
+    "Loading orders...";
+
+  try {
+
+    const { data: { user }, error: userError } =
+
+      await supabase.auth.getUser();
+
+    if (userError || !user) {
+
+      await logout();
+
+      return;
+
+    }
+
+    const { data: seller, error: sellerError } =
+
+      await supabase
 
         .from("seller_registrations")
 
@@ -240,60 +448,314 @@
 
         .maybeSingle();
 
-      if (sellerError) {
+    if (sellerError) {
 
-        document.getElementById("listings").textContent = sellerError.message;
+      document.getElementById("sellerStatus").textContent =
 
-        return;
+        sellerError.message;
 
-      }
-
-      if (!seller) {
-
-        document.getElementById("sellerName").textContent = "Seller";
-
-        document.getElementById("sellerStatus").textContent = "No seller account is linked to this login.";
-
-        document.getElementById("listings").textContent = "No seller account found.";
-
-        document.getElementById("orders").textContent = "No orders available.";
-
-        return;
-
-      }
-
-      currentSeller = seller;
-
-      document.getElementById("sellerName").textContent = seller.seller_name || "Seller";
-
-      document.getElementById("sellerStatus").textContent = "Account status: " + seller.status;
-
-      if (seller.status !== "approved") {
-
-        document.getElementById("listings").textContent = "Your seller account must be approved first.";
-
-        document.getElementById("orders").textContent = "No orders available.";
-
-        return;
-
-      }
-
-      await loadListings();
-
-      await loadOrders();
+      return;
 
     }
 
-    async function loadListings() {
+    if (!seller) {
 
-      const { data, error } = await supabase
+      document.getElementById("sellerName").textContent = "Seller";
 
-        .from("data_listings")
+      document.getElementById("sellerStatus").textContent =
 
-        .select("id, bundle_size, price_ghs, status, network, data_size_gb")
+        "No seller account is linked to this login.";
 
-        .
+      document.getElementById("listings").textContent =
 
-Of course! No problem at all—let's keep it simple. I'll give you one complete, ready-to-go block of code for `seller.html` that you can just copy all at once.
+        "No seller account found.";
 
-Here it is—no extra steps:
+      document.getElementById("orders").textContent =
+
+        "No orders available.";
+
+      return;
+
+    }
+
+    currentSeller = seller;
+
+    document.getElementById("sellerName").textContent =
+
+      seller.seller_name || "Seller";
+
+    document.getElementById("sellerStatus").textContent =
+
+      "Account status: " + seller.status;
+
+    if (seller.status !== "approved") {
+
+      document.getElementById("listings").textContent =
+
+        "Your seller account must be approved first.";
+
+      document.getElementById("orders").textContent =
+
+        "No orders available.";
+
+      return;
+
+    }
+
+    await loadListings();
+
+    await loadOrders();
+
+  } catch (error) {
+
+    document.getElementById("sellerStatus").textContent =
+
+      "Dashboard error: " + error.message;
+
+  }
+
+}
+
+async function loadListings() {
+
+  const container = document.getElementById("listings");
+
+  const { data, error } = await supabase
+
+    .from("data_listings")
+
+    .select("id, bundle_size, price_ghs, status, network, data_size_gb")
+
+    .order("id", { ascending: false });
+
+  if (error) {
+
+    container.textContent = error.message;
+
+    return;
+
+  }
+
+  if (!data || data.length === 0) {
+
+    container.textContent = "You have no listings yet.";
+
+    return;
+
+  }
+
+  container.innerHTML = data.map(item => `
+
+    <div class="item">
+
+      <strong>${escapeHTML(item.bundle_size)}</strong>
+
+      <p>Price: ${money(item.price_ghs)}</p>
+
+      <p>Network: ${escapeHTML(item.network)}</p>
+
+      <p>Status: ${escapeHTML(item.status)}</p>
+
+    </div>
+
+  `).join("");
+
+}
+
+async function loadOrders() {
+
+  const container = document.getElementById("orders");
+
+  const { data, error } = await supabase
+
+    .from("data_orders")
+
+    .select(`
+
+      id,
+
+      listing_id,
+
+      buyer_contact,
+
+      amount_ghs,
+
+      platform_fee,
+
+      seller_amount,
+
+      status,
+
+      created_at
+
+    `)
+
+    .order("id", { ascending: false });
+
+  if (error) {
+
+    container.textContent = error.message;
+
+    return;
+
+  }
+
+  if (!data || data.length === 0) {
+
+    container.textContent = "No customer orders yet.";
+
+    document.getElementById("earnings").textContent = money(0);
+
+    return;
+
+  }
+
+  const earnings = data
+
+    .filter(order =>
+
+      ["paid", "completed"].includes(order.status)
+
+    )
+
+    .reduce((total, order) =>
+
+      total + Number(order.seller_amount || 0), 0
+
+    );
+
+  document.getElementById("earnings").textContent =
+
+    money(earnings);
+
+  container.innerHTML = data.map(order => `
+
+    <div class="item">
+
+      <strong>Order #${escapeHTML(order.id)}</strong>
+
+      <p>Buyer contact: ${escapeHTML(order.buyer_contact)}</p>
+
+      <p>Order amount: ${money(order.amount_ghs)}</p>
+
+      <p>Platform fee: ${money(order.platform_fee)}</p>
+
+      <p>Your earnings: ${money(order.seller_amount)}</p>
+
+      <p>Status: ${escapeHTML(order.status)}</p>
+
+      ${
+
+        order.status === "paid"
+
+        ? `<button onclick="completeOrder(${Number(order.id)}, this)">
+
+             Mark as Completed
+
+           </button>`
+
+        : ""
+
+      }
+
+    </div>
+
+  `).join("");
+
+}
+
+async function completeOrder(orderId, button) {
+
+  if (!confirm(
+
+    "Have you delivered the data to this customer? Only confirm after delivery."
+
+  )) {
+
+    return;
+
+  }
+
+  button.disabled = true;
+
+  button.textContent = "Updating...";
+
+  try {
+
+    const { data, error } =
+
+      await supabase.functions.invoke("complete-seller-order", {
+
+        body: { order_id: orderId }
+
+      });
+
+    if (error) {
+
+      throw error;
+
+    }
+
+    if (data && data.error) {
+
+      throw new Error(data.error);
+
+    }
+
+    alert("Order marked as completed.");
+
+    await loadOrders();
+
+  } catch (error) {
+
+    alert("Could not complete order: " + error.message);
+
+    button.disabled = false;
+
+    button.textContent = "Mark as Completed";
+
+  }
+
+}
+
+async function logout() {
+
+  await supabase.auth.signOut();
+
+  currentSeller = null;
+
+  document.getElementById("dashboard").style.display = "none";
+
+  document.getElementById("loginBox").style.display = "block";
+
+  document.getElementById("password").value = "";
+
+  showMessage("You have logged out.");
+
+}
+
+async function restoreSession() {
+
+  const { data: { session } } =
+
+    await supabase.auth.getSession();
+
+  if (session) {
+
+    document.getElementById("loginBox").style.display = "none";
+
+    document.getElementById("dashboard").style.display = "block";
+
+    await loadDashboard();
+
+  }
+
+}
+
+restoreSession();
+
+</script>
+
+</body>
+
+</html>

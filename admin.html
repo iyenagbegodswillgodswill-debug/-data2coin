@@ -252,8 +252,6 @@ SUPABASE_PUBLISHABLE_KEY
 
 );
 
-// GENERAL HELPERS
-
 function showMessage(id,message){
 
 const box=document.getElementById(id);
@@ -304,8 +302,6 @@ return button;
 
 }
 
-// ADMIN SECURITY
-
 async function verifyAdmin(){
 
 const {data,error}=await db.auth.getUser();
@@ -341,8 +337,6 @@ return false;
 return true;
 
 }
-
-// LOGIN
 
 async function login(){
 
@@ -398,8 +392,6 @@ button.textContent="Login to Dashboard";
 
 }
 
-// OPEN DASHBOARD
-
 async function openDashboard(){
 
 document.getElementById("loginSection").classList.add("hidden");
@@ -409,8 +401,6 @@ document.getElementById("dashboard").classList.remove("hidden");
 await refreshDashboard();
 
 }
-
-// REFRESH DASHBOARD
 
 async function refreshDashboard(){
 
@@ -433,8 +423,6 @@ return;
 await Promise.all([loadOrders(),loadApplications()]);
 
 }
-
-// LOAD ORDERS
 
 async function loadOrders(){
 
@@ -562,8 +550,6 @@ list.appendChild(card);
 
 }
 
-// UPDATE ORDER STATUS
-
 async function updateOrderStatus(orderId,newStatus){
 
 const messages={
@@ -609,8 +595,6 @@ alert("Order #"+orderId+" updated to "+newStatus+".");
 await loadOrders();
 
 }
-
-// LOAD SELLER APPLICATIONS
 
 async function loadApplications(){
 
@@ -701,8 +685,6 @@ renderSellers("suspendedList",groups.suspended,"suspended");
 renderSellers("rejectedList",groups.rejected,"rejected");
 
 }
-
-// RENDER SELLER LISTS
 
 function renderSellers(elementId,sellers,type){
 
@@ -812,7 +794,7 @@ container.appendChild(card);
 
 }
 
-// INVITE APPROVED SELLER
+// SELLER INVITATION
 
 async function inviteSeller(sellerId,emailInput,button){
 
@@ -848,7 +830,9 @@ throw new Error("Admin session expired. Please log in again.");
 
 }
 
-const {data,error}=await db.functions.invoke("invite-seller",{
+// IMPORTANT: This must match the actual deployed function URL slug.
+
+const {data,error}=await db.functions.invoke("quick-responder",{
 
 body:{
 
@@ -896,6 +880,8 @@ await loadApplications();
 
 alert("Invitation failed: "+error.message);
 
+}finally{
+
 button.disabled=false;
 
 button.textContent="Invite Seller";
@@ -903,8 +889,6 @@ button.textContent="Invite Seller";
 }
 
 }
-
-// APPROVE OR REJECT SELLER
 
 async function changeStatus(id,status){
 
@@ -933,8 +917,6 @@ alert("Seller application "+status+".");
 await loadApplications();
 
 }
-
-// SUSPEND SELLER
 
 async function suspendSeller(id){
 
@@ -978,8 +960,6 @@ await loadApplications();
 
 }
 
-// REACTIVATE SELLER
-
 async function reactivateSeller(id){
 
 if(!confirm("Reactivate this seller and make their listing available?"))return;
@@ -1022,8 +1002,6 @@ await loadApplications();
 
 }
 
-// LOGOUT
-
 async function logout(){
 
 await db.auth.signOut();
@@ -1035,8 +1013,6 @@ document.getElementById("loginSection").classList.remove("hidden");
 document.getElementById("password").value="";
 
 }
-
-// CHECK EXISTING SESSION
 
 async function checkSession(){
 

@@ -4,512 +4,296 @@
 
 <head>
 
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data2Coin Ghana - Seller Dashboard</title>
+  <title>Data2Coin Ghana - Seller Dashboard</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<style>
+  <style>
 
-*{box-sizing:border-box}
+    * { box-sizing: border-box; }
 
-body{margin:0;background:#101010;color:white;font-family:Arial,sans-serif}
+    body { margin: 0; background: #101010; color: white; font-family: Arial, sans-serif; }
 
-header{background:#ffcc00;color:#111;padding:20px;text-align:center}
+    header { background: #ffcc00; color: #111; padding: 20px; text-align: center; }
 
-header h2{margin:0}
+    header h2 { margin: 0; }
 
-.container{max-width:850px;margin:25px auto;padding:15px}
+    .container { max-width: 850px; margin: 25px auto; padding: 15px; }
 
-.card{background:#1d1d1d;border:1px solid #333;border-radius:12px;padding:20px;margin-bottom:18px}
+    .card { background: #1d1d1d; border: 1px solid #333; border-radius: 12px; padding: 20px; margin-bottom: 18px; }
 
-h3{color:#ffcc00;margin-top:0}
+    h3 { color: #ffcc00; margin-top: 0; }
 
-input{width:100%;padding:14px;margin:8px 0;background:#111;color:white;border:1px solid #555;border-radius:7px}
+    input { width: 100%; padding: 14px; margin: 8px 0; background: #111; color: white; border: 1px solid #555; border-radius: 7px; }
 
-button{padding:12px 18px;background:#ffcc00;color:#111;border:0;border-radius:7px;font-weight:bold;cursor:pointer;margin:5px 0}
+    button { padding: 12px 18px; background: #ffcc00; color: #111; border: 0; border-radius: 7px; font-weight: bold; cursor: pointer; margin: 5px 0; }
 
-button:disabled{opacity:.5}
+    button:disabled { opacity: .5; cursor: not-allowed; }
 
-.secondary{background:#333;color:white}
+    .secondary { background: #333; color: white; }
 
-.stat{display:inline-block;background:#292929;padding:15px;border-radius:8px;margin:5px;min-width:135px}
+    .stat { display: inline-block; background: #292929; padding: 15px; border-radius: 8px; margin: 5px; min-width: 135px; }
 
-.stat strong{display:block;font-size:22px;color:#ffcc00;margin-top:8px}
+    .stat strong { display: block; font-size: 22px; color: #ffcc00; margin-top: 8px; }
 
-.item{border-top:1px solid #444;padding:14px 0}
+    .item { border-top: 1px solid #444; padding: 14px 0; }
 
-.small{color:#bbb;font-size:13px}
+    .small { color: #bbb; font-size: 13px; }
 
-#dashboard{display:none}
+    #dashboard { display: none; }
 
-#message{margin:12px 0;color:#ffcc00}
+    #message { margin: 12px 0; color: #ffcc00; }
 
-.status{color:#ffcc00;font-weight:bold}
+    .status { color: #ffcc00; font-weight: bold; }
 
-footer{text-align:center;color:#888;padding:25px}
+    footer { text-align: center; color: #888; padding: 25px; }
 
-</style>
+  </style>
 
 </head>
 
 <body>
 
-<header>
+  <header>
 
-<h2>Data2Coin 🇬🇭</h2>
+    <h2>Data2Coin 🇬🇭</h2>
 
-<p>Seller Dashboard</p>
+    <p>Seller Dashboard</p>
 
-</header>
+  </header>
 
-<div class="container">
+  <div class="container">
 
-<div class="card" id="loginBox">
+    <!-- Login Section -->
 
-<h3>Seller Login</h3>
+    <div class="card" id="loginBox">
 
-<p class="small">Log in with the email and password connected to your approved seller account.</p>
+      <h3>Seller Login</h3>
 
-<input id="email" type="email" placeholder="Email address">
+      <p class="small">Log in with the email and password connected to your approved seller account.</p>
 
-<input id="password" type="password" placeholder="Password">
+      <input id="email" type="email" placeholder="Email address">
 
-<button onclick="login()">Login</button>
+      <input id="password" type="password" placeholder="Password">
 
-<p id="message"></p>
+      <button onclick="login()">Login</button>
 
-</div>
+      <p id="message"></p>
 
-<div id="dashboard">
+    </div>
 
-<div class="card">
+    <!-- Dashboard Section -->
 
-<h3>Welcome, <span id="sellerName">Seller</span> 👋</h3>
+    <div id="dashboard">
 
-<p id="sellerStatus" class="status"></p>
+      <div class="card">
 
-<button class="secondary" onclick="loadDashboard()">Refresh Dashboard</button>
+        <h3>Welcome, <span id="sellerName">Seller</span> 👋</h3>
 
-<button class="secondary" onclick="logout()">Logout</button>
+        <p id="sellerStatus" class="status"></p>
 
-</div>
+        <button class="secondary" onclick="loadDashboard()">Refresh Dashboard</button>
 
-<div class="card">
-
-<h3>My Earnings</h3>
-
-<div class="stat">
-
-Paid + Completed
-
-<strong id="earnings">GH₵ 0.00</strong>
-
-</div>
-
-<p class="small">Recorded seller earnings. This does not confirm money has been received or withdrawn.</p>
-
-</div>
-
-<div class="card">
-
-<h3>My Data Listings</h3>
-
-<div id="listings">Loading listings...</div>
-
-</div>
-
-<div class="card">
-
-<h3>Customer Orders</h3>
-
-<div id="orders">Loading orders...</div>
-
-</div>
-
-</div>
-
-</div>
-
-<footer>Data2Coin Ghana · Seller Portal</footer>
-
-<script>
-
-const SUPABASE_URL = "https://lulbwtfxavlddcemyfyx.supabase.co";
-
-// Paste your existing Supabase PUBLISHABLE key here.
-
-const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_PUBLISHABLE_KEY_HERE";
-
-const supabase = window.supabase.createClient(
-
-  SUPABASE_URL,
-
-  SUPABASE_PUBLISHABLE_KEY
-
-);
-
-let currentListings = [];
-
-function money(value){
-
-  return "GH₵ " + Number(value || 0).toFixed(2);
-
-}
-
-function showMessage(message){
-
-  document.getElementById("message").textContent = message;
-
-}
-
-function escapeHTML(value){
-
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-
-    "&":"&amp;",
-
-    "<":"&lt;",
-
-    ">":"&gt;",
-
-    '"':"&quot;",
-
-    "'":"&#039;"
-
-  })[char]);
-
-}
-
-async function login(){
-
-  const email = document.getElementById("email").value.trim();
-
-  const password = document.getElementById("password").value;
-
-  if(!email || !password){
-
-    showMessage("Enter your email and password.");
-
-    return;
-
-  }
-
-  showMessage("Logging in...");
-
-  const {data,error} = await supabase.auth.signInWithPassword({
-
-    email,
-
-    password
-
-  });
-
-  if(error){
-
-    showMessage(error.message);
-
-    return;
-
-  }
-
-  document.getElementById("loginBox").style.display = "none";
-
-  document.getElementById("dashboard").style.display = "block";
-
-  await loadDashboard();
-
-}
-
-async function loadDashboard(){
-
-  document.getElementById("listings").textContent = "Loading listings...";
-
-  document.getElementById("orders").textContent = "Loading orders...";
-
-  const {data:{user},error:userError} = await supabase.auth.getUser();
-
-  if(userError || !user){
-
-    await logout();
-
-    return;
-
-  }
-
-  const {data:seller,error:sellerError} = await supabase
-
-    .from("seller_registrations")
-
-    .select("id,seller_name,status")
-
-    .eq("auth_user_id",user.id)
-
-    .maybeSingle();
-
-  if(sellerError){
-
-    document.getElementById("sellerStatus").textContent = sellerError.message;
-
-    return;
-
-  }
-
-  if(!seller){
-
-    document.getElementById("sellerName").textContent = "Seller";
-
-    document.getElementById("sellerStatus").textContent =
-
-      "No seller account is linked to this login.";
-
-    document.getElementById("listings").textContent = "No seller account found.";
-
-    document.getElementById("orders").textContent = "No orders available.";
-
-    return;
-
-  }
-
-  document.getElementById("sellerName").textContent =
-
-    seller.seller_name || "Seller";
-
-  document.getElementById("sellerStatus").textContent =
-
-    "Account status: " + seller.status;
-
-  if(seller.status !== "approved"){
-
-    document.getElementById("listings").textContent =
-
-      "Your seller account must be approved first.";
-
-    document.getElementById("orders").textContent = "No orders available.";
-
-    return;
-
-  }
-
-  await loadListings();
-
-  await loadOrders();
-
-}
-
-async function loadListings(){
-
-  const {data,error} = await supabase
-
-    .from("data_listings")
-
-    .select("id,bundle_size,price_ghs,status,network,data_size_gb")
-
-    .order("id",{ascending:false});
-
-  if(error){
-
-    document.getElementById("listings").textContent = error.message;
-
-    return;
-
-  }
-
-  currentListings = data || [];
-
-  if(!currentListings.length){
-
-    document.getElementById("listings").textContent =
-
-      "You do not have any listings yet.";
-
-    return;
-
-  }
-
-  document.getElementById("listings").innerHTML =
-
-    currentListings.map(item => `
-
-      <div class="item">
-
-        <strong>${escapeHTML(item.bundle_size || "Data bundle")}</strong>
-
-        <p>Price: ${money(item.price_ghs)}</p>
-
-        <p>Network: ${escapeHTML(item.network || "MTN")}</p>
-
-        <p>Status: <span class="status">${escapeHTML(item.status)}</span></p>
-
-        <p class="small">Listing #${item.id}</p>
+        <button class="secondary" onclick="logout()">Logout</button>
 
       </div>
 
-    `).join("");
+      <!-- Earnings -->
 
-}
+      <div class="card">
 
-async function loadOrders(){
+        <h3>My Earnings</h3>
 
-  const {data,error} = await supabase
+        <div class="stat">Paid + Completed
 
-    .from("data_orders")
-
-    .select("id,listing_id,buyer_contact,amount_ghs,platform_fee,seller_amount,status,created_at")
-
-    .order("id",{ascending:false});
-
-  if(error){
-
-    document.getElementById("orders").textContent = error.message;
-
-    return;
-
-  }
-
-  const orders = data || [];
-
-  const earnings = orders
-
-    .filter(o => ["paid","completed"].includes(o.status))
-
-    .reduce((total,o) => total + Number(o.seller_amount || 0),0);
-
-  document.getElementById("earnings").textContent = money(earnings);
-
-  if(!orders.length){
-
-    document.getElementById("orders").textContent = "No customer orders yet.";
-
-    return;
-
-  }
-
-  document.getElementById("orders").innerHTML =
-
-    orders.map(order => {
-
-      const listing = currentListings.find(
-
-        item => item.id === order.listing_id
-
-      );
-
-      const bundle = listing ? listing.bundle_size : "Data bundle";
-
-      const completeButton = order.status === "paid"
-
-        ? `<button onclick="completeOrder(${order.id},this)">Mark as Completed</button>`
-
-        : "";
-
-      return `
-
-        <div class="item">
-
-          <strong>Order #${order.id}</strong>
-
-          <p>Bundle: ${escapeHTML(bundle)}</p>
-
-          <p>Buyer contact: ${escapeHTML(order.buyer_contact || "Not provided")}</p>
-
-          <p>Order amount: ${money(order.amount_ghs)}</p>
-
-          <p>Your earnings: ${money(order.seller_amount)}</p>
-
-          <p>Status: <span class="status">${escapeHTML(order.status)}</span></p>
-
-          <p class="small">${new Date(order.created_at).toLocaleString()}</p>
-
-          ${completeButton}
+          <strong id="earnings">GH₵ 0.00</strong>
 
         </div>
 
-      `;
+        <p class="small">Recorded seller earnings. This does not confirm money has been received or withdrawn.</p>
 
-    }).join("");
+      </div>
 
-}
+      <!-- Listings -->
 
-async function completeOrder(orderId,button){
+      <div class="card">
 
-  const confirmed = confirm(
+        <h3>My Data Listings</h3>
 
-    "Have you delivered the data for order #" + orderId + "?\n\nOnly continue if delivery is complete."
+        <div id="listings">Loading listings...</div>
 
-  );
+      </div>
 
-  if(!confirmed) return;
+      <!-- Orders -->
 
-  button.disabled = true;
+      <div class="card">
 
-  button.textContent = "Processing...";
+        <h3>Customer Orders</h3>
 
-  const {data,error} = await supabase.functions.invoke(
+        <div id="orders">Loading orders...</div>
 
-    "complete-seller-order",
+      </div>
 
-    {body:{order_id:orderId}}
+    </div>
 
-  );
+  </div>
 
-  if(error || (data && data.error)){
+  <footer>Data2Coin Ghana · Seller Portal</footer>
 
-    alert("Could not complete order: " +
+  <script>
 
-      (data?.error || error?.message || "Unknown error"));
+    const SUPABASE_URL = "https://lulbwtfxavlddcemyfyx.supabase.co";
 
-    button.disabled = false;
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_-jijVrjmTRU_HJDX33euyw_y89CrW7j"; // Replace with your actual key if needed
 
-    button.textContent = "Mark as Completed";
+    const supabase = window.supabase.createClient(
 
-    return;
+      SUPABASE_URL,
 
-  }
+      SUPABASE_PUBLISHABLE_KEY
 
-  alert("Order #" + orderId + " marked as completed.");
+    );
 
-  await loadDashboard();
+    let currentSeller = null;
 
-}
+    let currentListings = [];
 
-async function logout(){
+    function money(value) {
 
-  await supabase.auth.signOut();
+      return "GH₵ " + Number(value || 0).toFixed(2);
 
-  currentListings = [];
+    }
 
-  document.getElementById("dashboard").style.display = "none";
+    function showMessage(message) {
 
-  document.getElementById("loginBox").style.display = "block";
+      document.getElementById("message").textContent = message;
 
-  showMessage("You have logged out.");
+    }
 
-}
+    async function login() {
 
-async function checkSession(){
+      const email = document.getElementById("email").value.trim();
 
-  const {data:{session}} = await supabase.auth.getSession();
+      const password = document.getElementById("password").value;
 
-  if(session){
+      if (!email || !password) {
 
-    document.getElementById("loginBox").style.display = "none";
+        showMessage("Enter your email and password.");
 
-    document.getElementById("dashboard").style.display = "block";
+        return;
 
-    await loadDashboard();
+      }
 
-  }
+      showMessage("Logging in...");
 
-}
+      const { data, error } = await supabase.auth.signInWithPassword({
 
-checkSession();
+        email,
 
-</script>
+        password
 
-</body>
+      });
 
-</html>
+      if (error) {
+
+        showMessage(error.message);
+
+        return;
+
+      }
+
+      document.getElementById("loginBox").style.display = "none";
+
+      document.getElementById("dashboard").style.display = "block";
+
+      await loadDashboard();
+
+    }
+
+    async function loadDashboard() {
+
+      document.getElementById("listings").textContent = "Loading listings...";
+
+      document.getElementById("orders").textContent = "Loading orders...";
+
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+
+      if (userError || !user) {
+
+        logout();
+
+        return;
+
+      }
+
+      const { data: seller, error: sellerError } = await supabase
+
+        .from("seller_registrations")
+
+        .select("id, seller_name, status")
+
+        .eq("auth_user_id", user.id)
+
+        .maybeSingle();
+
+      if (sellerError) {
+
+        document.getElementById("listings").textContent = sellerError.message;
+
+        return;
+
+      }
+
+      if (!seller) {
+
+        document.getElementById("sellerName").textContent = "Seller";
+
+        document.getElementById("sellerStatus").textContent = "No seller account is linked to this login.";
+
+        document.getElementById("listings").textContent = "No seller account found.";
+
+        document.getElementById("orders").textContent = "No orders available.";
+
+        return;
+
+      }
+
+      currentSeller = seller;
+
+      document.getElementById("sellerName").textContent = seller.seller_name || "Seller";
+
+      document.getElementById("sellerStatus").textContent = "Account status: " + seller.status;
+
+      if (seller.status !== "approved") {
+
+        document.getElementById("listings").textContent = "Your seller account must be approved first.";
+
+        document.getElementById("orders").textContent = "No orders available.";
+
+        return;
+
+      }
+
+      await loadListings();
+
+      await loadOrders();
+
+    }
+
+    async function loadListings() {
+
+      const { data, error } = await supabase
+
+        .from("data_listings")
+
+        .select("id, bundle_size, price_ghs, status, network, data_size_gb")
+
+        .
+
+Of course! No problem at all—let's keep it simple. I'll give you one complete, ready-to-go block of code for `seller.html` that you can just copy all at once.
+
+Here it is—no extra steps:

@@ -460,19 +460,13 @@ hr {
 
 <main class="container">
 
-<!-- HOME PAGE -->
+<!-- HOME -->
 
 <section class="page active" id="home">
 
     <div class="card hero">
 
-        <h1>
-
-            Your Data.<br>
-
-            Your Money.
-
-        </h1>
+        <h1>Your Data.<br>Your Money.</h1>
 
         <p>
 
@@ -496,9 +490,9 @@ hr {
 
         <p>
 
-            Data2Coin is designed to make buying and selling
+            Data2Coin makes buying and selling MTN data
 
-            MTN data bundles easier in Ghana.
+            bundles easier in Ghana.
 
         </p>
 
@@ -508,7 +502,7 @@ hr {
 
         <p><strong class="gold">Currency:</strong> Ghana Cedis (GH₵)</p>
 
-        <p><strong class="gold">Planned platform fee:</strong> 2%</p>
+        <p><strong class="gold">Platform fee:</strong> 2%</p>
 
     </div>
 
@@ -518,17 +512,19 @@ hr {
 
         <p>1. Browse available data bundles.</p>
 
-        <p>2. Choose a bundle and submit your phone number.</p>
+        <p>2. Choose your preferred bundle.</p>
 
-        <p>3. Your order is recorded.</p>
+        <p>3. Enter your phone number and email.</p>
 
-        <p>4. Payment and data delivery will be introduced after testing.</p>
+        <p>4. Continue to Paystack Mobile Money checkout.</p>
+
+        <p>5. Your payment is verified before your order is marked paid.</p>
 
     </div>
 
     <div class="card">
 
-        <h2>Want to become a seller?</h2>
+        <h2>Become a Seller</h2>
 
         <p>
 
@@ -548,7 +544,7 @@ hr {
 
 </section>
 
-<!-- BUY DATA PAGE -->
+<!-- BUY DATA -->
 
 <section class="page" id="data">
 
@@ -556,11 +552,7 @@ hr {
 
         <h2>Available Data</h2>
 
-        <p>
-
-            Browse available MTN data bundles from approved sellers.
-
-        </p>
+        <p>Browse available MTN data bundles from approved sellers.</p>
 
         <div id="status" class="status-message">
 
@@ -582,7 +574,7 @@ hr {
 
 </section>
 
-<!-- SELL DATA PAGE -->
+<!-- SELL -->
 
 <section class="page" id="sell">
 
@@ -602,63 +594,29 @@ hr {
 
             <label>Your name</label>
 
-            <input
+            <input type="text" id="sellerName"
 
-                type="text"
-
-                id="sellerName"
-
-                placeholder="Enter your name"
-
-                required
-
-            >
+                placeholder="Enter your name" required>
 
             <label>MTN phone number</label>
 
-            <input
+            <input type="tel" id="sellerContact"
 
-                type="tel"
-
-                id="sellerContact"
-
-                placeholder="Example: 0241234567"
-
-                required
-
-            >
+                placeholder="Example: 0241234567" required>
 
             <label>Data bundle</label>
 
-            <input
+            <input type="text" id="bundleSize"
 
-                type="text"
-
-                id="bundleSize"
-
-                placeholder="Example: 5 GB"
-
-                required
-
-            >
+                placeholder="Example: 5 GB" required>
 
             <label>Selling price (GH₵)</label>
 
-            <input
-
-                type="number"
-
-                id="sellerPrice"
+            <input type="number" id="sellerPrice"
 
                 placeholder="Enter your price"
 
-                min="0.01"
-
-                step="0.01"
-
-                required
-
-            >
+                min="0.01" step="0.01" required>
 
             <button class="primary" type="submit" id="sellerSubmit">
 
@@ -688,7 +646,7 @@ hr {
 
 </section>
 
-<!-- PAYMENTS PAGE -->
+<!-- PAYMENTS -->
 
 <section class="page" id="payments">
 
@@ -698,41 +656,45 @@ hr {
 
         <p>
 
-            Mobile Money payment integration is planned for
+            Data2Coin uses Paystack to provide a Mobile Money
 
-            Data2Coin Ghana.
+            checkout experience.
 
         </p>
+
+        <hr>
+
+        <p><strong class="gold">Payment method:</strong></p>
+
+        <p>Mobile Money</p>
+
+        <p><strong class="gold">Currency:</strong></p>
+
+        <p>Ghana Cedis (GH₵)</p>
+
+        <p><strong class="gold">Platform fee:</strong></p>
+
+        <p>2% of successful orders.</p>
 
         <div class="notice">
 
             <p>
 
-                Payment integration is not active yet.
+                This website is currently undergoing payment testing.
 
-                Do not send money to anyone claiming to collect
+                Only use authorised test transactions until live
 
-                payments on behalf of this demo website.
+                payment processing has been fully approved.
 
             </p>
 
         </div>
 
-        <hr>
-
-        <p><strong class="gold">Planned payment method:</strong></p>
-
-        <p>MTN Mobile Money</p>
-
-        <p><strong class="gold">Planned platform fee:</strong></p>
-
-        <p>2% of each successful order.</p>
-
     </div>
 
 </section>
 
-<!-- AIRTIME PAGE -->
+<!-- AIRTIME -->
 
 <section class="page" id="airtime">
 
@@ -758,7 +720,7 @@ hr {
 
 </section>
 
-<!-- MY ACCOUNT PAGE -->
+<!-- ACCOUNT -->
 
 <section class="page" id="account">
 
@@ -786,55 +748,55 @@ hr {
 
 </main>
 
-<!-- BOTTOM NAVIGATION -->
+<!-- NAVIGATION -->
 
 <nav class="bottom-nav">
 
-    <button class="nav-button active" data-page="home" onclick="showPage('home')">
+    <button class="nav-button active" data-page="home"
 
-        <span>🏠</span>
+        onclick="showPage('home')">
 
-        Home
-
-    </button>
-
-    <button class="nav-button" data-page="data" onclick="showPage('data')">
-
-        <span>📶</span>
-
-        Buy Data
+        <span>🏠</span>Home
 
     </button>
 
-    <button class="nav-button" data-page="sell" onclick="showPage('sell')">
+    <button class="nav-button" data-page="data"
 
-        <span>💼</span>
+        onclick="showPage('data')">
 
-        Sell
-
-    </button>
-
-    <button class="nav-button" data-page="payments" onclick="showPage('payments')">
-
-        <span>💳</span>
-
-        Payments
+        <span>📶</span>Buy Data
 
     </button>
 
-    <button class="nav-button" data-page="airtime" onclick="showPage('airtime')">
+    <button class="nav-button" data-page="sell"
 
-        <span>📱</span>
+        onclick="showPage('sell')">
 
-        Airtime
+        <span>💼</span>Sell
 
     </button>
 
-    <button class="nav-button" data-page="account" onclick="showPage('account')">
+    <button class="nav-button" data-page="payments"
 
-        <span>👤</span>
+        onclick="showPage('payments')">
 
-        Account
+        <span>💳</span>Payments
+
+    </button>
+
+    <button class="nav-button" data-page="airtime"
+
+        onclick="showPage('airtime')">
+
+        <span>📱</span>Airtime
+
+    </button>
+
+    <button class="nav-button" data-page="account"
+
+        onclick="showPage('account')">
+
+        <span>👤</span>Account
 
     </button>
 
@@ -846,7 +808,7 @@ hr {
 
     Connecting data buyers and sellers.<br>
 
-    Demo preview — real payments are not active yet.
+    Payment testing in progress.
 
 </footer>
 
@@ -934,27 +896,19 @@ async function loadListings() {
 
             .order("id", { ascending: false });
 
-        if (error) {
-
-            throw error;
-
-        }
+        if (error) throw error;
 
         if (!data || data.length === 0) {
 
-            status.textContent = "No available data bundles at the moment.";
+            status.textContent =
+
+                "No available data bundles at the moment.";
 
             listings.innerHTML = `
 
                 <div class="card">
 
-                    <p>
-
-                        New bundles will appear here when sellers
-
-                        are approved.
-
-                    </p>
+                    <p>New bundles will appear here when sellers are approved.</p>
 
                 </div>
 
@@ -1012,19 +966,7 @@ async function loadListings() {
 
             });
 
-            card.append(
-
-                size,
-
-                network,
-
-                price,
-
-                badge,
-
-                button
-
-            );
+            card.append(size, network, price, badge, button);
 
             listings.appendChild(card);
 
@@ -1042,13 +984,7 @@ async function loadListings() {
 
             <div class="card">
 
-                <p>
-
-                    There was a problem connecting to the marketplace.
-
-                    Please try again later.
-
-                </p>
+                <p>There was a problem connecting to the marketplace.</p>
 
             </div>
 
@@ -1058,17 +994,13 @@ async function loadListings() {
 
 }
 
-/* BUYER ORDER FORM */
+/* BUYER ORDER AND PAYMENT FORM */
 
 function openOrderForm(item, card) {
 
     const oldForm = document.getElementById("buyerOrderForm");
 
-    if (oldForm) {
-
-        oldForm.remove();
-
-    }
+    if (oldForm) oldForm.remove();
 
     const form = document.createElement("form");
 
@@ -1088,17 +1020,29 @@ function openOrderForm(item, card) {
 
         Number(item.price_ghs).toFixed(2);
 
-    const label = document.createElement("label");
+    const phoneLabel = document.createElement("label");
 
-    label.textContent = "Your MTN phone number";
+    phoneLabel.textContent = "Your MTN phone number";
 
-    const input = document.createElement("input");
+    const phoneInput = document.createElement("input");
 
-    input.type = "tel";
+    phoneInput.type = "tel";
 
-    input.placeholder = "Example: 0241234567";
+    phoneInput.placeholder = "Example: 0241234567";
 
-    input.required = true;
+    phoneInput.required = true;
+
+    const emailLabel = document.createElement("label");
+
+    emailLabel.textContent = "Your email address";
+
+    const emailInput = document.createElement("input");
+
+    emailInput.type = "email";
+
+    emailInput.placeholder = "Example: you@example.com";
+
+    emailInput.required = true;
 
     const submit = document.createElement("button");
 
@@ -1106,7 +1050,7 @@ function openOrderForm(item, card) {
 
     submit.className = "primary";
 
-    submit.textContent = "Submit Order";
+    submit.textContent = "Continue to Mobile Money Payment";
 
     const message = document.createElement("p");
 
@@ -1118,9 +1062,13 @@ function openOrderForm(item, card) {
 
         description,
 
-        label,
+        phoneLabel,
 
-        input,
+        phoneInput,
+
+        emailLabel,
+
+        emailInput,
 
         submit,
 
@@ -1134,15 +1082,23 @@ function openOrderForm(item, card) {
 
         event.preventDefault();
 
-        const phone = input.value.trim();
+        const phone = phoneInput.value.trim();
+
+        const email = emailInput.value.trim();
 
         const digits = phone.replace(/\D/g, "");
 
         if (digits.length < 9 || digits.length > 15) {
 
-            message.textContent =
+            message.textContent = "Please enter a valid phone number.";
 
-                "Please enter a valid phone number.";
+            return;
+
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+
+            message.textContent = "Please enter a valid email address.";
 
             return;
 
@@ -1150,47 +1106,89 @@ function openOrderForm(item, card) {
 
         submit.disabled = true;
 
-        submit.textContent = "Submitting...";
+        submit.textContent = "Preparing payment...";
 
-        message.textContent = "";
+        message.textContent = "Creating your order securely...";
 
         try {
 
-            const { error } = await supabaseClient
+            const { data, error } =
 
-                .from("data_orders")
+                await supabaseClient.functions.invoke(
 
-                .insert([{
+                    "initialize-payment",
 
-                    listing_id: Number(item.id),
+                    {
 
-                    buyer_contact: phone
+                        body: {
 
-                }]);
+                            listing_id: Number(item.id),
+
+                            buyer_contact: phone,
+
+                            email: email
+
+                        }
+
+                    }
+
+                );
 
             if (error) {
 
-                throw error;
+                console.error("Payment function error:", error);
+
+                throw new Error(
+
+                    data?.error || error.message ||
+
+                    "Could not connect to payment service."
+
+                );
+
+            }
+
+            if (
+
+                !data ||
+
+                !data.success ||
+
+                !data.authorization_url
+
+            ) {
+
+                throw new Error(
+
+                    data?.error || "Payment could not be started."
+
+                );
 
             }
 
             message.textContent =
 
-                "Your order has been submitted successfully. Payment is not active yet.";
+                "Order #" + data.order_id +
 
-            submit.textContent = "Order Submitted";
+                " created. Redirecting to secure checkout...";
+
+            submit.textContent = "Opening Paystack...";
+
+            window.location.href = data.authorization_url;
 
         } catch (error) {
 
-            console.error("Order error:", error);
+            console.error("Checkout error:", error);
 
             message.textContent =
 
-                "Order failed. Please check your details and try again.";
+                error.message ||
+
+                "Payment could not be started. Please try again.";
 
             submit.disabled = false;
 
-            submit.textContent = "Submit Order";
+            submit.textContent = "Try Payment Again";
 
         }
 
@@ -1286,11 +1284,7 @@ document.getElementById("sellerForm")
 
             }]);
 
-        if (error) {
-
-            throw error;
-
-        }
+        if (error) throw error;
 
         message.textContent =
 

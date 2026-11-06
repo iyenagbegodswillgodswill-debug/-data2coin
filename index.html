@@ -1,623 +1,1573 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <meta name="description" content="Data2Coin Ghana - Buy and sell MTN data bundles in Ghana.">
+
 <meta name="theme-color" content="#11140f">
+
 <title>Data2Coin Ghana</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
+
 *{box-sizing:border-box;margin:0;padding:0}
+
 :root{
+
 --gold:#ffcc00;
+
 --dark:#11140f;
+
 --card:#1d211a;
+
 --text:#fff;
+
 --muted:#b8bcae;
+
 --green:#3bd477;
+
 --red:#ff7777;
+
 }
+
 body{
+
 background:var(--dark);
+
 color:var(--text);
+
 font-family:Arial,sans-serif;
+
 min-height:100vh;
+
 }
+
 .app{min-height:100vh;padding-bottom:100px}
+
 header{
+
 background:#191d16;
+
 padding:24px 18px;
+
 border-bottom:1px solid #34392e;
+
 }
-.logo{font-size:27px;font-weight:900;color:var(--gold)}
-.tagline{font-size:15px;color:var(--muted);margin-top:8px}
-.container{padding:18px;max-width:700px;margin:auto}
+
+.logo{
+
+font-size:27px;
+
+font-weight:900;
+
+color:var(--gold);
+
+}
+
+.tagline{
+
+font-size:15px;
+
+color:var(--muted);
+
+margin-top:8px;
+
+}
+
+.container{
+
+padding:18px;
+
+max-width:700px;
+
+margin:auto;
+
+}
+
 .page{display:none}
+
 .page.active{display:block}
+
 .card{
+
 background:var(--card);
+
 border:1px solid #34392e;
+
 border-radius:18px;
+
 padding:20px;
+
 margin-bottom:18px;
+
 }
+
 .hero{
+
 background:linear-gradient(135deg,#30301b,#191d16);
+
 border:1px solid #665719;
+
 padding:25px 20px;
+
 }
+
 h1{font-size:30px;line-height:1.25;margin-bottom:12px}
+
 h2{font-size:24px;margin-bottom:15px}
+
 h3{font-size:19px;margin-bottom:12px}
-p{font-size:16px;line-height:1.6;color:var(--muted)}
+
+p{
+
+font-size:16px;
+
+line-height:1.6;
+
+color:var(--muted);
+
+}
+
 .gold{color:var(--gold)}
+
 .green{color:var(--green)}
+
 button{
-border:none;border-radius:12px;padding:15px 18px;
-font-size:16px;font-weight:bold;cursor:pointer;
-width:100%;margin-top:12px;
+
+border:none;
+
+border-radius:12px;
+
+padding:15px 18px;
+
+font-size:16px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+width:100%;
+
+margin-top:12px;
+
 }
+
 .primary{background:var(--gold);color:#17170f}
+
 .secondary{background:#34392e;color:white}
-button:disabled{opacity:.55;cursor:not-allowed}
+
+button:disabled{
+
+opacity:.55;
+
+cursor:not-allowed;
+
+}
+
 input,select,textarea{
-width:100%;padding:15px;border-radius:10px;
-border:1px solid #515747;background:#11140f;
-color:white;font-size:16px;margin-top:8px;margin-bottom:16px;
+
+width:100%;
+
+padding:15px;
+
+border-radius:10px;
+
+border:1px solid #515747;
+
+background:#11140f;
+
+color:white;
+
+font-size:16px;
+
+margin-top:8px;
+
+margin-bottom:16px;
+
 }
-label{display:block;font-size:15px;font-weight:bold;margin-top:12px}
+
+label{
+
+display:block;
+
+font-size:15px;
+
+font-weight:bold;
+
+margin-top:12px;
+
+}
+
 .data-card{
-border:1px solid #444b39;border-radius:15px;
-padding:18px;margin-bottom:15px;background:#24291f;
+
+border:1px solid #444b39;
+
+border-radius:15px;
+
+padding:18px;
+
+margin-bottom:15px;
+
+background:#24291f;
+
 }
-.data-size{font-size:25px;font-weight:bold;color:var(--gold)}
-.price{font-size:21px;font-weight:bold;margin-top:8px}
+
+.data-size{
+
+font-size:25px;
+
+font-weight:bold;
+
+color:var(--gold);
+
+}
+
+.price{
+
+font-size:21px;
+
+font-weight:bold;
+
+margin-top:8px;
+
+}
+
 .badge{
-display:inline-block;background:#173d27;color:#65ed98;
-padding:7px 12px;border-radius:20px;font-size:13px;margin-top:10px;
+
+display:inline-block;
+
+background:#173d27;
+
+color:#65ed98;
+
+padding:7px 12px;
+
+border-radius:20px;
+
+font-size:13px;
+
+margin-top:10px;
+
 }
+
 .notice{
-background:#3b3214;border:1px solid #756321;
-padding:15px;border-radius:12px;margin-top:15px;
+
+background:#3b3214;
+
+border:1px solid #756321;
+
+padding:15px;
+
+border-radius:12px;
+
+margin-top:15px;
+
 }
+
 .notice p{color:#ffe58a}
-.status-message{font-size:15px;margin-top:12px;overflow-wrap:anywhere}
-.order-box{
-background:#24291f;border:1px solid #665719;
-border-radius:14px;padding:16px;margin-top:15px;
+
+.status-message{
+
+font-size:15px;
+
+margin-top:12px;
+
 overflow-wrap:anywhere;
+
 }
-.order-code{font-size:18px;color:var(--gold);font-weight:bold;word-break:break-all}
-.small{font-size:13px;color:var(--muted)}
+
+.order-box{
+
+background:#24291f;
+
+border:1px solid #665719;
+
+border-radius:14px;
+
+padding:16px;
+
+margin-top:15px;
+
+overflow-wrap:anywhere;
+
+}
+
+.order-code{
+
+font-size:18px;
+
+color:var(--gold);
+
+font-weight:bold;
+
+word-break:break-all;
+
+}
+
+.small{
+
+font-size:13px;
+
+color:var(--muted);
+
+}
+
 .bottom-nav{
-position:fixed;bottom:0;left:0;width:100%;
-background:#191d16;border-top:1px solid #444b39;
-display:flex;justify-content:space-around;
+
+position:fixed;
+
+bottom:0;
+
+left:0;
+
+width:100%;
+
+background:#191d16;
+
+border-top:1px solid #444b39;
+
+display:flex;
+
+justify-content:space-around;
+
 padding:10px 3px calc(10px + env(safe-area-inset-bottom));
+
 z-index:100;
+
 }
+
 .nav-button{
-background:transparent;color:#b8bcae;font-size:11px;
-padding:7px 2px;margin:0;width:16.66%;
+
+background:transparent;
+
+color:#b8bcae;
+
+font-size:11px;
+
+padding:7px 2px;
+
+margin:0;
+
+width:16.66%;
+
 }
-.nav-button span{display:block;font-size:21px;margin-bottom:5px}
+
+.nav-button span{
+
+display:block;
+
+font-size:21px;
+
+margin-bottom:5px;
+
+}
+
 .nav-button.active{color:var(--gold)}
-footer{text-align:center;padding:25px 15px;color:#888f80;font-size:13px}
-hr{border:none;border-top:1px solid #42483a;margin:18px 0}
-@media(min-width:700px){.container{padding-top:25px}}
+
+footer{
+
+text-align:center;
+
+padding:25px 15px;
+
+color:#888f80;
+
+font-size:13px;
+
+}
+
+hr{
+
+border:none;
+
+border-top:1px solid #42483a;
+
+margin:18px 0;
+
+}
+
+@media(min-width:700px){
+
+.container{padding-top:25px}
+
+}
+
 </style>
+
 </head>
+
 <body>
+
 <div class="app">
+
 <header>
+
 <div class="logo">Data2Coin 🇬🇭</div>
+
 <div class="tagline">Buy and sell MTN data bundles in Ghana</div>
+
 </header>
+
 <main class="container">
+
 <!-- HOME -->
+
 <section class="page active" id="home">
+
 <div class="card hero">
+
 <h1>Your Data.<br>Your Money.</h1>
+
 <p>Welcome to Data2Coin Ghana — a marketplace connecting MTN data buyers and sellers.</p>
+
 <button class="primary" onclick="showPage('data')">Explore Available Data</button>
+
 </div>
+
 <div class="card">
+
 <h2>About Data2Coin</h2>
+
 <p>Data2Coin makes buying and selling MTN data bundles easier in Ghana.</p>
+
 <hr>
+
 <p><strong class="gold">Network:</strong> MTN Ghana</p>
+
 <p><strong class="gold">Currency:</strong> Ghana Cedis (GH₵)</p>
+
 <p><strong class="gold">Platform fee:</strong> 2%</p>
+
 </div>
+
 <div class="card">
+
 <h2>How It Works</h2>
+
 <p>1. Browse available data bundles.</p>
+
 <p>2. Choose your preferred bundle.</p>
+
 <p>3. Enter your phone number and email.</p>
+
 <p>4. Pay through Paystack Mobile Money.</p>
+
 <p>5. Keep your tracking code and follow your order.</p>
+
 </div>
+
 <div class="card">
+
 <h2>Become a Seller</h2>
+
 <p>Register your data bundle and wait for approval before it appears in the marketplace.</p>
+
 <button class="primary" onclick="showPage('sell')">Become a Seller</button>
+
 </div>
+
 </section>
+
 <!-- BUY DATA -->
+
 <section class="page" id="data">
+
 <div class="card">
+
 <h2>Available Data</h2>
+
 <p>Browse available MTN data bundles from approved sellers.</p>
+
 <p class="small">Prices are set by sellers and should reflect genuine supply costs and comparable MTN bundle offers.</p>
+
 <div id="status" class="status-message">Connecting to marketplace...</div>
+
 </div>
+
 <div id="listings">
-<div class="card"><p>Loading available data...</p></div>
+
+<div class="card">
+
+<p>Loading available data...</p>
+
 </div>
+
+</div>
+
 </section>
+
 <!-- SELL -->
+
 <section class="page" id="sell">
+
 <div class="card">
+
 <h2>Become a Seller</h2>
+
 <p>Submit your details. Your registration must be approved before your bundle is listed.</p>
+
 <form id="sellerForm">
+
 <label>Your name</label>
+
 <input type="text" id="sellerName" placeholder="Enter your name" required>
+
 <label>MTN phone number</label>
+
 <input type="tel" id="sellerContact" placeholder="Example: 0241234567" required>
+
 <label>Data bundle</label>
+
 <input type="text" id="bundleSize" placeholder="Example: 5 GB" required>
+
 <label>Selling price (GH₵)</label>
+
 <input type="number" id="sellerPrice" placeholder="Enter your price" min="0.01" step="0.01" required>
+
 <button class="primary" type="submit" id="sellerSubmit">Submit Seller Registration</button>
+
 <div id="sellerMessage" class="status-message"></div>
+
 </form>
+
 </div>
+
 <div class="card">
+
 <h3>Seller approval</h3>
+
 <p>Every seller registration is reviewed by an administrator. Only approved sellers can have their data displayed.</p>
+
 </div>
+
 </section>
+
 <!-- PAYMENTS -->
+
 <section class="page" id="payments">
+
 <div class="card">
+
 <h2>Payments</h2>
+
 <p>Data2Coin uses Paystack to provide a Mobile Money checkout experience.</p>
+
 <hr>
+
 <p><strong class="gold">Payment method:</strong></p>
+
 <p>Mobile Money</p>
+
 <p><strong class="gold">Currency:</strong></p>
+
 <p>Ghana Cedis (GH₵)</p>
+
 <p><strong class="gold">Platform fee:</strong></p>
+
 <p>2% of successful orders.</p>
+
 <div class="notice">
+
 <p>Payment testing is in progress. Do not treat test transactions as real payments or deliver data based on an unverified payment.</p>
+
 </div>
+
 </div>
+
 </section>
+
 <!-- AIRTIME -->
+
 <section class="page" id="airtime">
+
 <div class="card">
+
 <h2>Airtime</h2>
+
 <p>Airtime buying and selling will be introduced after the main data marketplace is ready.</p>
-<div class="notice"><p>This feature is coming soon.</p></div>
+
+<div class="notice">
+
+<p>This feature is coming soon.</p>
+
 </div>
+
+</div>
+
 </section>
+
 <!-- ACCOUNT -->
+
 <section class="page" id="account">
+
 <div class="card">
+
 <h2>My Account 👤</h2>
+
 <p>Your personal buyer dashboard. You can retrieve saved orders and check their progress.</p>
+
 </div>
+
 <div class="card">
+
 <h3>My Saved Orders</h3>
+
 <p class="small">Orders started on this device will appear here. Keep your tracking code private.</p>
+
 <div id="savedOrders">
+
 <p>No saved orders on this device yet.</p>
+
 </div>
+
 </div>
+
 <div class="card">
+
 <h3>Track an Order</h3>
+
 <p>Enter your order number and private tracking code.</p>
+
 <form id="trackingForm">
+
 <label>Order number</label>
+
 <input type="number" id="trackingOrderId" placeholder="Example: 12" min="1" required>
+
 <label>Private tracking code</label>
+
 <input type="text" id="trackingToken" placeholder="Paste your tracking code" required>
+
 <button class="primary" type="submit" id="trackButton">Track My Order</button>
+
 <div id="trackingMessage" class="status-message"></div>
+
 </form>
+
 <div id="trackingResult"></div>
+
 </div>
+
 <div class="card">
+
 <h3>Customer Support</h3>
+
 <p>If you have a payment or delivery problem, keep your order number and tracking code ready.</p>
+
 <p class="small">Official support contact details will be added when the support channel is established.</p>
+
 </div>
+
 </section>
+<!-- BOTTOM NAVIGATION -->
+
 </main>
+
 <nav class="bottom-nav">
+
 <button class="nav-button active" data-page="home" onclick="showPage('home')"><span>🏠</span>Home</button>
+
 <button class="nav-button" data-page="data" onclick="showPage('data')"><span>📶</span>Buy Data</button>
+
 <button class="nav-button" data-page="sell" onclick="showPage('sell')"><span>💼</span>Sell</button>
+
 <button class="nav-button" data-page="payments" onclick="showPage('payments')"><span>💳</span>Payments</button>
+
 <button class="nav-button" data-page="airtime" onclick="showPage('airtime')"><span>📱</span>Airtime</button>
+
 <button class="nav-button" data-page="account" onclick="showPage('account')"><span>👤</span>Account</button>
+
 </nav>
+
 <footer>
+
 Data2Coin Ghana 🇬🇭<br>
+
 Connecting data buyers and sellers.<br>
-Payment testing in progress.
+
+Platform fee: 2%.
+
 </footer>
+
 </div>
+
 <script>
+
 /* SUPABASE CONNECTION */
+
 const SUPABASE_URL = "https://lulbwtfxavlddcemyfyx.supabase.co";
+
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_-jijVrjmTRU_HJDX33euyw_y89CrW7j";
+
 const supabaseClient = window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_PUBLISHABLE_KEY
+
+  SUPABASE_URL,
+
+  SUPABASE_PUBLISHABLE_KEY
+
 );
+
 /* PAGE NAVIGATION */
-function showPage(pageName){
-document.querySelectorAll(".page").forEach(page=>{
-page.classList.remove("active");
-});
-document.querySelectorAll(".nav-button").forEach(button=>{
-button.classList.remove("active");
-});
-document.getElementById(pageName).classList.add("active");
-const activeButton=document.querySelector(
-'.nav-button[data-page="'+pageName+'"]'
-);
-if(activeButton) activeButton.classList.add("active");
-window.scrollTo(0,0);
-if(pageName==="data") loadListings();
-if(pageName==="account") displaySavedOrders();
+
+function showPage(pageName) {
+
+  document.querySelectorAll(".page").forEach(page => {
+
+    page.classList.remove("active");
+
+  });
+
+  document.querySelectorAll(".nav-button").forEach(button => {
+
+    button.classList.remove("active");
+
+  });
+
+  document.getElementById(pageName).classList.add("active");
+
+  const activeButton = document.querySelector(
+
+    '.nav-button[data-page="' + pageName + '"]'
+
+  );
+
+  if (activeButton) activeButton.classList.add("active");
+
+  window.scrollTo(0, 0);
+
+  if (pageName === "data") loadListings();
+
+  if (pageName === "account") displaySavedOrders();
+
 }
+
 /* SAFE TEXT DISPLAY */
-function safeText(value){
-return String(value ?? "");
+
+function safeText(value) {
+
+  return String(value ?? "");
+
 }
+
 /* LOAD AVAILABLE DATA */
-async function loadListings(){
-const status=document.getElementById("status");
-const listings=document.getElementById("listings");
-status.textContent="Loading available data...";
-listings.innerHTML="";
-try{
-const {data,error}=await supabaseClient
-.from("public_data_listings")
-.select("id,bundle_size,price_ghs,network,data_size_gb")
-.order("id",{ascending:false});
-if(error) throw error;
-if(!data || data.length===0){
-status.textContent="No available data bundles at the moment.";
-listings.innerHTML='<div class="card"><p>New bundles will appear here when sellers are approved.</p></div>';
-return;
+
+async function loadListings() {
+
+  const status = document.getElementById("status");
+
+  const listings = document.getElementById("listings");
+
+  status.textContent = "Loading available data...";
+
+  listings.innerHTML = "";
+
+  try {
+
+    const { data, error } = await supabaseClient
+
+      .from("public_data_listings")
+
+      .select("id,bundle_size,price_ghs,network,data_size_gb")
+
+      .order("id", { ascending: false });
+
+    if (error) throw error;
+
+    if (!data || data.length === 0) {
+
+      status.textContent = "No available data bundles at the moment.";
+
+      listings.innerHTML =
+
+        '<div class="card"><p>New bundles will appear here when sellers are approved.</p></div>';
+
+      return;
+
+    }
+
+    status.textContent = data.length + " available bundle(s) found.";
+
+    data.forEach(item => {
+
+      const card = document.createElement("div");
+
+      card.className = "data-card";
+
+      const size = document.createElement("div");
+
+      size.className = "data-size";
+
+      size.textContent = safeText(item.bundle_size || "Data bundle");
+
+      const network = document.createElement("p");
+
+      network.textContent = "Network: " + safeText(item.network || "MTN");
+
+      const price = document.createElement("div");
+
+      price.className = "price";
+
+      price.textContent = "GH₵ " + Number(item.price_ghs).toFixed(2);
+
+      const badge = document.createElement("div");
+
+      badge.className = "badge";
+
+      badge.textContent = "Available";
+
+      const button = document.createElement("button");
+
+      button.className = "primary";
+
+      button.textContent = "Order Data";
+
+      button.addEventListener("click", () => openOrderForm(item, card));
+
+      card.append(size, network, price, badge, button);
+
+      listings.appendChild(card);
+
+    });
+
+  } catch (error) {
+
+    console.error("Marketplace error:", error);
+
+    status.textContent = "Unable to load data. Please refresh and try again.";
+
+    listings.innerHTML =
+
+      '<div class="card"><p>There was a problem connecting to the marketplace.</p></div>';
+
+  }
+
 }
-status.textContent=data.length+" available bundle(s) found.";
-data.forEach(item=>{
-const card=document.createElement("div");
-card.className="data-card";
-const size=document.createElement("div");
-size.className="data-size";
-size.textContent=safeText(item.bundle_size || "Data bundle");
-const network=document.createElement("p");
-network.textContent="Network: "+safeText(item.network || "MTN");
-const price=document.createElement("div");
-price.className="price";
-price.textContent="GH₵ "+Number(item.price_ghs).toFixed(2);
-const badge=document.createElement("div");
-badge.className="badge";
-badge.textContent="Available";
-const button=document.createElement("button");
-button.className="primary";
-button.textContent="Order Data";
-button.addEventListener("click",()=>openOrderForm(item,card));
-card.append(size,network,price,badge,button);
-listings.appendChild(card);
-});
-}catch(error){
-console.error("Marketplace error:",error);
-status.textContent="Unable to load data. Please refresh and try again.";
-listings.innerHTML='<div class="card"><p>There was a problem connecting to the marketplace.</p></div>';
-}
-}
+
 /* LOCAL ORDER STORAGE */
-function getSavedOrders(){
-try{
-return JSON.parse(localStorage.getItem("data2coin_orders") || "[]");
-}catch{
-return [];
+
+function getSavedOrders() {
+
+  try {
+
+    return JSON.parse(localStorage.getItem("data2coin_orders") || "[]");
+
+  } catch {
+
+    return [];
+
+  }
+
 }
+
+function saveOrder(order) {
+
+  const orders = getSavedOrders();
+
+  const existing = orders.findIndex(
+
+    item => String(item.order_id) === String(order.order_id)
+
+  );
+
+  if (existing >= 0) {
+
+    orders[existing] = { ...orders[existing], ...order };
+
+  } else {
+
+    orders.unshift(order);
+
+  }
+
+  localStorage.setItem("data2coin_orders", JSON.stringify(orders));
+
 }
-function saveOrder(order){
-const orders=getSavedOrders();
-const existing=orders.findIndex(
-item=>String(item.order_id)===String(order.order_id)
-);
-if(existing>=0){
-orders[existing]=order;
-}else{
-orders.unshift(order);
-}
-localStorage.setItem("data2coin_orders",JSON.stringify(orders));
-}
+
 /* BUYER ORDER AND PAYMENT FORM */
-function openOrderForm(item,card){
-const oldForm=document.getElementById("buyerOrderForm");
-if(oldForm) oldForm.remove();
-const form=document.createElement("form");
-form.id="buyerOrderForm";
-form.className="card";
-const heading=document.createElement("h3");
-heading.textContent="Complete Your Order";
-const description=document.createElement("p");
-description.textContent=item.bundle_size+" — GH₵ "+Number(item.price_ghs).toFixed(2);
-const phoneLabel=document.createElement("label");
-phoneLabel.textContent="Your MTN phone number";
-const phoneInput=document.createElement("input");
-phoneInput.type="tel";
-phoneInput.placeholder="Example: 0241234567";
-phoneInput.required=true;
-const emailLabel=document.createElement("label");
-emailLabel.textContent="Your email address";
-const emailInput=document.createElement("input");
-emailInput.type="email";
-emailInput.placeholder="Example: you@example.com";
-emailInput.required=true;
-const submit=document.createElement("button");
-submit.type="submit";
-submit.className="primary";
-submit.textContent="Continue to Mobile Money Payment";
-const message=document.createElement("div");
-message.className="status-message";
-form.append(
-heading,
-description,
-phoneLabel,
-phoneInput,
-emailLabel,
-emailInput,
-submit,
-message
-);
-card.appendChild(form);
-form.addEventListener("submit",async function(event){
-event.preventDefault();
-const phone=phoneInput.value.trim();
-const email=emailInput.value.trim();
-const digits=phone.replace(/\D/g,"");
-if(digits.length<9 || digits.length>15){
-message.textContent="Please enter a valid phone number.";
-return;
+
+function openOrderForm(item, card) {
+
+  const oldForm = document.getElementById("buyerOrderForm");
+
+  if (oldForm) oldForm.remove();
+
+  const form = document.createElement("form");
+
+  form.id = "buyerOrderForm";
+
+  form.className = "card";
+
+  const heading = document.createElement("h3");
+
+  heading.textContent = "Complete Your Order";
+
+  const description = document.createElement("p");
+
+  description.textContent =
+
+    item.bundle_size + " — GH₵ " + Number(item.price_ghs).toFixed(2);
+
+  const phoneLabel = document.createElement("label");
+
+  phoneLabel.textContent = "Your MTN phone number";
+
+  const phoneInput = document.createElement("input");
+
+  phoneInput.type = "tel";
+
+  phoneInput.placeholder = "Example: 0241234567";
+
+  phoneInput.required = true;
+
+  const emailLabel = document.createElement("label");
+
+  emailLabel.textContent = "Your email address";
+
+  const emailInput = document.createElement("input");
+
+  emailInput.type = "email";
+
+  emailInput.placeholder = "Example: you@example.com";
+
+  emailInput.required = true;
+
+  const submit = document.createElement("button");
+
+  submit.type = "submit";
+
+  submit.className = "primary";
+
+  submit.textContent = "Continue to Mobile Money Payment";
+
+  const message = document.createElement("div");
+
+  message.className = "status-message";
+
+  form.append(
+
+    heading,
+
+    description,
+
+    phoneLabel,
+
+    phoneInput,
+
+    emailLabel,
+
+    emailInput,
+
+    submit,
+
+    message
+
+  );
+
+  card.appendChild(form);
+
+  form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const phone = phoneInput.value.trim();
+
+    const email = emailInput.value.trim();
+
+    const digits = phone.replace(/\D/g, "");
+
+    if (digits.length < 9 || digits.length > 15) {
+
+      message.textContent = "Please enter a valid phone number.";
+
+      return;
+
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+
+      message.textContent = "Please enter a valid email address.";
+
+      return;
+
+    }
+
+    submit.disabled = true;
+
+    submit.textContent = "Preparing payment...";
+
+    message.textContent = "Creating your order securely...";
+
+    try {
+
+      const { data, error } = await supabaseClient.functions.invoke(
+
+        "initialize-payment",
+
+        {
+
+          body: {
+
+            listing_id: Number(item.id),
+
+            buyer_contact: phone,
+
+            email: email
+
+          }
+
+        }
+
+      );
+
+      if (error) {
+
+        console.error("Payment function error:", error);
+
+        throw new Error(
+
+          data?.error || error.message ||
+
+          "Could not connect to payment service."
+
+        );
+
+      }
+
+      if (!data || !data.success ||
+
+          !data.authorization_url || !data.tracking_token) {
+
+        throw new Error(
+
+          data?.error || "Payment could not be started. Please try again."
+
+        );
+
+      }
+
+      const savedOrder = {
+
+        order_id: data.order_id,
+
+        tracking_token: data.tracking_token,
+
+        amount_ghs: data.amount_ghs,
+
+        bundle_size: item.bundle_size,
+
+        created_at: new Date().toISOString()
+
+      };
+
+      saveOrder(savedOrder);
+
+      message.innerHTML = "";
+
+      const orderBox = document.createElement("div");
+
+      orderBox.className = "order-box";
+
+      const title = document.createElement("h3");
+
+      title.textContent = "Your Order Has Been Created";
+
+      const orderNumber = document.createElement("p");
+
+      orderNumber.textContent = "Order number: " + data.order_id;
+
+      const tokenLabel = document.createElement("p");
+
+      tokenLabel.textContent = "Your private tracking code:";
+
+      const token = document.createElement("p");
+
+      token.className = "order-code";
+
+      token.textContent = data.tracking_token;
+
+      const warning = document.createElement("p");
+
+      warning.className = "small";
+
+      warning.textContent =
+
+        "Save this code. You will need it to track your order.";
+
+      const copyButton = document.createElement("button");
+
+      copyButton.type = "button";
+
+      copyButton.className = "secondary";
+
+      copyButton.textContent = "Copy Tracking Code";
+
+      copyButton.addEventListener("click", async () => {
+
+        try {
+
+          await navigator.clipboard.writeText(data.tracking_token);
+
+          copyButton.textContent = "Copied!";
+
+        } catch {
+
+          copyButton.textContent =
+
+            "Copy not available — select the code above.";
+
+        }
+
+      });
+
+      const payButton = document.createElement("button");
+
+      payButton.type = "button";
+
+      payButton.className = "primary";
+
+      payButton.textContent = "Continue to Paystack Checkout";
+
+      payButton.addEventListener("click", () => {
+
+        window.location.href = data.authorization_url;
+
+      });
+
+      orderBox.append(
+
+        title,
+
+        orderNumber,
+
+        tokenLabel,
+
+        token,
+
+        warning,
+
+        copyButton,
+
+        payButton
+
+      );
+
+      form.appendChild(orderBox);
+
+      submit.style.display = "none";
+
+    } catch (error) {
+
+      console.error("Checkout error:", error);
+
+      message.textContent =
+
+        error.message || "Payment could not be started.";
+
+      submit.disabled = false;
+
+      submit.textContent = "Try Payment Again";
+
+    }
+
+  });
+
 }
-if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-message.textContent="Please enter a valid email address.";
-return;
+  /* DISPLAY SAVED ORDERS */
+
+function displaySavedOrders() {
+
+  const container = document.getElementById("savedOrders");
+
+  const orders = getSavedOrders();
+
+  container.innerHTML = "";
+
+  if (orders.length === 0) {
+
+    container.innerHTML = "<p>No saved orders on this device yet.</p>";
+
+    return;
+
+  }
+
+  orders.forEach(order => {
+
+    const box = document.createElement("div");
+
+    box.className = "order-box";
+
+    const heading = document.createElement("h3");
+
+    heading.textContent = "Order #" + order.order_id;
+
+    const bundle = document.createElement("p");
+
+    bundle.textContent = "Bundle: " + safeText(order.bundle_size || "MTN Data");
+
+    const amount = document.createElement("p");
+
+    amount.textContent = "Amount: GH₵ " + Number(order.amount_ghs || 0).toFixed(2);
+
+    const token = document.createElement("p");
+
+    token.className = "small";
+
+    token.textContent = "Tracking code: " + order.tracking_token;
+
+    const button = document.createElement("button");
+
+    button.className = "primary";
+
+    button.textContent = "Track This Order";
+
+    button.addEventListener("click", () => {
+
+      document.getElementById("trackingOrderId").value = order.order_id;
+
+      document.getElementById("trackingToken").value = order.tracking_token;
+
+      document.getElementById("trackingForm").scrollIntoView({
+
+        behavior: "smooth"
+
+      });
+
+    });
+
+    box.append(heading, bundle, amount, token, button);
+
+    container.appendChild(box);
+
+  });
+
 }
-submit.disabled=true;
-submit.textContent="Preparing payment...";
-message.textContent="Creating your order securely...";
-try{
-const {data,error}=await supabaseClient.functions.invoke(
-"initialize-payment",
-{
-body:{
-listing_id:Number(item.id),
-buyer_contact:phone,
-email:email
-}
-}
-);
-if(error){
-console.error("Payment function error:",error);
-throw new Error(data?.error || error.message || "Could not connect to payment service.");
-}
-if(!data || !data.success || !data.authorization_url || !data.tracking_token){
-throw new Error(data?.error || "Payment could not be started. Please try again.");
-}
-/* SAVE TRACKING DETAILS BEFORE LEAVING THE WEBSITE */
-const savedOrder={
-order_id:data.order_id,
-tracking_token:data.tracking_token,
-amount_ghs:data.amount_ghs,
-bundle_size:item.bundle_size,
-created_at:new Date().toISOString()
-};
-saveOrder(savedOrder);
-message.innerHTML="";
-const orderBox=document.createElement("div");
-orderBox.className="order-box";
-const title=document.createElement("h3");
-title.textContent="Your Order Has Been Created";
-const orderNumber=document.createElement("p");
-orderNumber.textContent="Order number: "+data.order_id;
-const tokenLabel=document.createElement("p");
-tokenLabel.textContent="Your private tracking code:";
-const token=document.createElement("p");
-token.className="order-code";
-token.textContent=data.tracking_token;
-const warning=document.createElement("p");
-warning.className="small";
-warning.textContent="Save this code. You will need it to track your order.";
-const copyButton=document.createElement("button");
-copyButton.type="button";
-copyButton.className="secondary";
-copyButton.textContent="Copy Tracking Code";
-copyButton.addEventListener("click",async()=>{
-try{
-await navigator.clipboard.writeText(data.tracking_token);
-copyButton.textContent="Copied!";
-}catch{
-copyButton.textContent="Copy not available — select the code above.";
-}
+
+/* SECURE ORDER TRACKING AND RESUME PAYMENT */
+
+document.getElementById("trackingForm").addEventListener("submit", async function(event) {
+
+  event.preventDefault();
+
+  const orderId = document.getElementById("trackingOrderId").value.trim();
+
+  const trackingToken = document.getElementById("trackingToken").value.trim();
+
+  const message = document.getElementById("trackingMessage");
+
+  const result = document.getElementById("trackingResult");
+
+  const button = document.getElementById("trackButton");
+
+  if (!orderId || !trackingToken) {
+
+    message.textContent = "Enter your order number and tracking code.";
+
+    return;
+
+  }
+
+  button.disabled = true;
+
+  button.textContent = "Checking Order...";
+
+  message.textContent = "Securely checking your order...";
+
+  result.innerHTML = "";
+
+  try {
+
+    const { data, error } = await supabaseClient.functions.invoke(
+
+      "lookup-order",
+
+      {
+
+        body: {
+
+          order_id: Number(orderId),
+
+          tracking_token: trackingToken
+
+        }
+
+      }
+
+    );
+
+    if (error) {
+
+      throw new Error(data?.error || error.message || "Unable to check your order.");
+
+    }
+
+    if (!data || !data.success || !data.order) {
+
+      throw new Error(data?.error || "Order could not be found.");
+
+    }
+
+    const order = data.order;
+
+    const box = document.createElement("div");
+
+    box.className = "order-box";
+
+    const title = document.createElement("h3");
+
+    title.textContent = "Order #" + order.id;
+
+    const payment = document.createElement("p");
+
+    payment.textContent = "Payment status: " + safeText(order.payment_status || order.status);
+
+    const delivery = document.createElement("p");
+
+    delivery.textContent = "Delivery status: " + safeText(order.delivery_status || "Awaiting seller processing");
+
+    const amount = document.createElement("p");
+
+    amount.textContent = "Amount: GH₵ " + Number(order.amount_ghs || 0).toFixed(2);
+
+    const info = document.createElement("p");
+
+    info.className = "small";
+
+    info.textContent = "Keep your tracking code private.";
+
+    box.append(title, payment, delivery, amount, info);
+
+    /* SHOW RESUME PAYMENT ONLY FOR UNPAID ORDERS */
+
+    if (order.status === "pending_payment" || order.payment_status === "pending_payment") {
+
+      const emailLabel = document.createElement("label");
+
+      emailLabel.textContent = "Enter the email used for this order";
+
+      const emailInput = document.createElement("input");
+
+      emailInput.type = "email";
+
+      emailInput.placeholder = "Your email address";
+
+      emailInput.required = true;
+
+      const resumeButton = document.createElement("button");
+
+      resumeButton.type = "button";
+
+      resumeButton.className = "primary";
+
+      resumeButton.textContent = "Resume Payment";
+
+      const resumeMessage = document.createElement("div");
+
+      resumeMessage.className = "status-message";
+
+      resumeButton.addEventListener("click", async () => {
+
+        const email = emailInput.value.trim();
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+
+          resumeMessage.textContent = "Please enter a valid email address.";
+
+          return;
+
+        }
+
+        resumeButton.disabled = true;
+
+        resumeButton.textContent = "Opening payment...";
+
+        resumeMessage.textContent = "Preparing your payment. Please wait...";
+
+        try {
+
+          const { data: paymentData, error: paymentError } =
+
+            await supabaseClient.functions.invoke("resume-payment", {
+
+              body: {
+
+                order_id: Number(orderId),
+
+                tracking_token: trackingToken,
+
+                email: email
+
+              }
+
+            });
+
+          if (paymentError) {
+
+            throw new Error(paymentData?.error || paymentError.message);
+
+          }
+
+          if (!paymentData || !paymentData.success || !paymentData.authorization_url) {
+
+            throw new Error(paymentData?.error || "Unable to reopen payment.");
+
+          }
+
+          window.location.href = paymentData.authorization_url;
+
+        } catch (error) {
+
+          resumeMessage.textContent = error.message || "Payment could not be reopened.";
+
+          resumeButton.disabled = false;
+
+          resumeButton.textContent = "Resume Payment";
+
+        }
+
+      });
+
+      box.append(emailLabel, emailInput, resumeButton, resumeMessage);
+
+    }
+
+    result.appendChild(box);
+
+    message.textContent = "Order found successfully.";
+
+  } catch (error) {
+
+    console.error("Order tracking error:", error);
+
+    message.textContent = error.message || "Unable to find this order. Check your details.";
+
+  } finally {
+
+    button.disabled = false;
+
+    button.textContent = "Track My Order";
+
+  }
+
 });
-const payButton=document.createElement("button");
-payButton.type="button";
-payButton.className="primary";
-payButton.textContent="Continue to Paystack Checkout";
-payButton.addEventListener("click",()=>{
-window.location.href=data.authorization_url;
-});
-orderBox.append(
-title,
-orderNumber,
-tokenLabel,
-token,
-warning,
-copyButton,
-payButton
-);
-form.appendChild(orderBox);
-submit.style.display="none";
-}catch(error){
-console.error("Checkout error:",error);
-message.textContent=error.message || "Payment could not be started.";
-submit.disabled=false;
-submit.textContent="Try Payment Again";
-}
-});
-}
-/* DISPLAY SAVED ORDERS */
-function displaySavedOrders(){
-const container=document.getElementById("savedOrders");
-const orders=getSavedOrders();
-container.innerHTML="";
-if(orders.length===0){
-container.innerHTML="<p>No saved orders on this device yet.</p>";
-return;
-}
-orders.forEach(order=>{
-const box=document.createElement("div");
-box.className="order-box";
-const heading=document.createElement("h3");
-heading.textContent="Order #"+order.order_id;
-const bundle=document.createElement("p");
-bundle.textContent="Bundle: "+safeText(order.bundle_size || "MTN Data");
-const amount=document.createElement("p");
-amount.textContent="Amount: GH₵ "+Number(order.amount_ghs).toFixed(2);
-const token=document.createElement("p");
-token.className="small";
-token.textContent="Tracking code: "+order.tracking_token;
-const button=document.createElement("button");
-button.className="primary";
-button.textContent="Track This Order";
-button.addEventListener("click",()=>{
-document.getElementById("trackingOrderId").value=order.order_id;
-document.getElementById("trackingToken").value=order.tracking_token;
-document.getElementById("trackingForm").scrollIntoView({behavior:"smooth"});
-});
-box.append(heading,bundle,amount,token,button);
-container.appendChild(box);
-});
-}
-/* SECURE ORDER TRACKING */
-document.getElementById("trackingForm")
-.addEventListener("submit",async function(event){
-event.preventDefault();
-const orderId=document.getElementById("trackingOrderId").value.trim();
-const trackingToken=document.getElementById("trackingToken").value.trim();
-const message=document.getElementById("trackingMessage");
-const result=document.getElementById("trackingResult");
-const button=document.getElementById("trackButton");
-if(!orderId || !trackingToken){
-message.textContent="Enter your order number and tracking code.";
-return;
-}
-button.disabled=true;
-button.textContent="Checking Order...";
-message.textContent="Securely checking your order...";
-result.innerHTML="";
-try{
-const {data,error}=await supabaseClient.functions.invoke(
-"lookup-order",
-{
-body:{
-order_id:Number(orderId),
-tracking_token:trackingToken
-}
-}
-);
-if(error){
-throw new Error(data?.error || error.message || "Unable to check your order.");
-}
-if(!data || !data.success || !data.order){
-throw new Error(data?.error || "Order could not be found.");
-}
-const order=data.order;
-const box=document.createElement("div");
-box.className="order-box";
-const title=document.createElement("h3");
-title.textContent="Order #"+order.id;
-const payment=document.createElement("p");
-payment.textContent="Payment status: "+safeText(order.payment_status || order.status);
-const delivery=document.createElement("p");
-delivery.textContent="Delivery status: "+safeText(order.delivery_status || "Awaiting seller processing");
-const amount=document.createElement("p");
-amount.textContent="Amount: GH₵ "+Number(order.amount_ghs).toFixed(2);
-const info=document.createElement("p");
-info.className="small";
-info.textContent="Keep your tracking code private.";
-box.append(title,payment,delivery,amount,info);
-result.appendChild(box);
-message.textContent="Order found successfully.";
-}catch(error){
-console.error("Order tracking error:",error);
-message.textContent=error.message || "Unable to find this order. Check your details.";
-}finally{
-button.disabled=false;
-button.textContent="Track My Order";
-}
-});
+
 /* SELLER REGISTRATION */
-document.getElementById("sellerForm")
-.addEventListener("submit",async function(event){
-event.preventDefault();
-const sellerName=document.getElementById("sellerName").value.trim();
-const sellerContact=document.getElementById("sellerContact").value.trim();
-const bundleSize=document.getElementById("bundleSize").value.trim();
-const sellerPrice=Number(document.getElementById("sellerPrice").value);
-const message=document.getElementById("sellerMessage");
-const submit=document.getElementById("sellerSubmit");
-const digits=sellerContact.replace(/\D/g,"");
-if(!sellerName || digits.length<9 || digits.length>15 || !bundleSize || !Number.isFinite(sellerPrice) || sellerPrice<=0){
-message.textContent="Please enter valid information in all fields.";
-return;
-}
-submit.disabled=true;
-submit.textContent="Submitting...";
-message.textContent="";
-try{
-const {error}=await supabaseClient
-.from("seller_registrations")
-.insert([{
-seller_name:sellerName,
-contact_number:sellerContact,
-seller_contact:sellerContact,
-bundle_size:bundleSize,
-selling_price:sellerPrice,
-price_ghs:sellerPrice,
-status:"pending"
-}]);
-if(error) throw error;
-message.textContent="Registration submitted successfully! Your application is waiting for admin approval.";
-document.getElementById("sellerForm").reset();
-submit.textContent="Registration Submitted";
-}catch(error){
-console.error("Seller registration error:",error);
-message.textContent="Registration failed. Please try again.";
-submit.disabled=false;
-submit.textContent="Submit Seller Registration";
-}
+
+document.getElementById("sellerForm").addEventListener("submit", async function(event) {
+
+  event.preventDefault();
+
+  const sellerName = document.getElementById("sellerName").value.trim();
+
+  const sellerContact = document.getElementById("sellerContact").value.trim();
+
+  const bundleSize = document.getElementById("bundleSize").value.trim();
+
+  const sellerPrice = Number(document.getElementById("sellerPrice").value);
+
+  const message = document.getElementById("sellerMessage");
+
+  const submit = document.getElementById("sellerSubmit");
+
+  const digits = sellerContact.replace(/\D/g, "");
+
+  if (
+
+    !sellerName ||
+
+    digits.length < 9 ||
+
+    digits.length > 15 ||
+
+    !bundleSize ||
+
+    !Number.isFinite(sellerPrice) ||
+
+    sellerPrice <= 0
+
+  ) {
+
+    message.textContent = "Please enter valid information in all fields.";
+
+    return;
+
+  }
+
+  submit.disabled = true;
+
+  submit.textContent = "Submitting...";
+
+  message.textContent = "";
+
+  try {
+
+    const { error } = await supabaseClient
+
+      .from("seller_registrations")
+
+      .insert([{
+
+        seller_name: sellerName,
+
+        contact_number: sellerContact,
+
+        seller_contact: sellerContact,
+
+        bundle_size: bundleSize,
+
+        selling_price: sellerPrice,
+
+        price_ghs: sellerPrice,
+
+        status: "pending"
+
+      }]);
+
+    if (error) throw error;
+
+    message.textContent =
+
+      "Registration submitted successfully! Your application is waiting for admin approval.";
+
+    document.getElementById("sellerForm").reset();
+
+    submit.textContent = "Registration Submitted";
+
+  } catch (error) {
+
+    console.error("Seller registration error:", error);
+
+    message.textContent =
+
+      "Registration failed. Please try again.";
+
+    submit.disabled = false;
+
+    submit.textContent = "Submit Seller Registration";
+
+  }
+
 });
+
 /* INITIALISE WEBSITE */
-document.addEventListener("DOMContentLoaded",function(){
-loadListings();
-displaySavedOrders();
+
+document.addEventListener("DOMContentLoaded", function() {
+
+  loadListings();
+
+  displaySavedOrders();
+
 });
+
 </script>
+
 </body>
+
 </html>

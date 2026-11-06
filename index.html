@@ -1546,8 +1546,7 @@ document.getElementById("sellerForm").addEventListener("submit", async function(
 
     message.textContent =
 
-      "Registration failed. Please try again.";
-
+  "Registration failed: " + (error.message || "Unknown error");
     submit.disabled = false;
 
     submit.textContent = "Submit Seller Registration";

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Seller Dashboard | Data2Coin Ghana</title>
+
+<style>
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+body {
+
+    margin: 0;
+
+    padding: 20px;
+
+    font-family: Arial, sans-serif;
+
+    background: #111;
+
+    color: white;
+
+}
+
+.container {
+
+    max-width: 750px;
+
+    margin: auto;
+
+}
+
+header {
+
+    text-align: center;
+
+    padding: 20px;
+
+    border-bottom: 2px solid #ffcc00;
+
+}
+
+h1, h2 {
+
+    color: #ffcc00;
+
+}
+
+.card {
+
+    background: #202020;
+
+    padding: 20px;
+
+    margin: 20px 0;
+
+    border-radius: 12px;
+
+}
+
+input {
+
+    width: 100%;
+
+    padding: 14px;
+
+    margin: 10px 0;
+
+    background: #333;
+
+    color: white;
+
+    border: 1px solid #555;
+
+    border-radius: 7px;
+
+}
+
+button {
+
+    padding: 13px;
+
+    background: #ffcc00;
+
+    color: black;
+
+    border: none;
+
+    border-radius: 7px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+.login-button {
+
+    width: 100%;
+
+    margin-top: 10px;
+
+}
+
+.logout {
+
+    background: #555;
+
+    color: white;
+
+}
+
+.order, .listing {
+
+    background: #303030;
+
+    padding: 15px;
+
+    border-radius: 8px;
+
+    margin: 12px 0;
+
+    overflow-wrap: anywhere;
+
+}
+
+.status {
+
+    color: #ffcc00;
+
+    font-weight: bold;
+
+}
+
+.small {
+
+    color: #aaa;
+
+    font-size: 13px;
+
+}
+
+#dashboard {
+
+    display: none;
+
+}
+
+#message {
+
+    text-align: center;
+
+    margin: 15px 0;
+
+    overflow-wrap: anywhere;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+
+    <h1>Data2Coin 🇬🇭</h1>
+
+    <p>Seller Dashboard</p>
+
+</header>
+
+<div id="loginSection" class="card">
+
+    <h2>Seller Login</h2>
+
+    <p>Log in to manage your data business.</p>
+
+    <form id="loginForm">
+
+        <input
+
+            type="email"
+
+            id="email"
+
+            placeholder="Email address"
+
+            required
+
+        >
+
+        <input
+
+            type="password"
+
+            id="password"
+
+            placeholder="Password"
+
+            required
+
+        >
+
+        <button class="login-button" type="submit">
+
+            Login to Dashboard
+
+        </button>
+
+    </form>
+
+    <p id="loginMessage"></p>
+
+</div>
+
+<div id="dashboard">
+
+    <div class="card">
+
+        <h2>Welcome, Seller!</h2>
+
+        <p id="sellerEmail"></p>
+
+        <button class="logout" onclick="logout()">
+
+            Logout
+
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <h2>My Data Listings</h2>
+
+        <div id="listings">Loading listings...</div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Customer Orders</h2>
+
+        <div id="orders">Loading orders...</div>
+
+    </div>
+
+</div>
+
+<div id="message"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+
+"https://lulbwtfxavlddcemyfyx.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+
+"sb_publishable_-jijVrjmTRU_HJDX33euyw_y89CrW7j";
+
+const db = supabase.createClient(
+
+    SUPABASE_URL,
+
+    SUPABASE_PUBLISHABLE_KEY
+
+);
+
+const loginSection =
+
+document.getElementById("loginSection");
+
+const dashboard =
+
+document.getElementById("dashboard");
+
+const loginMessage =
+
+document.getElementById("loginMessage");
+
+document.getElementById("loginForm")
+
+.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    loginMessage.textContent = "Logging in...";
+
+    const email =
+
+    document.getElementById("email").value.trim();
+
+    const password =
+
+    document.getElementById("password").value;
+
+    const { data, error } =
+
+    await db.auth.signInWithPassword({
+
+        email,
+
+        password
+
+    });
+
+    if (error) {
+
+        loginMessage.textContent = error.message;
+
+        return;
+
+    }
+
+    showDashboard(data.user);
+
+});
+
+async function showDashboard(user) {
+
+    loginSection.style.display = "none";
+
+    dashboard.style.display = "block";
+
+    document.getElementById("sellerEmail").textContent =
+
+    user.email;
+
+    await loadListings();
+
+    await loadOrders();
+
+}
+
+async function loadListings() {
+
+    const box = document.getElementById("listings");
+
+    box.textContent = "Loading listings...";
+
+    const { data, error } = await db
+
+        .from("data_listings")
+
+        .select("id,bundle_size,price_ghs,status,network,data_size_gb")
+
+        .order("id", { ascending: false });
+
+    if (error) {
+
+        box.textContent = "Could not load listings: " + error.message;
+
+        return;
+
+    }
+
+    if (!data || data.length === 0) {
+
+        box.textContent = "You have no listings yet.";
+
+        return;
+
+    }
+
+    box.innerHTML = "";
+
+    data.forEach(item => {
+
+        const div = document.createElement("div");
+
+        div.className = "listing";
+
+        const title = document.createElement("strong");
+
+        title.textContent = item.bundle_size || "Data bundle";
+
+        const details = document.createElement("p");
+
+        details.textContent =
+
+            "Price: GH₵ " + Number(item.price_ghs).toFixed(2) +
+
+            " | Network: " + (item.network || "MTN");
+
+        const status = document.createElement("p");
+
+        status.textContent = "Status: " + item.status;
+
+        status.className = "status";
+
+        div.append(title, details, status);
+
+        box.appendChild(div);
+
+    });
+
+}
+
+async function loadOrders() {
+
+    const box = document.getElementById("orders");
+
+    box.textContent = "Loading orders...";
+
+    const { data, error } = await db
+
+        .from("data_orders")
+
+        .select(`
+
+            id,
+
+            listing_id,
+
+            buyer_contact,
+
+            amount_ghs,
+
+            platform_fee,
+
+            seller_amount,
+
+            status,
+
+            created_at,
+
+            delivery_status,
+
+            delivered_at
+
+        `)
+
+        .order("id", { ascending: false });
+
+    if (error) {
+
+        box.textContent = "Could not load orders: " + error.message;
+
+        return;
+
+    }
+
+    if (!data || data.length === 0) {
+
+        box.textContent = "No customer orders yet.";
+
+        return;
+
+    }
+
+    box.innerHTML = "";
+
+    data.forEach(order => {
+
+        const div = document.createElement("div");
+
+        div.className = "order";
+
+        const title = document.createElement("h3");
+
+        title.textContent = "Order #" + order.id;
+
+        const buyer = document.createElement("p");
+
+        buyer.textContent =
+
+            "Buyer contact: " + (order.buyer_contact || "Not available");
+
+        const amount = document.createElement("p");
+
+        amount.textContent =
+
+            "Order amount: GH₵ " +
+
+            Number(order.amount_ghs).toFixed(2);
+
+        const earnings = document.createElement("p");
+
+        earnings.textContent =
+
+            "Your earnings: GH₵ " +
+
+            Number(order.seller_amount).toFixed(2);
+
+        const payment = document.createElement("p");
+
+        payment.textContent =
+
+            "Payment: " + order.status;
+
+        payment.className = "status";
+
+        const delivery = document.createElement("p");
+
+        delivery.textContent =
+
+            "Delivery: " + (order.delivery_status || "Not available");
+
+        div.append(
+
+            title,
+
+            buyer,
+
+            amount,
+
+            earnings,
+
+            payment,
+
+            delivery
+
+        );
+
+        if (
+
+            order.status === "paid" &&
+
+            order.delivery_status === "awaiting_delivery"
+
+        ) {
+
+            const button = document.createElement("button");
+
+            button.textContent = "Mark as Delivered";
+
+            button.addEventListener("click", () => {
+
+                markDelivered(order.id, button);
+
+            });
+
+            div.appendChild(button);
+
+        }
+
+        box.appendChild(div);
+
+    });
+
+}
+
+async function markDelivered(orderId, button) {
+
+    const confirmed = confirm(
+
+        "Have you successfully delivered this data bundle?"
+
+    );
+
+    if (!confirmed) return;
+
+    button.disabled = true;
+
+    button.textContent = "Updating...";
+
+    const { error } = await db.rpc(
+
+        "mark_order_delivered",
+
+        {
+
+            p_order_id: orderId
+
+        }
+
+    );
+
+    if (error) {
+
+        alert("Could not update delivery: " + error.message);
+
+        button.disabled = false;
+
+        button.textContent = "Mark as Delivered";
+
+        return;
+
+    }
+
+    alert("Order marked as delivered successfully!");
+
+    await loadOrders();
+
+}
+
+async function logout() {
+
+    await db.auth.signOut();
+
+    dashboard.style.display = "none";
+
+    loginSection.style.display = "block";
+
+    document.getElementById("password").value = "";
+
+    loginMessage.textContent = "You have logged out.";
+
+}
+
+async function checkLogin() {
+
+    const { data, error } = await db.auth.getSession();
+
+    if (error) {
+
+        loginMessage.textContent = error.message;
+
+        return;
+
+    }
+
+    if (data.session) {
+
+        showDashboard(data.session.user);
+
+    }
+
+}
+
+checkLogin();
+
+</script>
+
+</body>
+
+</html>

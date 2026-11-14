@@ -17,30 +17,25 @@
 <style>
 
 *{box-sizing:border-box}
-
-body{margin:0;font-family:Arial,sans-serif;background:#f3f4ef;color:#171914}
-
-header{background:#11140f;color:white;padding:24px 16px;text-align:center;border-bottom:4px solid #ffcc00}
-
-header h1{margin:0;font-size:25px}
-
-header p{margin:8px 0 0;color:#ffcc00;font-size:14px}
-
-.container{width:100%;max-width:850px;padding:16px;margin:auto}
-
-.card{background:white;border-radius:14px;padding:18px;margin-bottom:16px;box-shadow:0 3px 12px rgba(0,0,0,.06)}
-
-h2{font-size:20px;margin-top:0}
+:root{color-scheme:dark;--gold:#ffcc00;--muted:#b8bcae;--panel:#1c2319}
+body{margin:0;font-family:Arial,sans-serif;background:radial-gradient(ellipse at 10% 0%,rgba(255,204,0,.13),transparent 34%),radial-gradient(ellipse at 100% 40%,rgba(59,212,119,.08),transparent 30%),linear-gradient(145deg,#080b08,#151b12 55%,#090d09);background-attachment:fixed;color:#fff;min-height:100vh}
+header{background:rgba(14,19,13,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);color:white;padding:25px 16px;text-align:center;border-bottom:1px solid rgba(255,204,0,.35);box-shadow:0 12px 35px rgba(0,0,0,.25)}
+header h1{margin:0;font-size:26px;color:var(--gold)}
+header p{margin:8px 0 0;color:#e9d98b;font-size:14px}
+.container{width:100%;max-width:1000px;padding:16px;margin:auto}
+.card{background:linear-gradient(145deg,rgba(35,43,30,.96),rgba(20,26,18,.96));border:1px solid rgba(255,255,255,.08);border-radius:17px;padding:18px;margin-bottom:16px;box-shadow:0 14px 35px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.035);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+h2{font-size:20px;margin-top:0;color:#ffe27a}
 
 h3{font-size:17px;margin:0 0 12px}
 
-input{width:100%;padding:15px;margin:8px 0;border:1px solid #ccc;border-radius:9px;font-size:16px}
+input{width:100%;padding:15px;margin:8px 0;border:1px solid #515b48;border-radius:9px;font-size:16px;background:#10150f;color:#fff}
 
-button{border:none;border-radius:9px;padding:12px 15px;margin:5px 4px 5px 0;font-size:14px;font-weight:bold;cursor:pointer}
+button{border:none;border-radius:10px;padding:12px 15px;margin:5px 4px 5px 0;font-size:14px;font-weight:bold;cursor:pointer;transition:transform .18s ease,filter .18s ease}
+button:active{transform:scale(.98)}
 
 button:disabled{opacity:.5;cursor:not-allowed}
 
-.primary{background:#ffcc00;color:#171914}
+.primary{background:#ffcc00;color:#171914;box-shadow:0 7px 18px rgba(255,204,0,.15)}
 
 .dark{background:#171914;color:white}
 
@@ -52,43 +47,37 @@ button:disabled{opacity:.5;cursor:not-allowed}
 
 .hidden{display:none!important}
 
-.message{padding:12px;border-radius:8px;margin-top:10px;background:#fff4cc;font-size:14px;overflow-wrap:anywhere}
+.message{padding:12px;border-radius:8px;margin-top:10px;background:#393116;border:1px solid #776222;color:#ffe58a;font-size:14px;overflow-wrap:anywhere}
 
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 
-.stat{background:#f6f5ed;border-radius:10px;padding:14px}
+.stat{background:linear-gradient(145deg,#2a3324,#1b2218);border:1px solid rgba(255,204,0,.16);border-radius:12px;padding:14px}
 
 .stat strong{display:block;font-size:23px;margin-top:7px;overflow-wrap:anywhere}
 
-.stat span{font-size:13px;color:#555}
+.stat span{font-size:13px;color:#c3c9b9}
 
-.item{border:1px solid #e5e5e5;border-radius:11px;padding:14px;margin:12px 0;background:#fff;overflow-wrap:anywhere}
+.item{border:1px solid #414b38;border-radius:12px;padding:14px;margin:12px 0;background:rgba(15,20,13,.72);overflow-wrap:anywhere}
 
-.item p{margin:7px 0;font-size:14px;line-height:1.5}
+.item p{margin:7px 0;font-size:14px;line-height:1.5;color:#d4dacb}
 
-.badge{display:inline-block;padding:5px 9px;border-radius:20px;background:#eee;font-size:12px;font-weight:bold;text-transform:uppercase}
+.badge{display:inline-block;padding:5px 9px;border-radius:20px;background:#343b2e;color:#fff;font-size:12px;font-weight:bold;text-transform:uppercase}
 
-.pending_payment{background:#fff0c2}
-
-.paid{background:#d9f4e3}
-
-.completed{background:#d9e8ff}
-
-.cancelled,.rejected,.suspended{background:#ffe0e0}
-
-.approved{background:#d9f4e3}
+.pending_payment,.pending{background:#514019;color:#ffe58a}
+.paid,.approved{background:#17452c;color:#8ff0b1}
+.completed{background:#173d5c;color:#a9d7ff}
+.cancelled,.rejected,.suspended{background:#512626;color:#ffaaaa}
 
 .section-title{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
 
-.small{color:#666;font-size:13px}
+.small{color:#b8bcae;font-size:13px}
+.section-title h2{margin-bottom:0}
+footer{text-align:center;padding:25px;color:#929a89;font-size:12px}
+.invite-box{background:#282817;border:1px solid #665719;border-radius:10px;padding:12px;margin-top:12px}
+.invite-box label{font-size:13px;font-weight:bold;color:#ffe27a}
+.invite-status{font-size:13px;color:#8ff0b1;margin-top:8px}
 
-.invite-box{background:#fff9df;border:1px solid #f0d66a;border-radius:10px;padding:12px;margin-top:12px}
 
-.invite-box label{font-size:13px;font-weight:bold}
-
-.invite-status{font-size:13px;color:#168447;margin-top:8px}
-
-footer{text-align:center;padding:25px;color:#777;font-size:12px}
 
 @media(min-width:600px){.stats{grid-template-columns:repeat(4,1fr)}}
 
@@ -186,7 +175,7 @@ footer{text-align:center;padding:25px;color:#777;font-size:12px}
 
 </div>
 
-<p class="small">Verify actual payment before marking an order as Paid. Do not mark an order Paid just because it was submitted.</p>
+<p class="small">Payment status is confirmed by the Paystack verification webhook. This dashboard does not manually mark pending orders as paid.</p>
 
 <div id="ordersList"><p class="small">Loading orders...</p></div>
 
@@ -421,6 +410,8 @@ return;
 }
 
 await Promise.all([loadOrders(),loadApplications()]);
+  document.getElementById("dashboardMessage").textContent="Dashboard refreshed just now. Auto-refresh runs every 30 seconds.";
+  document.getElementById("dashboardMessage").classList.remove("hidden");
 
 }
 
@@ -530,7 +521,7 @@ addText(card,"p","Date: "+date);
 
 if(order.status==="pending_payment"){
 
-card.appendChild(makeButton("Mark Paid","green",()=>updateOrderStatus(order.id,"paid")));
+
 
 card.appendChild(makeButton("Cancel Order","red",()=>updateOrderStatus(order.id,"cancelled")));
 
@@ -830,9 +821,9 @@ throw new Error("Admin session expired. Please log in again.");
 
 }
 
-// IMPORTANT: This must match the actual deployed function URL slug.
+// Call the deployed invite-seller Edge Function.
 
-const {data,error}=await db.functions.invoke("quick-responder",{
+const {data,error}=await db.functions.invoke("invite-seller",{
 
 body:{
 
@@ -1033,6 +1024,12 @@ await openDashboard();
 }
 
 checkSession();
+setInterval(async()=>{
+  const dashboard=document.getElementById("dashboard");
+  if(dashboard&&!dashboard.classList.contains("hidden")){
+    await refreshDashboard();
+  }
+},30000);
 
 </script>
 

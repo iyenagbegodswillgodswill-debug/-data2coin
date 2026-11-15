@@ -1149,27 +1149,120 @@ async function loadKingflexyPackages() {
       select.addEventListener("click", () => {
         const previous = document.getElementById("selectedKingflexyPackage");
         if (previous) previous.remove();
-        const panel = document.createElement("div");
+        const panel = document.createElement("form");
         panel.id = "selectedKingflexyPackage";
         panel.className = "card";
         const title = document.createElement("h3");
-        title.textContent = "Package selected";
+        title.textContent = "Complete Your Data Order";
         const chosen = document.createElement("p");
         chosen.textContent = sizeText + " — " + price.textContent;
-        const label = document.createElement("label");
-        label.textContent = "MTN recipient phone number";
-        const phone = document.createElement("input");
-        phone.type = "tel";
-        phone.placeholder = "0241234567";
-        phone.inputMode = "tel";
-        phone.required = true;
-        const info = document.createElement("p");
-        info.className = "status-message";
-        info.textContent = "Enter the number that should receive this data. Payment and delivery for these live packages are not connected yet, so no payment will be taken.";
-        panel.append(title, chosen, label, phone, info);
+        const recipientLabel = document.createElement("label");
+        recipientLabel.textContent = "MTN recipient phone (receives the data)";
+        const recipient = document.createElement("input");
+        recipient.type = "tel";
+        recipient.inputMode = "tel";
+        recipient.placeholder = "0241234567";
+        recipient.required = true;
+        const payerLabel = document.createElement("label");
+        payerLabel.textContent = "Your MTN MoMo phone (receives payment prompt)";
+        const payer = document.createElement("input");
+        payer.type = "tel";
+        payer.inputMode = "tel";
+        payer.placeholder = "0241234567";
+        payer.required = true;
+        const emailLabel = document.createElement("label");
+        emailLabel.textContent = "Email address";
+        const email = document.createElement("input");
+        email.type = "email";
+        email.placeholder = "you@example.com";
+        email.required = true;
+        const submit = document.createElement("button");
+        submit.type = "submit";
+        submit.className = "primary";
+        submit.textContent = "Send MTN MoMo Payment Prompt";
+        const message = document.createElement("div");
+        message.className = "status-message";
+        const note = document.createElement("p");
+        note.className = "small";
+        note.textContent = "The recipient number gets the data. The MoMo number gets the payment request. Never enter your MoMo PIN on this website.";
+        panel.append(title, chosen, recipientLabel, recipient, payerLabel, payer, emailLabel, email, submit, message, note);
         card.insertAdjacentElement("afterend", panel);
-        phone.focus();
         panel.scrollIntoView({ behavior: "smooth", block: "center" });
+        panel.addEventListener("submit", async event => {
+          event.preventDefault();
+          if (!Number.isFinite(Number(pkg.volume_gb)) || Number(pkg.volume_gb) <= 0) {
+            message.textContent = "This package cannot be ordered because its data size could not be verified.";
+            return;
+          }
+          submit.disabled = true;
+          submit.textContent = "Sending payment request...";
+          message.textContent = "Checking the live price and creating your order...";
+          try {
+            const { data, error } = await supabaseClient.functions.invoke("start-live-data-payment", {
+              body: {
+                volume_gb: Number(pkg.volume_gb),
+                recipient_phone: recipient.value.trim(),
+                payment_phone: payer.value.trim(),
+                email: email.value.trim()
+              }
+            });
+            if (error || !data?.success) throw new Error(data?.error || error?.message || "Could not start payment.");
+            const saved = {
+              order_id: data.order_id,
+              tracking_token: data.tracking_token,
+              amount_ghs: data.amount_ghs,
+              bundle_size: sizeText,
+              created_at: new Date().toISOString(),
+              live_order: true
+            };
+            saveOrder(saved);
+            submit.style.display = "none";
+            message.replaceChildren();
+            const orderInfo = document.createElement("p");
+            orderInfo.textContent = "Order " + data.order_id + " · Amount: GH₵ " + Number(data.amount_ghs).toFixed(2);
+            const promptInfo = document.createElement("p");
+            promptInfo.textContent = data.display_text || "Approve the payment request on the MoMo phone you entered.";
+            const state = document.createElement("p");
+            state.className = "gold";
+            state.textContent = "Waiting for MoMo approval and payment verification...";
+            message.append(orderInfo, promptInfo, state);
+            const refresh = document.createElement("button");
+            refresh.type = "button";
+            refresh.className = "secondary";
+            refresh.textContent = "Check Order Status";
+            refresh.addEventListener("click", async () => {
+              refresh.disabled = true;
+              refresh.textContent = "Checking...";
+              try {
+                const result = await supabaseClient.functions.invoke("get-live-data-order", {
+                  body: { order_id: data.order_id, tracking_token: data.tracking_token }
+                });
+                if (result.error || !result.data?.success) throw new Error(result.data?.error || "Status unavailable.");
+                const order = result.data.order;
+                state.textContent = "Payment: " + order.payment_status + " · Delivery: " + order.fulfillment_status;
+                if (order.fulfillment_status === "delivered") state.textContent += " — Data delivery confirmed.";
+                if (order.fulfillment_status === "manual_review") state.textContent += " — Support review required; please do not pay again.";
+                if (order.provider_message) {
+                  const detail = document.createElement("p");
+                  detail.className = "small";
+                  detail.textContent = order.provider_message;
+                  message.appendChild(detail);
+                }
+              } catch (checkError) {
+                state.textContent = checkError.message || "Could not check status.";
+              } finally {
+                refresh.disabled = false;
+                refresh.textContent = "Check Order Status";
+              }
+            });
+            message.appendChild(refresh);
+          } catch (checkoutError) {
+            message.textContent = checkoutError.message || "Payment could not be started.";
+            submit.disabled = false;
+            submit.textContent = "Send MTN MoMo Payment Prompt";
+          }
+        });
+        recipient.focus();
       });
       card.append(badge, select);
       card.style.cursor = "pointer";

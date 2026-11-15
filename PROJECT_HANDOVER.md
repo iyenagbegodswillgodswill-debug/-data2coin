@@ -331,3 +331,36 @@ When opening a new ChatGPT conversation, share this file/link and say:
 | Date | Update |
 |---|---|
 | 2026-11-14 | Created initial continuity record from the current GitHub frontend inspection and available project history. Recorded marketplace rules, Supabase project reference, known tables/triggers, Paystack verification safeguards, account/dashboard requirements, deployment link, and latest requested login-first/design direction. Exact current backend state and original design reference remain to be inspected. |
+
+
+---
+
+## Latest implementation update — 2026-11-14
+
+### Customer account and combined seller dashboard
+- Updated `index.html` in commit `db8a0472a2fad4d44957e87478d51d6fb4753888`.
+- Added email/password customer registration and login using the existing Supabase Auth project.
+- Added session restoration on page load and a Log Out control.
+- Added a single Account area that displays the signed-in email, seller-registration status, and — for an approved linked seller — that seller's own listings and customer orders.
+- The combined seller panel uses the existing row-level security policies and the existing `complete-seller-order` Edge Function. That function checks the bearer token, verifies the logged-in user, confirms the approved seller owns the listing, and only allows a paid order to be completed.
+- Seller registrations submitted while logged in now include the current Auth user's `auth_user_id` and email. Guest seller registration remains possible and is not linked to an account.
+- Admin access remains separate in `admin.html`; the Account page only shows its admin link when the signed-in user has their own record in `admin_users`. Do not weaken the admin verification.
+- The current page JavaScript passed a syntax parse check after the edit. This does not replace a real browser sign-up/login test.
+
+### Visual design update
+- Added a black-and-gold visual layer and home-screen shortcuts matching the supplied reference.
+- Added the BIGMK Furniture & More banner and the reference categories: sofas/lounges, beds/bedroom sets, dining sets, and TV stands/home décor.
+- The furniture area is currently a branded banner and category display only. No live furniture inventory, product checkout, or catalogue link has been connected.
+- Existing Buy Data, Sell Data, Payments, Airtime, order tracking, and local saved-order UI were retained.
+
+### Password reset
+- Corrected the GitHub Pages reset redirect in `reset-password.html` in commit `2ab78b520331ec1918f230e23b77450365e0aa34`.
+- Changed the success message from seller-only wording to Data2Coin account wording.
+- The old home page was preserved at `index-before-account-login-2026-11-14.html` (backup commit `00172a06b82e0eaf929fa099c1514feeef7dcc64`).
+
+### Important limits / next checks
+- **Not browser-tested yet:** a real user must still test sign-up, email confirmation (if enabled), log-in, refresh/session persistence, password reset, log-out, and seller status on the published site.
+- Supabase Auth may require the GitHub Pages project URL and the reset-password URL to be present in Authentication → URL Configuration → Redirect URLs. The code uses the project home URL for sign-up confirmation and the reset page URL for password resets. Confirm the allowlist if Supabase reports a redirect-not-allowed error.
+- Buyer order history is still device-local plus private order tracking. The current `data_orders` table does **not** have a buyer Auth user ID column, and `initialize-payment` does not attach an authenticated buyer to the order. Do not claim cross-device buyer transaction history is implemented. Plan the schema, Edge Function, and RLS changes as a separate secure step.
+- Paystack initialization, webhook, lookup, and resume-payment functions were not changed. Live payments must remain disabled or clearly test-only until Paystack/API approval and full verified-payment testing.
+- Existing database tables, data, RLS policies, seller approvals, and administrator account were not changed by this frontend update.

@@ -1114,7 +1114,7 @@ async function loadKingflexyPackages() {
     if (!data?.success || !Array.isArray(packages) || !packages.length) {
       throw new Error(data?.error || "The provider returned no MTN packages.");
     }
-    status.textContent = packages.length + " live MTN package options found. Preview only — buying is not enabled yet.";
+    status.textContent = packages.length + " live MTN package options found. Select a package to order.";
     packages.forEach(pkg => {
       const sizeText = String(pkg.size || pkg.bundle_size || pkg.name || "MTN Data");
       const rawCost = Number(pkg.price ?? pkg.price_ghs ?? pkg.cost ?? pkg.amount);

@@ -1208,7 +1208,18 @@ async function loadKingflexyPackages() {
                 payment_phone: payer.value.trim(),
               }
             });
-            if (error || !data?.success) throw new Error(data?.error || error?.message || "Could not start payment.");
+            if (error) {
+              let reason = data?.error || error.message || "Could not start payment."; 
+              try {
+                const response = error.context?.clone ? error.context.clone() : error.context;
+                if (response?.json) {
+                  const details = await response.json();
+                  reason = details?.error || details?.message || reason;
+                }
+              } catch (_) {}
+              throw new Error(reason);
+            }
+            if (!data?.success) throw new Error(data?.error || "Could not start payment.");
             const saved = {
               order_id: data.order_id,
               tracking_token: data.tracking_token,

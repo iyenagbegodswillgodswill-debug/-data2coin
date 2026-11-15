@@ -881,8 +881,6 @@ async function loadSellerAccountPanel(user) {
     card.appendChild(accountElement("strong", "Order #" + order.id));
     card.appendChild(accountElement("p", "Buyer contact: " + (order.buyer_contact || "Not available")));
     card.appendChild(accountElement("p", "Order amount: GH₵ " + Number(order.amount_ghs || 0).toFixed(2)));
-    card.appendChild(accountElement("p", "Platform fee: GH₵ " + Number(order.platform_fee || 0).toFixed(2)));
-    card.appendChild(accountElement("p", "Your amount: GH₵ " + Number(order.seller_amount || 0).toFixed(2)));
     card.appendChild(accountElement("p", "Status: " + (order.status || "unknown")));
     if (order.status === "paid") {
       const complete = document.createElement("button");

@@ -49,6 +49,12 @@ input,select{width:100%;padding:14px;border-radius:10px;border:1px solid #51451a
 button.action{width:100%;padding:15px;border:0;border-radius:11px;background:var(--gold);color:#111;font-size:16px;font-weight:800;margin-top:12px}
 button:disabled{opacity:.5;cursor:not-allowed}
 .small{font-size:12px;color:#929292}
+.account-chip{position:absolute;z-index:5;right:3%;top:2%;padding:9px 13px;border:1px solid #ffcc00;border-radius:999px;background:#111;color:#ffcc00;font-weight:800;font-size:12px;text-decoration:none}
+.auth-switch{display:flex;gap:8px;margin:12px 0}
+.auth-switch button{flex:1;padding:12px;border:1px solid #6b5700;border-radius:10px;background:#171717;color:#fff;font-weight:700}
+.auth-switch button.selected{background:#ffcc00;color:#111}
+.account-meta{overflow-wrap:anywhere;color:#fff;font-size:14px;line-height:1.7}
+
 .status{margin-top:12px;overflow-wrap:anywhere}
 .category{padding:14px;border:1px solid #3b310c;border-radius:12px;background:#151515;margin:10px 0}
 .category strong{color:var(--gold)}
@@ -62,6 +68,7 @@ footer{text-align:center;color:#777;font-size:12px;padding:20px}
 <div class="app">
 <section id="home" class="page active" style="padding:0">
   <div class="home-screen" aria-label="Data2Coin home">
+    <a class="account-chip" href="#account" data-page="account">LOG IN / ACCOUNT</a>
     <iframe src="staging.html" title="Data2Coin approved visual design" scrolling="no" tabindex="-1"></iframe>
     <a class="hotspot data" href="#data" data-page="data" aria-label="Buy MTN data"></a>
     <a class="hotspot airtime" href="#airtime" data-page="airtime" aria-label="Buy MTN airtime"></a>
@@ -144,8 +151,42 @@ footer{text-align:center;color:#777;font-size:12px;padding:20px}
   <div class="topbar"><div class="brand">Data2Coin</div><button class="back" data-page="home">← Home</button></div>
   <h1>More</h1>
   <div class="card"><h2>Order Tracking</h2><p>Check the progress of a previous purchase.</p><button class="action" data-page="track">Track an Order</button></div>
+  <div class="card"><h2>My Account</h2><p>Create an account or log in to view your customer account.</p><button class="action" data-page="account">Open My Account</button></div>
   <div class="card"><h2>Customer Support</h2><p>Get help with an order or payment.</p><button class="action" data-page="support">Get Support</button></div>
   <div class="card"><h2>About Data2Coin</h2><p>Buy MTN data and airtime, and shop BIGMK Furniture from one simple Ghanaian digital store.</p></div>
+</section>
+
+
+<section id="account" class="page">
+  <div class="topbar"><div class="brand">Data2Coin</div><button class="back" data-page="home">← Home</button></div>
+  <h1>My <span class="gold">Account</span></h1>
+  <p>Register or log in securely to your Data2Coin customer account.</p>
+  <div id="signedInPanel" class="card" hidden>
+    <h2>Welcome back</h2>
+    <div id="accountDetails" class="account-meta"></div>
+    <button id="logoutButton" class="action" type="button">Log Out</button>
+  </div>
+  <div id="authPanel" class="card">
+    <div class="auth-switch">
+      <button id="showLogin" class="selected" type="button">Log In</button>
+      <button id="showSignup" type="button">Create Account</button>
+    </div>
+    <form id="authForm">
+      <div id="signupFields" hidden>
+        <label class="field" for="fullName">Full name</label>
+        <input id="fullName" type="text" autocomplete="name" placeholder="Your full name">
+        <label class="field" for="phoneNumber">Mobile number</label>
+        <input id="phoneNumber" type="tel" autocomplete="tel" placeholder="e.g. 0240000000">
+      </div>
+      <label class="field" for="authEmail">Email address</label>
+      <input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com">
+      <label class="field" for="authPassword">Password</label>
+      <input id="authPassword" type="password" required minlength="6" autocomplete="current-password" placeholder="At least 6 characters">
+      <button id="authSubmit" class="action" type="submit">Log In</button>
+      <p id="authStatus" class="status" role="status" aria-live="polite"></p>
+    </form>
+    <p class="small">Your password is handled by Supabase Authentication. Never share it with anyone.</p>
+  </div>
 </section>
 
 <nav class="bottom-links" aria-label="Main navigation">
@@ -181,6 +222,80 @@ window.addEventListener("load", () => {
   const initial = location.hash.replace("#","");
   if (document.getElementById(initial)?.classList.contains("page")) showPage(initial);
 });
+
+let authMode = "login";
+const authPanel = document.getElementById("authPanel");
+const signedInPanel = document.getElementById("signedInPanel");
+const authStatus = document.getElementById("authStatus");
+function setAuthMode(mode) {
+  authMode = mode;
+  document.getElementById("signupFields").hidden = mode !== "signup";
+  document.getElementById("showLogin").classList.toggle("selected", mode === "login");
+  document.getElementById("showSignup").classList.toggle("selected", mode === "signup");
+  document.getElementById("authSubmit").textContent = mode === "login" ? "Log In" : "Create Account";
+  document.getElementById("authPassword").autocomplete = mode === "login" ? "current-password" : "new-password";
+  authStatus.textContent = "";
+}
+document.getElementById("showLogin").addEventListener("click", () => setAuthMode("login"));
+document.getElementById("showSignup").addEventListener("click", () => setAuthMode("signup"));
+function renderAuthState(user) {
+  if (user) {
+    authPanel.hidden = true;
+    signedInPanel.hidden = false;
+    const name = user.user_metadata?.full_name || "Data2Coin customer";
+    const phone = user.user_metadata?.phone || "Not added";
+    document.getElementById("accountDetails").textContent =
+      "Name: " + name + "\nEmail: " + user.email + "\nMobile: " + phone;
+  } else {
+    signedInPanel.hidden = true;
+    authPanel.hidden = false;
+  }
+}
+document.getElementById("authForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const submit = document.getElementById("authSubmit");
+  submit.disabled = true;
+  authStatus.textContent = authMode === "login" ? "Signing you in..." : "Creating your account...";
+  const email = document.getElementById("authEmail").value.trim();
+  const password = document.getElementById("authPassword").value;
+  try {
+    if (authMode === "signup") {
+      const full_name = document.getElementById("fullName").value.trim();
+      const phone = document.getElementById("phoneNumber").value.trim();
+      if (!full_name) throw new Error("Please enter your full name.");
+      const {data,error} = await supabaseClient.auth.signUp({
+        email,password,options:{data:{full_name,phone}}
+      });
+      if (error) throw error;
+      if (data.session) {
+        authStatus.textContent = "Account created successfully.";
+        renderAuthState(data.user);
+      } else {
+        authStatus.textContent = "Registration received. Please check your email for the confirmation link, then log in.";
+        setAuthMode("login");
+      }
+    } else {
+      const {data,error} = await supabaseClient.auth.signInWithPassword({email,password});
+      if (error) throw error;
+      authStatus.textContent = "Login successful.";
+      renderAuthState(data.user);
+    }
+  } catch (error) {
+    authStatus.textContent = error.message || "Something went wrong. Please try again.";
+  } finally {
+    submit.disabled = false;
+  }
+});
+document.getElementById("logoutButton").addEventListener("click", async () => {
+  const button = document.getElementById("logoutButton");
+  button.disabled = true;
+  const {error} = await supabaseClient.auth.signOut();
+  button.disabled = false;
+  authStatus.textContent = error ? error.message : "You have logged out.";
+  if (!error) renderAuthState(null);
+});
+supabaseClient.auth.getSession().then(({data}) => renderAuthState(data.session?.user || null));
+supabaseClient.auth.onAuthStateChange((_event,session) => renderAuthState(session?.user || null));
 
 document.getElementById("trackingForm").addEventListener("submit", async event => {
   event.preventDefault();

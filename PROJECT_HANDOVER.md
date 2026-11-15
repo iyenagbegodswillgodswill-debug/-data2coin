@@ -364,3 +364,13 @@ When opening a new ChatGPT conversation, share this file/link and say:
 - Buyer order history is still device-local plus private order tracking. The current `data_orders` table does **not** have a buyer Auth user ID column, and `initialize-payment` does not attach an authenticated buyer to the order. Do not claim cross-device buyer transaction history is implemented. Plan the schema, Edge Function, and RLS changes as a separate secure step.
 - Paystack initialization, webhook, lookup, and resume-payment functions were not changed. Live payments must remain disabled or clearly test-only until Paystack/API approval and full verified-payment testing.
 - Existing database tables, data, RLS policies, seller approvals, and administrator account were not changed by this frontend update.
+
+
+### Additional live-database findings — 2026-11-14
+- Seller registration summary: 4 approved seller registrations currently exist; 2 have an Auth `auth_user_id` link and 2 do not. The combined Account page only displays the seller registration linked to the signed-in user. Do not automatically attach the unlinked records to an account without confirming ownership.
+- Supabase Security Advisor currently reports:
+  - **Error:** `public.public_data_listings` is a SECURITY DEFINER view. It exposes only available listing fields (id, bundle_size, price_ghs, network, data_size_gb), but its invoker/definer behavior still needs review.
+  - **Warnings:** public and/or authenticated execution grants on SECURITY DEFINER database functions `prepare_data_order()`, `publish_approved_seller()`, `mark_order_delivered(bigint)`, and `rls_auto_enable()`.
+  - **Warning:** leaked-password protection is disabled.
+- These are database-level findings that existed independently of the new frontend. Do not blindly change or revoke function permissions: inspect trigger dependencies, grants, and the intended public listing read path first. No database policies, functions, views, triggers, or table definitions were changed by the frontend update.
+- Recommended security follow-up: confirm the public listing view can use SECURITY INVOKER with a narrowly scoped SELECT policy for available listings; restrict direct EXECUTE grants on trigger/event-trigger functions if appropriate; retain seller ownership checks on delivery actions; decide whether to enable leaked-password protection.

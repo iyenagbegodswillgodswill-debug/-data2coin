@@ -482,6 +482,36 @@ margin:18px 0;
 
 }
 
+
+/* DATA2COIN GOLD + BLACK DESIGN LAYER */
+:root{--gold:#ffc400;--dark:#050505;--card:#17120a;--text:#fffaf0;--muted:#d2c3a2;--green:#5bd68a}
+body{background:radial-gradient(ellipse at 15% 4%,rgba(255,196,0,.18),transparent 34%),radial-gradient(ellipse at 90% 42%,rgba(160,105,15,.12),transparent 32%),linear-gradient(155deg,#050505 0%,#120d05 52%,#050505 100%);color:var(--text)}
+header{background:rgba(5,5,5,.94);border-bottom:1px solid rgba(255,196,0,.42);box-shadow:0 12px 32px rgba(0,0,0,.55)}
+.logo{letter-spacing:.2px;text-shadow:0 0 18px rgba(255,196,0,.2)}
+.card{background:linear-gradient(145deg,rgba(30,23,12,.97),rgba(13,11,8,.98));border:1px solid rgba(255,196,0,.28);box-shadow:0 14px 34px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.035)}
+.hero{background:radial-gradient(circle at 90% 25%,rgba(255,196,0,.20),transparent 34%),linear-gradient(135deg,#211605,#090909 75%);border:1px solid rgba(255,196,0,.62)}
+.data-card{background:linear-gradient(145deg,#21190c,#0e0d0a);border:1px solid rgba(255,196,0,.34)}
+input,select,textarea{background:#080808;border-color:#66501b}
+.secondary{background:#30230d;color:#fff3c7;border:1px solid #70571b}
+.notice{background:#2b210c;border-color:#94721c}.notice p{color:#ffe69b}
+.bottom-nav{background:rgba(5,5,5,.96);border-top:1px solid rgba(255,196,0,.42)}
+.nav-button{color:#c8b98f}
+.order-box{background:linear-gradient(145deg,#21190c,#0e0d0a);border-color:#80621b}
+.home-shortcuts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.shortcut{min-height:82px;margin:0;padding:12px 6px;background:linear-gradient(145deg,#241a0a,#100e09);border:1px solid rgba(255,196,0,.45);color:#fff0bd;border-radius:15px;font-size:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.shortcut span{font-size:22px}
+.bigmk-card{position:relative;overflow:hidden;background:linear-gradient(105deg,rgba(5,5,5,.96),rgba(37,24,6,.94));border:1px solid #b88920}
+.bigmk-title{color:#ffd34e;font-weight:900;letter-spacing:.8px;font-size:20px}
+.furniture-categories{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:14px}
+.furniture-categories span{border:1px solid rgba(255,196,0,.34);background:rgba(255,196,0,.07);border-radius:11px;padding:11px 8px;text-align:center;color:#f4e4bd;font-size:13px}
+.auth-switch{background:transparent;color:#ffd34e;border:1px solid #70571b}
+.account-panel{border-color:rgba(255,196,0,.48)}
+.account-status{padding:12px;border-radius:12px;background:rgba(255,196,0,.07);border:1px solid rgba(255,196,0,.25);margin-top:12px}
+.account-item{padding:13px;margin-top:10px;border:1px solid rgba(255,196,0,.22);border-radius:12px;background:rgba(255,255,255,.025)}
+.account-item p{font-size:14px;margin-top:4px}
+.account-link{color:#ffd34e;text-decoration:underline}
+.kente-strip{height:12px;margin:16px -18px 0;background:repeating-linear-gradient(45deg,#e4a900 0 7px,#14100a 7px 14px,#9e5e08 14px 21px,#080808 21px 28px);border-top:1px solid #a87811;border-bottom:1px solid #a87811}
+@media(max-width:380px){.home-shortcuts{gap:7px}.shortcut{font-size:12px;padding:10px 4px}}
 </style>
 
 </head>
@@ -546,14 +576,32 @@ margin:18px 0;
 
 </div>
 
+<div class="card home-shortcut-card">
+<h2>Explore Data2Coin</h2>
+<div class="home-shortcuts">
+<button class="shortcut" onclick="showPage('data')"><span>📶</span>Data Bundles</button>
+<button class="shortcut" onclick="showPage('airtime')"><span>📱</span>Airtime</button>
+<button class="shortcut" onclick="showPage('payments')"><span>💳</span>Payments</button>
+<button class="shortcut" onclick="showPage('data')"><span>🛒</span>Buy Data</button>
+<button class="shortcut" onclick="showPage('sell')"><span>⇄</span>Sell Data</button>
+<button class="shortcut" onclick="showPage('account')"><span>👤</span>My Account</button>
+</div>
+</div>
+<div class="card bigmk-card">
+<div class="bigmk-title">BIGMK FURNITURE &amp; MORE</div>
+<p>Ready-made furniture for homes in Ghana and Nigeria.</p>
+<div class="furniture-categories">
+<span>🛋️ Sofas &amp; Lounges</span>
+<span>🛏️ Beds &amp; Bedroom Sets</span>
+<span>🍽️ Dining Sets</span>
+<span>📺 TV Stands &amp; Home Decor</span>
+</div>
+<p class="small" style="margin-top:12px">BIGMK Furniture — bringing comfort and style to your home.</p>
+</div>
 <div class="card">
-
 <h2>Become a Seller</h2>
-
 <p>Register your data bundle and wait for approval before it appears in the marketplace.</p>
-
 <button class="primary" onclick="showPage('sell')">Become a Seller</button>
-
 </div>
 
 </section>
@@ -690,6 +738,54 @@ margin:18px 0;
 
 <section class="page" id="account">
 
+<div class="card account-panel" id="guestAccountPanel">
+<h2>Log In / Register</h2>
+<p>Use one Data2Coin account to buy data and access seller tools when approved.</p>
+<form id="accountLoginForm">
+<label>Email address</label>
+<input type="email" id="accountLoginEmail" placeholder="Enter your email" autocomplete="username" required>
+<label>Password</label>
+<input type="password" id="accountLoginPassword" placeholder="Enter your password" autocomplete="current-password" required>
+<button class="primary" type="submit" id="accountLoginButton">Log In</button>
+</form>
+<button class="auth-switch" type="button" id="showSignupButton">Create a new account</button>
+<form id="accountSignupForm" style="display:none">
+<h3>Create Your Data2Coin Account</h3>
+<label>Email address</label>
+<input type="email" id="accountSignupEmail" placeholder="Enter your email" autocomplete="email" required>
+<label>Create password</label>
+<input type="password" id="accountSignupPassword" placeholder="At least 8 characters" minlength="8" autocomplete="new-password" required>
+<label>Confirm password</label>
+<input type="password" id="accountSignupConfirm" placeholder="Enter password again" minlength="8" autocomplete="new-password" required>
+<button class="primary" type="submit" id="accountSignupButton">Create Account</button>
+<button class="secondary" type="button" id="showLoginButton">Back to Log In</button>
+</form>
+<p style="margin-top:10px"><a class="account-link" href="reset-password.html">Forgot your password?</a></p>
+<div class="status-message" id="accountAuthMessage" role="status" aria-live="polite"></div>
+</div>
+
+<div class="card account-panel" id="signedInAccountPanel" style="display:none">
+<h2>My Data2Coin Account 👤</h2>
+<p>Signed in as <strong class="gold" id="accountUserEmail"></strong></p>
+<div class="account-status" id="accountRoleStatus">Your buyer account is ready.</div>
+<button class="secondary" type="button" id="accountSignOutButton">Log Out</button>
+<div id="accountAdminAccess" style="display:none;margin-top:12px">
+<a class="account-link" href="admin.html">Open Administrator Dashboard</a>
+</div>
+</div>
+
+<div class="card account-panel" id="sellerAccountPanel" style="display:none">
+<h3>My Seller Account</h3>
+<div id="sellerAccountStatus" class="account-status">Checking seller status...</div>
+<div id="sellerAccountTools" style="display:none">
+<h3 style="margin-top:18px">My Data Listings</h3>
+<div id="sellerAccountListings"><p>Loading your listings...</p></div>
+<h3 style="margin-top:18px">Customer Orders</h3>
+<p class="small">Only orders attached to your approved seller listings are shown here.</p>
+<div id="sellerAccountOrders"><p>Loading your orders...</p></div>
+</div>
+</div>
+
 <div class="card">
 
 <h2>My Account 👤</h2>
@@ -769,6 +865,7 @@ margin:18px 0;
 
 </nav>
 
+<div class="kente-strip" aria-hidden="true"></div>
 <footer>
 
 Data2Coin Ghana 🇬🇭<br>
@@ -790,12 +887,294 @@ const SUPABASE_URL = "https://lulbwtfxavlddcemyfyx.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_-jijVrjmTRU_HJDX33euyw_y89CrW7j";
 
 const supabaseClient = window.supabase.createClient(
-
   SUPABASE_URL,
-
   SUPABASE_PUBLISHABLE_KEY
-
 );
+
+let currentAccountUser = null;
+let currentSellerRegistration = null;
+
+function setAccountAuthMessage(message, isError = false) {
+  const target = document.getElementById("accountAuthMessage");
+  if (!target) return;
+  target.textContent = message || "";
+  target.style.color = isError ? "#ff9999" : "#ffe18a";
+}
+
+function showAccountAuthView(user) {
+  currentAccountUser = user || null;
+  const guest = document.getElementById("guestAccountPanel");
+  const signed = document.getElementById("signedInAccountPanel");
+  const sellerPanel = document.getElementById("sellerAccountPanel");
+  if (guest) guest.style.display = user ? "none" : "block";
+  if (signed) signed.style.display = user ? "block" : "none";
+  if (sellerPanel) sellerPanel.style.display = user ? "block" : "none";
+  if (user) {
+    document.getElementById("accountUserEmail").textContent = user.email || "Signed-in user";
+    document.getElementById("accountRoleStatus").textContent =
+      "Your buyer account is active. Seller tools appear below when your seller registration is approved.";
+  } else {
+    currentSellerRegistration = null;
+    document.getElementById("accountAdminAccess").style.display = "none";
+  }
+}
+
+function accountElement(tag, text, className) {
+  const el = document.createElement(tag);
+  el.textContent = text == null ? "" : String(text);
+  if (className) el.className = className;
+  return el;
+}
+
+async function loadSellerAccountPanel(user) {
+  const status = document.getElementById("sellerAccountStatus");
+  const tools = document.getElementById("sellerAccountTools");
+  const listingsBox = document.getElementById("sellerAccountListings");
+  const ordersBox = document.getElementById("sellerAccountOrders");
+  tools.style.display = "none";
+  status.textContent = "Checking your seller registration...";
+  listingsBox.replaceChildren();
+  ordersBox.replaceChildren();
+
+  const { data: seller, error: sellerError } = await supabaseClient
+    .from("seller_registrations")
+    .select("id, seller_name, status, bundle_size, selling_price")
+    .eq("auth_user_id", user.id)
+    .maybeSingle();
+
+  if (sellerError) {
+    status.textContent = "Could not load seller status: " + sellerError.message;
+    return;
+  }
+  currentSellerRegistration = seller || null;
+  if (!seller) {
+    status.textContent = "You have not registered as a seller yet. Open the Sell tab to apply. Your application will be linked to this account.";
+    return;
+  }
+
+  status.textContent = "Seller: " + (seller.seller_name || "Data2Coin seller") +
+    " · Status: " + String(seller.status || "pending").toUpperCase();
+  if (seller.status !== "approved") {
+    status.textContent += ". Seller tools will appear here after administrator approval.";
+    return;
+  }
+
+  tools.style.display = "block";
+  const { data: listings, error: listingsError } = await supabaseClient
+    .from("data_listings")
+    .select("id, bundle_size, price_ghs, status, network")
+    .eq("seller_registration_id", seller.id)
+    .order("id", { ascending: false });
+
+  if (listingsError) {
+    listingsBox.textContent = "Could not load your listings: " + listingsError.message;
+    return;
+  }
+  const ownListings = listings || [];
+  if (!ownListings.length) {
+    listingsBox.appendChild(accountElement("p", "You have no published listings yet.", "small"));
+  } else {
+    ownListings.forEach(item => {
+      const card = accountElement("div", "", "account-item");
+      card.appendChild(accountElement("strong", item.bundle_size || "MTN Data"));
+      card.appendChild(accountElement("p", "Price: GH₵ " + Number(item.price_ghs || 0).toFixed(2)));
+      card.appendChild(accountElement("p", "Network: " + (item.network || "MTN") + " · Status: " + (item.status || "unknown")));
+      listingsBox.appendChild(card);
+    });
+  }
+
+  const listingIds = ownListings.map(item => item.id);
+  if (!listingIds.length) {
+    ordersBox.appendChild(accountElement("p", "Customer orders will appear here when your bundles receive orders.", "small"));
+    return;
+  }
+
+  const { data: orders, error: ordersError } = await supabaseClient
+    .from("data_orders")
+    .select("id, listing_id, buyer_contact, amount_ghs, platform_fee, seller_amount, status, created_at")
+    .in("listing_id", listingIds)
+    .order("id", { ascending: false });
+
+  if (ordersError) {
+    ordersBox.textContent = "Could not load customer orders: " + ordersError.message;
+    return;
+  }
+  const ownOrders = orders || [];
+  if (!ownOrders.length) {
+    ordersBox.appendChild(accountElement("p", "No customer orders yet.", "small"));
+    return;
+  }
+
+  const earnings = ownOrders
+    .filter(order => ["paid", "completed"].includes(order.status))
+    .reduce((total, order) => total + Number(order.seller_amount || 0), 0);
+  ordersBox.appendChild(accountElement("p", "Recorded seller earnings: GH₵ " + earnings.toFixed(2), "gold"));
+
+  ownOrders.forEach(order => {
+    const card = accountElement("div", "", "account-item");
+    card.appendChild(accountElement("strong", "Order #" + order.id));
+    card.appendChild(accountElement("p", "Buyer contact: " + (order.buyer_contact || "Not available")));
+    card.appendChild(accountElement("p", "Order amount: GH₵ " + Number(order.amount_ghs || 0).toFixed(2)));
+    card.appendChild(accountElement("p", "Platform fee: GH₵ " + Number(order.platform_fee || 0).toFixed(2)));
+    card.appendChild(accountElement("p", "Your amount: GH₵ " + Number(order.seller_amount || 0).toFixed(2)));
+    card.appendChild(accountElement("p", "Status: " + (order.status || "unknown")));
+    if (order.status === "paid") {
+      const complete = document.createElement("button");
+      complete.type = "button";
+      complete.className = "primary";
+      complete.textContent = "Mark as Completed";
+      complete.addEventListener("click", () => completeSellerOrderFromAccount(order.id, complete));
+      card.appendChild(complete);
+    }
+    ordersBox.appendChild(card);
+  });
+}
+
+async function completeSellerOrderFromAccount(orderId, button) {
+  if (!currentAccountUser) {
+    setAccountAuthMessage("Please log in again.", true);
+    return;
+  }
+  if (!confirm("Have you delivered the data to this customer? Only confirm after delivery.")) return;
+  button.disabled = true;
+  button.textContent = "Updating...";
+  try {
+    const { data, error } = await supabaseClient.functions.invoke("complete-seller-order", {
+      body: { order_id: orderId }
+    });
+    if (error) throw error;
+    if (!data || !data.success) throw new Error(data?.error || "Could not update this order.");
+    await loadSellerAccountPanel(currentAccountUser);
+  } catch (error) {
+    setAccountAuthMessage(error.message || "Could not complete this order.", true);
+    button.disabled = false;
+    button.textContent = "Mark as Completed";
+  }
+}
+
+async function refreshAccountDashboard(user) {
+  if (!user) {
+    showAccountAuthView(null);
+    return;
+  }
+  showAccountAuthView(user);
+  setAccountAuthMessage("");
+  await loadSellerAccountPanel(user);
+  const { data: adminRecord, error: adminError } = await supabaseClient
+    .from("admin_users")
+    .select("user_id")
+    .eq("user_id", user.id)
+    .maybeSingle();
+  if (!adminError && adminRecord) {
+    document.getElementById("accountAdminAccess").style.display = "block";
+    document.getElementById("accountRoleStatus").textContent =
+      "Administrator account detected. Buyer and seller features remain available from this account.";
+  }
+}
+
+document.getElementById("showSignupButton").addEventListener("click", () => {
+  document.getElementById("accountLoginForm").style.display = "none";
+  document.getElementById("showSignupButton").style.display = "none";
+  document.getElementById("accountSignupForm").style.display = "block";
+  setAccountAuthMessage("");
+});
+
+document.getElementById("showLoginButton").addEventListener("click", () => {
+  document.getElementById("accountSignupForm").style.display = "none";
+  document.getElementById("accountLoginForm").style.display = "block";
+  document.getElementById("showSignupButton").style.display = "block";
+  setAccountAuthMessage("");
+});
+
+document.getElementById("accountLoginForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const email = document.getElementById("accountLoginEmail").value.trim();
+  const password = document.getElementById("accountLoginPassword").value;
+  const button = document.getElementById("accountLoginButton");
+  button.disabled = true;
+  button.textContent = "Logging in...";
+  try {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+    if (!data.user) throw new Error("Login did not return an account. Please try again.");
+    await refreshAccountDashboard(data.user);
+    setAccountAuthMessage("You are now logged in.");
+    document.getElementById("accountLoginForm").reset();
+  } catch (error) {
+    setAccountAuthMessage(error.message || "Unable to log in.", true);
+  } finally {
+    button.disabled = false;
+    button.textContent = "Log In";
+  }
+});
+
+document.getElementById("accountSignupForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const email = document.getElementById("accountSignupEmail").value.trim();
+  const password = document.getElementById("accountSignupPassword").value;
+  const confirmPassword = document.getElementById("accountSignupConfirm").value;
+  const button = document.getElementById("accountSignupButton");
+  if (password.length < 8) {
+    setAccountAuthMessage("Use a password with at least 8 characters.", true);
+    return;
+  }
+  if (password !== confirmPassword) {
+    setAccountAuthMessage("The passwords do not match.", true);
+    return;
+  }
+  button.disabled = true;
+  button.textContent = "Creating account...";
+  try {
+    const redirectUrl = new URL("./", window.location.href).href;
+    const { data, error } = await supabaseClient.auth.signUp({
+      email,
+      password,
+      options: { emailRedirectTo: redirectUrl }
+    });
+    if (error) throw error;
+    document.getElementById("accountSignupForm").reset();
+    if (data.session && data.user) {
+      await refreshAccountDashboard(data.user);
+      setAccountAuthMessage("Your Data2Coin account has been created.");
+    } else {
+      setAccountAuthMessage("Your account request was received. Check your email for the confirmation link, then return here to log in.");
+    }
+  } catch (error) {
+    setAccountAuthMessage(error.message || "Unable to create your account.", true);
+  } finally {
+    button.disabled = false;
+    button.textContent = "Create Account";
+  }
+});
+
+document.getElementById("accountSignOutButton").addEventListener("click", async () => {
+  const { error } = await supabaseClient.auth.signOut();
+  if (error) {
+    setAccountAuthMessage(error.message, true);
+    return;
+  }
+  showAccountAuthView(null);
+  setAccountAuthMessage("You have logged out.");
+});
+
+supabaseClient.auth.onAuthStateChange((_event, session) => {
+  const user = session?.user || null;
+  showAccountAuthView(user);
+  if (!user) {
+    document.getElementById("sellerAccountStatus").textContent = "Log in to view your seller account.";
+    document.getElementById("sellerAccountListings").replaceChildren();
+    document.getElementById("sellerAccountOrders").replaceChildren();
+  }
+});
+
+async function initializeAccountAuth() {
+  const { data, error } = await supabaseClient.auth.getSession();
+  if (error) {
+    setAccountAuthMessage("Could not restore your login: " + error.message, true);
+    return;
+  }
+  await refreshAccountDashboard(data.session?.user || null);
+}
 
 /* PAGE NAVIGATION */
 
@@ -1590,6 +1969,8 @@ document.getElementById("sellerForm").addEventListener("submit", async function(
 
   try {
 
+    const { data: { user: sellerAccountUser } } = await supabaseClient.auth.getUser();
+
     const { error } = await supabaseClient
 
       .from("seller_registrations")
@@ -1608,6 +1989,10 @@ document.getElementById("sellerForm").addEventListener("submit", async function(
 
         price_ghs: sellerPrice,
 
+        auth_user_id: sellerAccountUser ? sellerAccountUser.id : null,
+
+        email: sellerAccountUser ? sellerAccountUser.email : null,
+
         status: "pending"
 
       }]);
@@ -1621,6 +2006,8 @@ document.getElementById("sellerForm").addEventListener("submit", async function(
     document.getElementById("sellerForm").reset();
 
     submit.textContent = "Registration Submitted";
+
+    if (sellerAccountUser) await refreshAccountDashboard(sellerAccountUser);
 
   } catch (error) {
 
@@ -1640,11 +2027,9 @@ document.getElementById("sellerForm").addEventListener("submit", async function(
 /* INITIALISE WEBSITE */
 
 document.addEventListener("DOMContentLoaded", function() {
-
   loadListings();
-
   displaySavedOrders();
-
+  initializeAccountAuth();
 });
 
 </script>

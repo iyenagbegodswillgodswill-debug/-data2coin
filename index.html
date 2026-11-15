@@ -1218,7 +1218,7 @@ function showPage(pageName) {
 
   window.scrollTo(0, 0);
 
-  if (pageName === "data") loadListings();
+  if (pageName === "data") { loadListings(); loadKingflexyPackages(); }
 
   if (pageName === "account") displaySavedOrders();
 
@@ -2097,6 +2097,7 @@ document.getElementById("sellerForm").addEventListener("submit", async function(
 
 document.addEventListener("DOMContentLoaded", function() {
   loadListings();
+  loadKingflexyPackages();
   displaySavedOrders();
   initializeAccountAuth();
 });

@@ -138,6 +138,8 @@ header{
 
 background:#191d16;
 
+width:100%;
+
 padding:24px 18px;
 
 border-bottom:1px solid #34392e;
@@ -165,14 +167,21 @@ margin-top:8px;
 }
 
 .container{
-
-padding:18px;
-
-max-width:700px;
-
-margin:auto;
-
+  padding:clamp(14px,2.5vw,28px);
+  width:100%;
+  max-width:none;
+  margin:0;
 }
+.app{
+  width:100%;
+  max-width:none;
+  min-height:100vh;
+}
+body,html{
+  width:100%;
+  min-height:100%;
+}
+
 
 .page{display:none}
 
@@ -1170,12 +1179,6 @@ async function loadKingflexyPackages() {
         payer.inputMode = "tel";
         payer.placeholder = "0241234567";
         payer.required = true;
-        const emailLabel = document.createElement("label");
-        emailLabel.textContent = "Email address";
-        const email = document.createElement("input");
-        email.type = "email";
-        email.placeholder = "you@example.com";
-        email.required = true;
         const submit = document.createElement("button");
         submit.type = "submit";
         submit.className = "primary";
@@ -1185,7 +1188,7 @@ async function loadKingflexyPackages() {
         const note = document.createElement("p");
         note.className = "small";
         note.textContent = "The recipient number gets the data. The MoMo number gets the payment request. Never enter your MoMo PIN on this website.";
-        panel.append(title, chosen, recipientLabel, recipient, payerLabel, payer, emailLabel, email, submit, message, note);
+        panel.append(title, chosen, recipientLabel, recipient, payerLabel, payer, submit, message, note);
         card.insertAdjacentElement("afterend", panel);
         panel.scrollIntoView({ behavior: "smooth", block: "center" });
         panel.addEventListener("submit", async event => {
@@ -1203,7 +1206,6 @@ async function loadKingflexyPackages() {
                 volume_gb: Number(pkg.volume_gb),
                 recipient_phone: recipient.value.trim(),
                 payment_phone: payer.value.trim(),
-                email: email.value.trim()
               }
             });
             if (error || !data?.success) throw new Error(data?.error || error?.message || "Could not start payment.");

@@ -8,7 +8,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="description" content="Data2Coin Ghana - Buy and sell MTN data bundles in Ghana.">
+<meta name="description" content="Data2Coin Ghana - Buy MTN data bundles in Ghana.">
 
 <meta name="theme-color" content="#11140f">
 
@@ -530,7 +530,7 @@ input,select,textarea{background:#080808;border-color:#66501b}
 
 <div class="logo">Data2Coin 🇬🇭</div>
 
-<div class="tagline">Buy and sell MTN data bundles in Ghana</div>
+<div class="tagline">Buy MTN data bundles in Ghana</div>
 
 </header>
 
@@ -544,7 +544,7 @@ input,select,textarea{background:#080808;border-color:#66501b}
 
 <h1>Your Data.<br>Your Money.</h1>
 
-<p>Welcome to Data2Coin Ghana — a marketplace connecting MTN data buyers and sellers.</p>
+<p>Welcome to Data2Coin Ghana — a simpler way to get more MTN data for less.</p>
 
 <button class="primary" onclick="showPage('data')">Explore Available Data</button>
 
@@ -554,7 +554,7 @@ input,select,textarea{background:#080808;border-color:#66501b}
 
 <h2>About Data2Coin</h2>
 
-<p>Data2Coin makes buying and selling MTN data bundles easier in Ghana.</p>
+<p>Data2Coin helps you buy MTN data bundles at competitive prices in Ghana.</p>
 
 <hr>
 
@@ -589,7 +589,7 @@ input,select,textarea{background:#080808;border-color:#66501b}
 <button class="shortcut" onclick="showPage('airtime')"><span>📱</span>Airtime</button>
 <button class="shortcut" onclick="showPage('payments')"><span>💳</span>Payments</button>
 <button class="shortcut" onclick="showPage('data')"><span>🛒</span>Buy Data</button>
-<button class="shortcut" onclick="showPage('sell')"><span>⇄</span>Sell Data</button>
+
 <button class="shortcut" onclick="showPage('account')"><span>👤</span>My Account</button>
 </div>
 </div>
@@ -604,12 +604,6 @@ input,select,textarea{background:#080808;border-color:#66501b}
 </div>
 <p class="small" style="margin-top:12px">BIGMK Furniture — bringing comfort and style to your home.</p>
 </div>
-<div class="card">
-<h2>Become a Seller</h2>
-<p>Register your data bundle and wait for approval before it appears in the marketplace.</p>
-<button class="primary" onclick="showPage('sell')">Become a Seller</button>
-</div>
-
 </section>
 
 <!-- BUY DATA -->
@@ -628,69 +622,6 @@ input,select,textarea{background:#080808;border-color:#66501b}
 
 <div id="kingflexyStatus" class="status-message">Loading live MTN packages...</div>
 <div id="kingflexyPackages"></div>
-
-<hr>
-<h3>Marketplace seller listings</h3>
-<p class="small">Bundles offered by approved Data2Coin sellers.</p>
-<div id="status" class="status-message">Connecting to marketplace...</div>
-
-</div>
-
-<div id="listings">
-
-<div class="card">
-
-<p>Loading available data...</p>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- SELL -->
-
-<section class="page" id="sell">
-
-<div class="card">
-
-<h2>Become a Seller</h2>
-
-<p>Submit your details. Your registration must be approved before your bundle is listed.</p>
-
-<form id="sellerForm">
-
-<label>Your name</label>
-
-<input type="text" id="sellerName" placeholder="Enter your name" required>
-
-<label>MTN phone number</label>
-
-<input type="tel" id="sellerContact" placeholder="Example: 0241234567" required>
-
-<label>Data bundle</label>
-
-<input type="text" id="bundleSize" placeholder="Example: 5 GB" required>
-
-<label>Selling price (GH₵)</label>
-
-<input type="number" id="sellerPrice" placeholder="Enter your price" min="0.01" step="0.01" required>
-
-<button class="primary" type="submit" id="sellerSubmit">Submit Seller Registration</button>
-
-<div id="sellerMessage" class="status-message"></div>
-
-</form>
-
-</div>
-
-<div class="card">
-
-<h3>Seller approval</h3>
-
-<p>Every seller registration is reviewed by an administrator. Only approved sellers can have their data displayed.</p>
-
-</div>
 
 </section>
 
@@ -822,31 +753,7 @@ input,select,textarea{background:#080808;border-color:#66501b}
 
 </div>
 
-<div class="card">
 
-<h3>Track an Order</h3>
-
-<p>Enter your order number and private tracking code.</p>
-
-<form id="trackingForm">
-
-<label>Order number</label>
-
-<input type="number" id="trackingOrderId" placeholder="Example: 12" min="1" required>
-
-<label>Private tracking code</label>
-
-<input type="text" id="trackingToken" placeholder="Paste your tracking code" required>
-
-<button class="primary" type="submit" id="trackButton">Track My Order</button>
-
-<div id="trackingMessage" class="status-message"></div>
-
-</form>
-
-<div id="trackingResult"></div>
-
-</div>
 
 <div class="card">
 
@@ -869,7 +776,7 @@ input,select,textarea{background:#080808;border-color:#66501b}
 
 <button class="nav-button" data-page="data" onclick="showPage('data')"><span>📶</span>Buy Data</button>
 
-<button class="nav-button" data-page="sell" onclick="showPage('sell')"><span>💼</span>Sell</button>
+
 
 <button class="nav-button" data-page="payments" onclick="showPage('payments')"><span>💳</span>Payments</button>
 
@@ -884,7 +791,7 @@ input,select,textarea{background:#080808;border-color:#66501b}
 
 Data2Coin Ghana 🇬🇭<br>
 
-Connecting data buyers and sellers.<br>
+More data for less.<br>
 
 Platform fee: 2%.
 
@@ -1218,7 +1125,7 @@ function showPage(pageName) {
 
   window.scrollTo(0, 0);
 
-  if (pageName === "data") { loadListings(); loadKingflexyPackages(); }
+  if (pageName === "data") { loadKingflexyPackages(); }
 
   if (pageName === "account") displaySavedOrders();
 
@@ -2096,7 +2003,6 @@ document.getElementById("sellerForm").addEventListener("submit", async function(
 /* INITIALISE WEBSITE */
 
 document.addEventListener("DOMContentLoaded", function() {
-  loadListings();
   loadKingflexyPackages();
   displaySavedOrders();
   initializeAccountAuth();

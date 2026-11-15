@@ -545,6 +545,21 @@ body.home-design .container{padding-left:0;padding-right:0;padding-top:0}
 body.home-design main.container{max-width:620px}
 body.home-design footer,body.home-design .kente-strip{display:none}
 
+
+/* FULL-SCREEN APP LAYOUT */
+html,body{width:100%;min-height:100%;margin:0}
+body{min-height:100vh;min-height:100dvh}
+.app{width:100%;max-width:none;min-height:100vh;min-height:100dvh;margin:0;border-radius:0;overflow-x:hidden}
+header{width:100%;box-sizing:border-box;padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right))}
+main.container{width:100%;max-width:none;box-sizing:border-box;margin:0;padding:18px max(16px,env(safe-area-inset-right)) calc(104px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+.page{width:100%;max-width:none;box-sizing:border-box}
+.page>.card,.page .card{width:100%;box-sizing:border-box}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;width:100%;box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom);z-index:1000}
+footer{width:100%;box-sizing:border-box}
+.exact-design{width:100%;max-width:none}
+.exact-design img{width:100%;max-width:none}
+.kingflexy-card{width:100%;box-sizing:border-box}
+
 </style>
 
 </head>

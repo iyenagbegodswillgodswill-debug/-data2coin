@@ -1165,6 +1165,10 @@ async function loadKingflexyPackages() {
         title.textContent = "Complete Your Data Order";
         const chosen = document.createElement("p");
         chosen.textContent = sizeText + " — " + price.textContent;
+        const useLabel = document.createElement("label");
+        useLabel.textContent = "Who are you buying data for?";
+        const useFor = document.createElement("select");
+        useFor.innerHTML = '<option value="self">For myself</option><option value="other">For someone else</option>';
         const recipientLabel = document.createElement("label");
         recipientLabel.textContent = "MTN recipient phone (receives the data)";
         const recipient = document.createElement("input");
@@ -1179,6 +1183,21 @@ async function loadKingflexyPackages() {
         payer.inputMode = "tel";
         payer.placeholder = "0241234567";
         payer.required = true;
+        useFor.addEventListener("change", () => {
+          recipient.value = "";
+          recipient.readOnly = false;
+          recipientLabel.textContent = useFor.value === "self"
+            ? "Your MTN number (receives the data)"
+            : "Recipient's MTN number (receives the data)";
+        });
+        payer.addEventListener("input", () => {
+          if (useFor.value === "self") recipient.value = payer.value;
+        });
+        recipient.addEventListener("input", () => {
+          if (useFor.value === "self" && recipient.value !== payer.value) {
+            // Keep both numbers editable; the customer may use a different MoMo line.
+          }
+        });
         const submit = document.createElement("button");
         submit.type = "submit";
         submit.className = "primary";
@@ -1188,7 +1207,7 @@ async function loadKingflexyPackages() {
         const note = document.createElement("p");
         note.className = "small";
         note.textContent = "The recipient number gets the data. The MoMo number gets the payment request. Never enter your MoMo PIN on this website.";
-        panel.append(title, chosen, recipientLabel, recipient, payerLabel, payer, submit, message, note);
+        panel.append(title, chosen, useLabel, useFor, recipientLabel, recipient, payerLabel, payer, submit, message, note);
         card.insertAdjacentElement("afterend", panel);
         panel.scrollIntoView({ behavior: "smooth", block: "center" });
         panel.addEventListener("submit", async event => {
@@ -1275,7 +1294,7 @@ async function loadKingflexyPackages() {
             submit.textContent = "Send MTN MoMo Payment Prompt";
           }
         });
-        recipient.focus();
+        useFor.focus();
       });
       card.append(badge, select);
       card.style.cursor = "pointer";

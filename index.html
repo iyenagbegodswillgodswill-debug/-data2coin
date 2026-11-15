@@ -52,7 +52,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .status{margin-top:12px;overflow-wrap:anywhere}
 .category{padding:14px;border:1px solid #3b310c;border-radius:12px;background:#151515;margin:10px 0}
 .category strong{color:var(--gold)}
-.bottom-links{display:flex;justify-content:space-around;gap:8px;padding:12px 8px;border-top:1px solid #292929;color:#aaa;font-size:12px}
+.bottom-links{display:none;justify-content:space-around;gap:8px;padding:12px 8px;border-top:1px solid #292929;color:#aaa;font-size:12px}
 .bottom-links button{background:none;color:inherit;border:0;padding:8px 4px;width:auto;margin:0;font-size:12px}
 .bottom-links button.active{color:var(--gold)}
 footer{text-align:center;color:#777;font-size:12px;padding:20px}
@@ -168,6 +168,7 @@ function showPage(name) {
   document.querySelectorAll(".page").forEach(p => p.classList.toggle("active", p.id === name));
   document.querySelectorAll(".bottom-links button").forEach(b => b.classList.toggle("active", b.dataset.page === name));
   history.replaceState(null, "", "#" + name);
+  document.querySelector(".bottom-links").style.display = name === "home" ? "none" : "flex";
   window.scrollTo({top:0,behavior:"instant"});
 }
 document.querySelectorAll("[data-page]").forEach(el => {

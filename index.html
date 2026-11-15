@@ -599,7 +599,7 @@ body.home-design footer,body.home-design .kente-strip{display:none}
 
 <p class="small">Our goal: give customers more MTN data for less money.</p>
 
-<div class="notice"><p>KiNG FLEXY live package prices are being checked. The prices below include our planned 2% platform fee and 10% target profit. They are preview prices until checkout and delivery are fully tested.</p></div>
+<div class="notice"><p>Select a data package to continue.</p></div>
 
 <div id="kingflexyStatus" class="status-message">Loading live MTN packages...</div>
 <div id="kingflexyPackages"></div>
@@ -1087,8 +1087,7 @@ function safeText(value) {
 
 }
 
-/* LIVE KING FLEXY CATALOGUE — READ ONLY PREVIEW
-   No purchase endpoint is called here. Existing payment and seller flows remain unchanged. */
+/* LIVE KING FLEXY CATALOGUE — PACKAGE SELECTION */
 async function loadKingflexyPackages() {
   const status = document.getElementById("kingflexyStatus");
   const box = document.getElementById("kingflexyPackages");
@@ -1118,10 +1117,7 @@ async function loadKingflexyPackages() {
       if (Number.isFinite(rawCost) && rawCost > 0) {
         const retail = Math.ceil((rawCost * 1.10 / 0.98) * 100) / 100;
         price.textContent = "GH₵ " + retail.toFixed(2);
-        const note = document.createElement("p");
-        note.className = "kingflexy-note";
-        note.textContent = "Provider cost: GH₵ " + rawCost.toFixed(2) + " · Includes 2% platform fee + 10% target profit.";
-        card.append(row, note);
+        card.append(row);
       } else {
         price.textContent = "Price unavailable";
         const note = document.createElement("p");
@@ -1132,8 +1128,41 @@ async function loadKingflexyPackages() {
       row.append(size, price);
       const badge = document.createElement("span");
       badge.className = "badge";
-      badge.textContent = "MTN · Live provider package";
-      card.appendChild(badge);
+      badge.textContent = "MTN · Available";
+      const select = document.createElement("button");
+      select.type = "button";
+      select.className = "primary";
+      select.textContent = "Select package";
+      select.addEventListener("click", () => {
+        const previous = document.getElementById("selectedKingflexyPackage");
+        if (previous) previous.remove();
+        const panel = document.createElement("div");
+        panel.id = "selectedKingflexyPackage";
+        panel.className = "card";
+        const title = document.createElement("h3");
+        title.textContent = "Package selected";
+        const chosen = document.createElement("p");
+        chosen.textContent = sizeText + " — " + price.textContent;
+        const label = document.createElement("label");
+        label.textContent = "MTN recipient phone number";
+        const phone = document.createElement("input");
+        phone.type = "tel";
+        phone.placeholder = "0241234567";
+        phone.inputMode = "tel";
+        phone.required = true;
+        const info = document.createElement("p");
+        info.className = "status-message";
+        info.textContent = "Enter the number that should receive this data. Payment and delivery for these live packages are not connected yet, so no payment will be taken.";
+        panel.append(title, chosen, label, phone, info);
+        card.insertAdjacentElement("afterend", panel);
+        phone.focus();
+        panel.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+      card.append(badge, select);
+      card.style.cursor = "pointer";
+      card.addEventListener("click", event => {
+        if (event.target !== select) select.click();
+      });
       box.appendChild(card);
     });
   } catch (error) {

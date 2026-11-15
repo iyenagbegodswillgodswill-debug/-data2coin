@@ -271,8 +271,8 @@ document.getElementById("authForm").addEventListener("submit", async event => {
         authStatus.textContent = "Account created successfully.";
         renderAuthState(data.user);
       } else {
-        authStatus.textContent = "Registration received. Please check your email for the confirmation link, then log in.";
         setAuthMode("login");
+        authStatus.textContent = "Registration received. Please check your email for the confirmation link, then log in.";
       }
     } else {
       const {data,error} = await supabaseClient.auth.signInWithPassword({email,password});

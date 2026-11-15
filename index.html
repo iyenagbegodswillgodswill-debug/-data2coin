@@ -1676,6 +1676,8 @@ function displaySavedOrders() {
 /* INITIALISE WEBSITE */
 
 document.addEventListener("DOMContentLoaded", function() {
+  document.body.classList.add("home-design");
+  loadExactHomeDesign();
   loadKingflexyPackages();
   displaySavedOrders();
   initializeAccountAuth();
